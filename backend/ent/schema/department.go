@@ -23,5 +23,6 @@ func (Department) Fields() []ent.Field {
 func (Department) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.To("instructorinfos", InstructorInfo.Type).StorageKey(edge.Column("department_id")),
+		edge.To("department", Course.Type).StorageKey(edge.Column("department_id")),
 	}
 }
