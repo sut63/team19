@@ -18,15 +18,11 @@ type Departments struct {
 	Department []Department
 }
 
-
-
 // Department defines the struct for the department
 type Department struct {
 	DEPARTMENT string
 	FACULTY    string
 }
-
-
 
 // InstructorRooms defines the struct for the instructorrooms
 type InstructorRooms struct {
@@ -39,6 +35,9 @@ type InstructorRoom struct {
 	BUILDING string
 }
 
+// @title SUT SA Example API
+// @version 1.0
+// @description This is a sample server for SUT SE 2563
 // @termsOfService http://swagger.io/terms/
 
 // @contact.name API Support
@@ -99,27 +98,27 @@ func main() {
 	// Set Departments Data
 	departments := Departments{
 		Department: []Department{
-			Department{"MANUFACTURING ENGINEERING", "Institute of Engineering"},
-			Department{"AGRICULTURAL ENGINEERING", "Institute of Engineering"},
-			Department{"TRANSPORTATION ENGINEERING", "Institute of Engineering"},
-			Department{"COMPUTER ENGINEERING", "Institute of Engineering"},
-			Department{"CHEMICAL ENGINEERING", "Institute of Engineering"},
-			Department{"MECHANICAL ENGINEERING", "Institute of Engineering"},
-			Department{"CERAMIC ENGINEERING", "Institute of Engineering"},
-			Department{"TELECOMMUNICATION ENGINEERING", "Institute of Engineering"},
-			Department{"POLYMER ENGINEERING", "Institute of Engineering"},
-			Department{"ELECTRICAL ENGINEERING", "Institute of Engineering"},
-			Department{"CIVIL ENGINEERING", "Institute of Engineering"},
-			Department{"METALLURGICAL ENGINEERING", "Institute of Engineering"},
-			Department{"ENVIRONMENTAL ENGINEERING", "Institute of Engineering"},
-			Department{"ELECTRONIC ENGINEERING", "Institute of Engineering"},
-			Department{"INDUSTRIAL ENGINEERING", "Institute of Engineering"},
-			Department{"AUTOMOTIVE ENGINEERING", "Institute of Engineering"},
-			Department{"MECHATRONICS", "Institute of Engineering"},
-			Department{"AERONAUTICAL ENGINEERING", "Institute of Engineering"},
-			Department{"COMMUNICATION ARTS", "Institute of Social Technology"},
-			Department{"GENERAL", "Doctor of Medicine Program"},
-			Department{"NURSING SCIENCE", "Faculty of Nursing"},
+			{"MANUFACTURING ENGINEERING", "Institute of Engineering"},
+			{"AGRICULTURAL ENGINEERING", "Institute of Engineering"},
+			{"TRANSPORTATION ENGINEERING", "Institute of Engineering"},
+			{"COMPUTER ENGINEERING", "Institute of Engineering"},
+			{"CHEMICAL ENGINEERING", "Institute of Engineering"},
+			{"MECHANICAL ENGINEERING", "Institute of Engineering"},
+			{"CERAMIC ENGINEERING", "Institute of Engineering"},
+			{"TELECOMMUNICATION ENGINEERING", "Institute of Engineering"},
+			{"POLYMER ENGINEERING", "Institute of Engineering"},
+			{"ELECTRICAL ENGINEERING", "Institute of Engineering"},
+			{"CIVIL ENGINEERING", "Institute of Engineering"},
+			{"METALLURGICAL ENGINEERING", "Institute of Engineering"},
+			{"ENVIRONMENTAL ENGINEERING", "Institute of Engineering"},
+			{"ELECTRONIC ENGINEERING", "Institute of Engineering"},
+			{"INDUSTRIAL ENGINEERING", "Institute of Engineering"},
+			{"AUTOMOTIVE ENGINEERING", "Institute of Engineering"},
+			{"MECHATRONICS", "Institute of Engineering"},
+			{"AERONAUTICAL ENGINEERING", "Institute of Engineering"},
+			{"COMMUNICATION ARTS", "Institute of Social Technology"},
+			{"GENERAL", "Doctor of Medicine Program"},
+			{"NURSING SCIENCE", "Faculty of Nursing"},
 		},
 	}
 	for _, d := range departments.Department {
@@ -133,16 +132,16 @@ func main() {
 	// Set InstructorRooms Data
 	instructorrooms := InstructorRooms{
 		InstructorRoom: []InstructorRoom{
-			InstructorRoom{"A101", "Building A"},
-			InstructorRoom{"A102", "Building A"},
-			InstructorRoom{"A103", "Building A"},
-			InstructorRoom{"A104", "Building A"},
-			InstructorRoom{"A105", "Building A"},
-			InstructorRoom{"B101", "Building B"},
-			InstructorRoom{"B102", "Building B"},
-			InstructorRoom{"B103", "Building B"},
-			InstructorRoom{"B104", "Building B"},
-			InstructorRoom{"B105", "Building B"},
+			{"A101", "Building A"},
+			{"A102", "Building A"},
+			{"A103", "Building A"},
+			{"A104", "Building A"},
+			{"A105", "Building A"},
+			{"B101", "Building B"},
+			{"B102", "Building B"},
+			{"B103", "Building B"},
+			{"B104", "Building B"},
+			{"B105", "Building B"},
 		},
 	}
 	for _, ir := range instructorrooms.InstructorRoom {
@@ -181,11 +180,6 @@ func main() {
 			SetDegreeName(deg).
 			Save(context.Background())
 	}
-
-
-	
-
-
 
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	router.Run()

@@ -15,7 +15,7 @@ type InstructorInfo struct {
 func (InstructorInfo) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("NAME").Unique(),
-		field.Int("PHONENUMBER").Unique(),
+		field.String("PHONENUMBER").Unique(),
 		field.String("EMAIL").Unique(),
 		field.String("PASSWORD"),
 	}

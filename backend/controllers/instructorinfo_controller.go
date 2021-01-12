@@ -25,7 +25,7 @@ type InstructorInfo struct {
 	InstructorRoom int
 	Title          int
 	Name           string
-	PhoneNumber    int
+	PhoneNumber    string
 	Email          string
 	Password       string
 }
@@ -138,7 +138,10 @@ func (ctl *InstructorInfoController) GetInstructorInfo(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, u)
+	c.JSON(200, gin.H{
+		"status": true,
+		"data":   u,
+	})
 }
 
 // ListInstructorInfo handles request to get a list of instructorinfo entities
