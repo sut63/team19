@@ -18,11 +18,15 @@ type Departments struct {
 	Department []Department
 }
 
+
+
 // Department defines the struct for the department
 type Department struct {
 	DEPARTMENT string
 	FACULTY    string
 }
+
+
 
 // InstructorRooms defines the struct for the instructorrooms
 type InstructorRooms struct {
@@ -113,6 +117,9 @@ func main() {
 			Department{"AUTOMOTIVE ENGINEERING", "Institute of Engineering"},
 			Department{"MECHATRONICS", "Institute of Engineering"},
 			Department{"AERONAUTICAL ENGINEERING", "Institute of Engineering"},
+			Department{"COMMUNICATION ARTS", "Institute of Social Technology"},
+			Department{"GENERAL", "Doctor of Medicine Program"},
+			Department{"NURSING SCIENCE", "Faculty of Nursing"},
 		},
 	}
 	for _, d := range departments.Department {
@@ -154,6 +161,31 @@ func main() {
 			SetTITLE(t).
 			Save(context.Background())
 	}
+
+	// Set Subjects Data
+	subjects := []string{"We love environment", "We love environment",
+		"Love the world", "Health and Care"}
+	for _, sub := range subjects {
+		client.Subject.
+			Create().
+			SetSubjectName(sub).
+			Save(context.Background())
+	}
+
+	// Set Degrees Data
+	degrees := []string{"We love environment", "We love environment",
+		"Love the world", "Health and Care"}
+	for _, deg := range degrees {
+		client.Degree.
+			Create().
+			SetDegreeName(deg).
+			Save(context.Background())
+	}
+
+
+	
+
+
 
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	router.Run()

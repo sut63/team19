@@ -1,0 +1,1470 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.swagger.io/support",
+            "email": "support@swagger.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "host": "localhost:8080",
+    "basePath": "/api/v1",
+    "paths": {
+        "/courses": {
+            "get": {
+                "description": "list course entities",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "List course entities",
+                "operationId": "list-course",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ent.Course"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create course",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Create course",
+                "operationId": "create-course",
+                "parameters": [
+                    {
+                        "description": "Course entity",
+                        "name": "course",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ent.Course"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.Course"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/courses/{id}": {
+            "get": {
+                "description": "get course by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a course entity by ID",
+                "operationId": "get-course",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Course ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.Course"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update course by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Update a course entity by ID",
+                "operationId": "update-course",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Course ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Course entity",
+                        "name": "course",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ent.Course"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.Course"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "get course by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Delete a course entity by ID",
+                "operationId": "delete-course",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Course ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/degrees": {
+            "get": {
+                "description": "list degree entities",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "List degree entities",
+                "operationId": "list-degree",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ent.Degree"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create degree",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Create degree",
+                "operationId": "create-degree",
+                "parameters": [
+                    {
+                        "description": "Degree entity",
+                        "name": "degree",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ent.Degree"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.Degree"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/degrees/{id}": {
+            "get": {
+                "description": "get degree by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a degree entity by ID",
+                "operationId": "get-degree",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Degree ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.Degree"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/departments": {
+            "get": {
+                "description": "list department entities",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "List department entities",
+                "operationId": "list-department",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ent.Department"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create department",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Create department",
+                "operationId": "create-department",
+                "parameters": [
+                    {
+                        "description": "Department entity",
+                        "name": "department",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ent.Department"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.Department"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/departments/{id}": {
+            "get": {
+                "description": "get department by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a department entity by ID",
+                "operationId": "get-department",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Department ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.Department"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/instructorinfos": {
+            "get": {
+                "description": "list instructorinfo entities",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "List instructorinfo entities",
+                "operationId": "list-instructorinfo",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ent.InstructorInfo"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create instructorinfo",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Create instructorinfo",
+                "operationId": "create-instructorinfo",
+                "parameters": [
+                    {
+                        "description": "InstructorInfo entity",
+                        "name": "instructorinfo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ent.InstructorInfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.InstructorInfo"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/instructorinfos/{id}": {
+            "get": {
+                "description": "get instructorinfo by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a instructorinfo entity by ID",
+                "operationId": "get-instructorinfo",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "InstructorInfo ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.InstructorInfo"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update instructorinfo by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Update a instructorinfo entity by ID",
+                "operationId": "update-instructorinfo",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "InstructorInfo ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "InstructorInfo entity",
+                        "name": "instructorinfo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ent.InstructorInfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.InstructorInfo"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "get instructorinfo by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Delete a instructorinfo entity by ID",
+                "operationId": "delete-instructorinfo",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "InstructorInfo ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/instructorrooms": {
+            "get": {
+                "description": "list instructorroom entities",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "List instructorroom entities",
+                "operationId": "list-instructorroom",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ent.InstructorRoom"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create instructorroom",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Create instructorroom",
+                "operationId": "create-instructorroom",
+                "parameters": [
+                    {
+                        "description": "InstructorRoom entity",
+                        "name": "instructorroom",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ent.InstructorRoom"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.InstructorRoom"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/instructorrooms/{id}": {
+            "get": {
+                "description": "get instructorroom by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a instructorroom entity by ID",
+                "operationId": "get-instructorroom",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "InstructorRoom ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.InstructorRoom"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/subjects": {
+            "get": {
+                "description": "list subject entities",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "List subject entities",
+                "operationId": "list-subject",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ent.Subject"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create subject",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Create subject",
+                "operationId": "create-subject",
+                "parameters": [
+                    {
+                        "description": "Subject entity",
+                        "name": "subject",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ent.Subject"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.Subject"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/subjects/{id}": {
+            "get": {
+                "description": "get subject by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a subject entity by ID",
+                "operationId": "get-subject",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Subject ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.Subject"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/titles": {
+            "get": {
+                "description": "list title entities",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "List title entities",
+                "operationId": "list-title",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ent.Title"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create title",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Create title",
+                "operationId": "create-title",
+                "parameters": [
+                    {
+                        "description": "Title entity",
+                        "name": "title",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ent.Title"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.Title"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/titles/{id}": {
+            "get": {
+                "description": "get title by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a title entity by ID",
+                "operationId": "get-title",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Title ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.Title"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "ent.Course": {
+            "type": "object",
+            "properties": {
+                "Course_name": {
+                    "description": "CourseName holds the value of the \"Course_name\" field.",
+                    "type": "string"
+                },
+                "degree_id": {
+                    "type": "integer"
+                },
+                "edges": {
+                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the CourseQuery when eager-loading is set.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.CourseEdges"
+                },
+                "id": {
+                    "description": "ID of the ent.",
+                    "type": "integer"
+                },
+                "instructorInfo_id": {
+                    "type": "integer"
+                },
+                "subject_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "ent.CourseEdges": {
+            "type": "object",
+            "properties": {
+                "degreeID": {
+                    "description": "DegreeID holds the value of the Degree_id edge.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.Degree"
+                },
+                "departmentID": {
+                    "description": "DepartmentID holds the value of the Department_id edge.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.Department"
+                },
+                "instructorInfoID": {
+                    "description": "InstructorInfoID holds the value of the InstructorInfo_id edge.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.InstructorInfo"
+                },
+                "subjectID": {
+                    "description": "SubjectID holds the value of the Subject_id edge.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.Subject"
+                }
+            }
+        },
+        "ent.Degree": {
+            "type": "object",
+            "properties": {
+                "Degree_name": {
+                    "description": "DegreeName holds the value of the \"Degree_name\" field.",
+                    "type": "string"
+                },
+                "edges": {
+                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the DegreeQuery when eager-loading is set.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.DegreeEdges"
+                },
+                "id": {
+                    "description": "ID of the ent.",
+                    "type": "integer"
+                }
+            }
+        },
+        "ent.DegreeEdges": {
+            "type": "object",
+            "properties": {
+                "degree": {
+                    "description": "Degree holds the value of the degree edge.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ent.Course"
+                    }
+                }
+            }
+        },
+        "ent.Department": {
+            "type": "object",
+            "properties": {
+                "DEPARTMENT": {
+                    "description": "DEPARTMENT holds the value of the \"DEPARTMENT\" field.",
+                    "type": "string"
+                },
+                "FACULTY": {
+                    "description": "FACULTY holds the value of the \"FACULTY\" field.",
+                    "type": "string"
+                },
+                "edges": {
+                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the DepartmentQuery when eager-loading is set.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.DepartmentEdges"
+                },
+                "id": {
+                    "description": "ID of the ent.",
+                    "type": "integer"
+                }
+            }
+        },
+        "ent.DepartmentEdges": {
+            "type": "object",
+            "properties": {
+                "department": {
+                    "description": "Department holds the value of the department edge.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ent.Course"
+                    }
+                },
+                "instructorinfos": {
+                    "description": "Instructorinfos holds the value of the instructorinfos edge.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ent.InstructorInfo"
+                    }
+                }
+            }
+        },
+        "ent.InstructorInfo": {
+            "type": "object",
+            "properties": {
+                "EMAIL": {
+                    "description": "EMAIL holds the value of the \"EMAIL\" field.",
+                    "type": "string"
+                },
+                "NAME": {
+                    "description": "NAME holds the value of the \"NAME\" field.",
+                    "type": "string"
+                },
+                "PASSWORD": {
+                    "description": "PASSWORD holds the value of the \"PASSWORD\" field.",
+                    "type": "string"
+                },
+                "PHONENUMBER": {
+                    "description": "PHONENUMBER holds the value of the \"PHONENUMBER\" field.",
+                    "type": "integer"
+                },
+                "edges": {
+                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the InstructorInfoQuery when eager-loading is set.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.InstructorInfoEdges"
+                },
+                "id": {
+                    "description": "ID of the ent.",
+                    "type": "integer"
+                }
+            }
+        },
+        "ent.InstructorInfoEdges": {
+            "type": "object",
+            "properties": {
+                "department": {
+                    "description": "Department holds the value of the department edge.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.Department"
+                },
+                "instructor": {
+                    "description": "Instructor holds the value of the instructor edge.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ent.Course"
+                    }
+                },
+                "instructorroom": {
+                    "description": "Instructorroom holds the value of the instructorroom edge.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.InstructorRoom"
+                },
+                "title": {
+                    "description": "Title holds the value of the title edge.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.Title"
+                }
+            }
+        },
+        "ent.InstructorRoom": {
+            "type": "object",
+            "properties": {
+                "BUILDING": {
+                    "description": "BUILDING holds the value of the \"BUILDING\" field.",
+                    "type": "string"
+                },
+                "ROOM": {
+                    "description": "ROOM holds the value of the \"ROOM\" field.",
+                    "type": "string"
+                },
+                "edges": {
+                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the InstructorRoomQuery when eager-loading is set.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.InstructorRoomEdges"
+                },
+                "id": {
+                    "description": "ID of the ent.",
+                    "type": "integer"
+                }
+            }
+        },
+        "ent.InstructorRoomEdges": {
+            "type": "object",
+            "properties": {
+                "instructorinfos": {
+                    "description": "Instructorinfos holds the value of the instructorinfos edge.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ent.InstructorInfo"
+                    }
+                }
+            }
+        },
+        "ent.Subject": {
+            "type": "object",
+            "properties": {
+                "Subject_name": {
+                    "description": "SubjectName holds the value of the \"Subject_name\" field.",
+                    "type": "string"
+                },
+                "edges": {
+                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the SubjectQuery when eager-loading is set.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.SubjectEdges"
+                },
+                "id": {
+                    "description": "ID of the ent.",
+                    "type": "integer"
+                }
+            }
+        },
+        "ent.SubjectEdges": {
+            "type": "object",
+            "properties": {
+                "subject": {
+                    "description": "Subject holds the value of the subject edge.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ent.Course"
+                    }
+                }
+            }
+        },
+        "ent.Title": {
+            "type": "object",
+            "properties": {
+                "TITLE": {
+                    "description": "TITLE holds the value of the \"TITLE\" field.",
+                    "type": "string"
+                },
+                "edges": {
+                    "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the TitleQuery when eager-loading is set.",
+                    "type": "object",
+                    "$ref": "#/definitions/ent.TitleEdges"
+                },
+                "id": {
+                    "description": "ID of the ent.",
+                    "type": "integer"
+                }
+            }
+        },
+        "ent.TitleEdges": {
+            "type": "object",
+            "properties": {
+                "instructorinfos": {
+                    "description": "Instructorinfos holds the value of the instructorinfos edge.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ent.InstructorInfo"
+                    }
+                }
+            }
+        },
+        "gin.H": {
+            "type": "object",
+            "additionalProperties": true
+        }
+    },
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        },
+        "BasicAuth": {
+            "type": "basic"
+        },
+        "OAuth2AccessCode": {
+            "type": "oauth2",
+            "flow": "accessCode",
+            "authorizationUrl": "https://example.com/oauth/authorize",
+            "tokenUrl": "https://example.com/oauth/token",
+            "scopes": {
+                "admin": " Grants read and write access to administrative information"
+            }
+        },
+        "OAuth2Application": {
+            "type": "oauth2",
+            "flow": "application",
+            "authorizationUrl": "",
+            "tokenUrl": "https://example.com/oauth/token",
+            "scopes": {
+                "admin": " Grants read and write access to administrative information",
+                "write": " Grants write access"
+            }
+        },
+        "OAuth2Implicit": {
+            "type": "oauth2",
+            "flow": "implicit",
+            "authorizationUrl": "https://example.com/oauth/authorize",
+            "scopes": {
+                "admin": " Grants read and write access to administrative information",
+                "write": " Grants write access"
+            }
+        },
+        "OAuth2Password": {
+            "type": "oauth2",
+            "flow": "password",
+            "authorizationUrl": "",
+            "tokenUrl": "https://example.com/oauth/token",
+            "scopes": {
+                "admin": " Grants read and write access to administrative information",
+                "read": " Grants read access",
+                "write": " Grants write access"
+            }
+        }
+    }
+}
