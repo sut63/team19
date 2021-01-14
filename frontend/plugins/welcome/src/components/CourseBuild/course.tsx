@@ -1,14 +1,13 @@
-import React, { FC, useEffect,useState } from 'react';
+import React, { FC, useEffect } from 'react';
+
 
 import Swal from 'sweetalert2'; // alert
 
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import {
  Content,
- Header,
  Page,
  pageTheme,
- ContentHeader,
 
 } from '@backstage/core';
 
@@ -28,6 +27,11 @@ import {
   MenuItem,
   TextField,
   Button,
+  AppBar,
+  MuiThemeProvider,
+  createMuiTheme,
+  Toolbar,
+
 } from '@material-ui/core';
 
 
@@ -41,15 +45,18 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
 
-    formControl: {
-      width:300,
-
+    
+    text0: {  
+      marginLeft: theme.spacing(32),
+      marginRight: theme.spacing(4),
+      marginTop: theme.spacing(3),
+      fontSize: 20,
     },
 
-    text: {  //ชื่อชมรม
-        marginLeft: theme.spacing(5),
+    text1: {  //ชื่อชมรม
+        marginLeft: theme.spacing(30),
         marginRight: theme.spacing(4),
-        marginTop: theme.spacing(1),
+        marginTop: theme.spacing(20),
         fontSize: 20,
     },
     text2: {
@@ -58,83 +65,123 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: 20,
   },
   text3: {
-    marginLeft: theme.spacing(4),
+    marginLeft: theme.spacing(25),
     marginTop: theme.spacing(4),
     fontSize: 20,
 },
 
-  box1: {
-    marginLeft: theme.spacing(7),
-    marginTop: theme.spacing(2),
-    width: '30ch',  
-},
-
-  box2: {
-    marginLeft: theme.spacing(5),
-    marginTop: theme.spacing(4),
-    width: '30ch',  
-  },
-
-  box3: {
-    marginLeft: theme.spacing(3),
-    marginTop: theme.spacing(2),
-    width: '30ch',  
+text4: {
+  marginLeft: theme.spacing(20), 
+  fontSize: 25,
+  color: "white",
 },
 
 
-  textfill1: {  //ชื่อกิจกรรม
-    marginLeft: theme.spacing(10),
-    marginTop: theme.spacing(3),
-    width: '80ch',
-  },
-  textfill2: {
-    marginLeft: theme.spacing(10),
-    marginTop: theme.spacing(4),
-    width: '80ch',
-  },
-  textfill3: {
-    marginLeft: theme.spacing(14),
-    marginTop: theme.spacing(4),
-    width: '80ch',
-  },
-  textfill4: {
-    marginLeft: theme.spacing(16),
-    marginTop: theme.spacing(4),
-    width: '30ch',
-  },
-  button: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-  },
-  text4: {
-    marginLeft: theme.spacing(2),
-    marginTop: theme.spacing(1),
-    marginBottom:  theme.spacing(1),
-    fontSize: 14,
-},
+
 text5: {
   marginLeft: theme.spacing(2),
   marginTop: theme.spacing(1),
   marginBottom:  theme.spacing(1),
   fontSize: 14,
-  color: "blue",
+  color: "black",
 },
+
+text6: {
+  marginLeft: theme.spacing(0),
+  marginTop: theme.spacing(1),
+  marginBottom:  theme.spacing(1),
+  fontSize: 14,
+  color: "white",
+},
+
+
+text7: {
+  marginLeft: theme.spacing(90),
+  marginTop: theme.spacing(1),
+  marginBottom:  theme.spacing(1),
+  fontSize: 14,
+  color: "#f8bbd0",
+},
+
+
+text8: {
+  marginLeft: theme.spacing(28),
+  marginTop: theme.spacing(4),
+  marginBottom:  theme.spacing(1),
+  fontSize: 21,
+  color: "white",
+},
+
+
+  box1: {
+    marginLeft: theme.spacing(9.5),
+    marginTop: theme.spacing(2),
+    width: '60ch',  
+},
+
+  box2: {
+    marginLeft: theme.spacing(13),
+    marginTop: theme.spacing(2),
+    width: '60ch',  
+  },
+
+  box3: {
+    marginLeft: theme.spacing(10),
+    marginTop: theme.spacing(20),
+    width: '60ch',  
+},
+
+
+  textfill1: {  //ชื่อกิจกรรม
+    marginLeft: theme.spacing(13),
+    marginTop: theme.spacing(2),
+    width: '60ch',
+  },
+  
+  
+  
+  button: {
+    marginTop: theme.spacing(6),
+    marginLeft: theme.spacing(60),
+    display: 'flex',
+    flexWrap: 'wrap',
+    
+  },
+
+  button1: {
+    width: '50ch',
+    
+    
+  },
+  
+
   }),
 );
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      // light: will be calculated from palette.primary.main,
+      main: "#ef6694"
+      // dark: will be calculated from palette.primary.main,
+      // contrastText: will be calculated to contrast with palette.primary.main
+    }
+  }
+});
 
 //โครงสร้างของ interface
 interface currency{
     DepartmentID :      number;
-	SubjectID :      number;
-	DegreeID  :      number;
-	CourseName : string;
+	  SubjectID :         number;
+	  DegreeID  :         number;
+	  CourseName :        string;
 	
 }
 
 const WelcomePage: FC<{}> = () => {
 const classes = useStyles();
+
+
 
 const api = new DefaultApi();
 
@@ -144,9 +191,9 @@ const api = new DefaultApi();
  const [degrees, setDegrees ] = React.useState<EntDegree[]>([]);
  const Toast = Swal.mixin({  //ตั้งค่าการแจ้งเตือน
   toast: true,
-  position: 'top-end',
+  position: 'center',
   showConfirmButton: false,
-  timer: 3000,
+  timer: 5000,
   timerProgressBar: true,
   didOpen: toast => {
     toast.addEventListener('mouseenter', Swal.stopTimer);
@@ -163,12 +210,12 @@ const handleChange = ( event: React.ChangeEvent<{ name?: string; value: unknown 
 
 
  const getDepartments = async () => {
-  const res = await api.listDepartment({ limit: 10, offset:0});
+  const res = await api.listDepartment({ limit: 100, offset:0});
   setDepartments(res);
  };
 
  const getSubjects = async () => {//ดึงข้อมูล
-  const res = await api.listSubject({ limit: 10, offset:0}); //ดึงจาก listUser
+  const res = await api.listSubject({ limit: 100, offset:0}); //ดึงจาก listUser
   setSubjects(res); //ส่งค่าไป user ข้างบน
  };
 
@@ -176,6 +223,8 @@ const handleChange = ( event: React.ChangeEvent<{ name?: string; value: unknown 
   const res = await api.listDegree({ limit: 10, offset:0});
   setDegrees(res);
  };
+
+
 
  
  useEffect(() => { //เรียกใช้
@@ -192,7 +241,7 @@ const handleChange = ( event: React.ChangeEvent<{ name?: string; value: unknown 
 
 //6 กดบันทึกที่หน้า ui 
  function save() {
-    const apiUrl = 'http://localhost:8080/api/v1/activitys'; //url จาก main.go + activitys ตรง crud ใน ctl
+    const apiUrl = 'http://localhost:8080/api/v1/courses'; //url จาก main.go + activitys ตรง crud ใน ctl
     const requestOptions = { //ส่งคำขอที่เป็นแบบ ใส่ค่าข้อมูล
       method: 'POST', // 7 เพิ่มเข้ารายการกิจกรรม (ใส่ค่าข้อมูล)
       headers: { 'Content-Type': 'application/json' },
@@ -217,45 +266,33 @@ const handleChange = ( event: React.ChangeEvent<{ name?: string; value: unknown 
         }
       });
   }
-    
-  /*const Createpreempt = async () => { 
-    const preemption = {
-      user: 1,
-      roominfo: roomid,
-      purpose: purposeid,
-    
-      added: preempttime + ":00+07:00"
-    
-    };
-    
-    console.log(preemption);
-    
-    const res: any = await api.createActivity({ preemption: preemption });
-    
-    
-    
-     };*/
-
  return (
    <Page theme={pageTheme.home}>
-     <Header
-       title={`สร้างหลักสูตร`}
-       
-     ></Header>
+     
+     <div>
+        <MuiThemeProvider theme={theme}>
+          <AppBar color="primary" className="app-header">
+           <Toolbar>
+           
+              <FormControl className={classes.text4} > <text>| สร้างหลักสูตร | </text></FormControl>
+              <PersonIcon className={classes.text7} style={{ fontSize: 100}} ></PersonIcon>
+              <FormControl className={classes.text6} > <text>chanwit</text> </FormControl>
+              <FormControl className={classes.text5} > <text>Logout</text> </FormControl>
+           </Toolbar>
+          </AppBar>
+        </MuiThemeProvider>
+      </div>
 
-     <ContentHeader title="">
-     <div><PersonIcon style={{ fontSize: 100}} color="secondary" ></PersonIcon> </div>
-     <div><FormControl className={classes.text4} > <text>chanwit</text> </FormControl></div>
-     <FormControl className={classes.text5} > <text>Logout</text> </FormControl>
-    </ContentHeader>
+
+    
 
      <Content>
 
      <div>
-       <FormControl className={classes.text} > <text>ชื่อสำนักวิชา</text> </FormControl>   
+       <FormControl className={classes.text1} > <text>สาขาวิชา</text> </FormControl>   
        <FormControl fullWidth  variant="outlined" 
         className={classes.box3}>
-        <InputLabel>select</InputLabel>
+        <InputLabel>เลือก</InputLabel>
         <Select
           name="DepartmentID" //เก็บไว้ตัวแปรไหน
           value={currency.DepartmentID || ''}  //เก็บไว้ที่ไหน
@@ -264,7 +301,7 @@ const handleChange = ( event: React.ChangeEvent<{ name?: string; value: unknown 
         {departments.map(item => { //ฟังชันไว้แสดงข้อมูลใน  user combo box
             return (
               <MenuItem key ={item.id} value = {item.id}>
-                {item.uSERNAME}
+                {item.dEPARTMENT}
                 </MenuItem>
             );
           }  
@@ -275,23 +312,23 @@ const handleChange = ( event: React.ChangeEvent<{ name?: string; value: unknown 
       
       </div> 
 
-      
-       
+
+
 
      <div>
-       <FormControl className={classes.text} > <text>ชื่อชมรม</text> </FormControl>   
+       <FormControl className={classes.text0} > <text>รายวิชา</text> </FormControl>   
        <FormControl fullWidth  variant="outlined" 
         className={classes.box1}>
-        <InputLabel>select</InputLabel>
+        <InputLabel>เลือก</InputLabel>
         <Select
-          name="CLUBID"
-          value={currency.CLUBID || ''}
+          name="SubjectID"
+          value={currency.SubjectID || ''}
           onChange={handleChange}
         >
-        {clubs.map(item => {
+        {subjects.map(item => {
             return (
               <MenuItem key ={item.id} value = {item.id}>
-                {item.cLUBNAME}
+                {item.subjectName}
                 </MenuItem>
             );
           }  
@@ -305,19 +342,19 @@ const handleChange = ( event: React.ChangeEvent<{ name?: string; value: unknown 
 
 
        <div>
-       <FormControl className={classes.text3} ><text >ประเภทกิจกรรม</text> </FormControl>
+       <FormControl className={classes.text3} ><text >ระดับการศึกษา</text> </FormControl>
        <FormControl fullWidth  variant="outlined" 
         className={classes.box2}>
-        <InputLabel>select</InputLabel>
+        <InputLabel>เลือก</InputLabel>
         <Select
-          name="TYPEID"
-          value={currency.TYPEID || ''}
+          name="DegreeID"
+          value={currency.DegreeID || ''}
           onChange={handleChange}
         >
-        {kinds.map(item => {
+        {degrees.map(item => {
             return (
               <MenuItem key ={item.id} value = {item.id}>
-                {item.tYPENAME}
+                {item.degreeName}
                 </MenuItem>
             );
           }  
@@ -329,12 +366,12 @@ const handleChange = ( event: React.ChangeEvent<{ name?: string; value: unknown 
       </div>    
 
       <div>
-      <FormControl className={classes.text3} >  <text >ชื่อกิจกรรม</text> </FormControl>
+      <FormControl className={classes.text8} >  <text >ชื่อหลักสูตร</text> </FormControl>
        <FormControl className={classes.textfill1} >
            <TextField id="outlined-basic"  variant="outlined" 
-           name="ACTIVITYNAME"
-           defaultValue="พิมพ์ชื่อกิจกรรม"
-           value = {currency.ACTIVITYNAME}
+           name="CourseName"
+           defaultValue="พิมพ์ชื่อหลักสูตร"
+           value = {currency.CourseName}
            onChange={handleChange}
            />
       </FormControl>
@@ -348,7 +385,7 @@ const handleChange = ( event: React.ChangeEvent<{ name?: string; value: unknown 
       
 
       <div className={classes.button}>
-      <Button size="large" variant="contained" color="secondary" onClick = {save}> บันทึกกิจกรรม </Button>
+      <Button size="large" variant="contained" color="secondary" onClick = {save}> บันทึกหลักสูตร </Button>
       </div>
      </Content>
    </Page>
