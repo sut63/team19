@@ -167,8 +167,28 @@ func main() {
 	}
 
 	// Set Subjects Data
-	subjects := []string{"SOFTWARE ENGINEERING", "OPERATING SYSTEMS", "OBJECT-ORIENTED TECHNOLOGY",
-		"MACHINE LEARNING FUNDAMENTALS", "SYSTEM ANALYSIS AND DESIGN","DATA STRUCTURES AND ALGORITHMS"}
+	subjects := []string{"102105 ORGANIC CHEMISTRY",
+	"103102  CALCULUS ",
+	"109209 MEDICAL BIOCHEMISTRY",
+	"116200  EMBRYOLOGY",
+	"104110 CELL BIOLOGY",
+	"116203 MEDICAL IMMUNOLOGY",
+	"202241 LAW IN DAILY LIFE",
+	"214302 COMPUTER SERVICES",
+	"109302 NUTRITION AND METABOLISM",
+	"116208 NERVOUS SYSTEM",
+	"116303 DIGESTIVE SYSTEM",
+	"116301 RESPIRATORY SYSTEM",
+	"116308 MEDICAL TOXICOLOGY",
+	"116307 HEMATOPOIETIC",
+	"202108 DIGITAL LITERACY",
+	"202201  LIFE SKILLS",
+	"523301 COMPUTER STATISTICS",
+	"523101 COMPUTER PROGRAMMING",
+	"525101  ENGINEERING GRAPHICS",
+	"523211 DATABASE SYSTEMS",
+	"523332 SOFTWARE ENGINEERING",
+	"213101 ENGLISH FOR COMMUNICATION"}
 	for _, sub := range subjects {
 		client.Subject.
 			Create().
@@ -177,8 +197,13 @@ func main() {
 	}
 
 	// Set Degrees Data
-	degrees := []string{"ปริญญาตรี", "ปริญญาโท",
-		"ปริญญาเอก"}
+	degrees := []string{"ปริญญาตรี",
+	"ปริญญาโท",
+	"ปริญญาเอก",
+	"ปริญญาตรีเพิ่มขึ้นอีกสาขาหนึ่ง",
+	"ผู้ร่วมเรียนปริญญาตรี",
+	"ผู้ร่วมเรียนปริญญาโท",
+	"นักศึกษาหลักสูตรนานาชาติ"}
 	for _, deg := range degrees {
 		client.Degree.
 			Create().
