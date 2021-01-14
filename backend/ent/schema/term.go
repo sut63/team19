@@ -15,7 +15,7 @@ type Term struct {
 func (Term) Fields() []ent.Field {
 	return []ent.Field{
 
-		field.Int("TERM").Positive(),
+		field.Int("TERM").Unique(),
 	}
 }
 

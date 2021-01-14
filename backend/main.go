@@ -94,6 +94,11 @@ func main() {
 	controllers.NewInstructorRoomController(v1, client)
 	controllers.NewDepartmentController(v1, client)
 	controllers.NewTitleController(v1, client)
+	controllers.NewTermController(v1, client)
+	controllers.NewYearController(v1, client)
+	controllers.NewSubjectController(v1, client)
+	controllers.NewDegreeController(v1, client)
+	controllers.NewSubjectsOfferedController(v1, client)
 
 	// Set Departments Data
 	departments := Departments{
@@ -162,8 +167,8 @@ func main() {
 	}
 
 	// Set Subjects Data
-	subjects := []string{"We love environment", "We love environment",
-		"Love the world", "Health and Care"}
+	subjects := []string{"SOFTWARE ENGINEERING", "OPERATING SYSTEMS", "OBJECT-ORIENTED TECHNOLOGY",
+		"MACHINE LEARNING FUNDAMENTALS", "SYSTEM ANALYSIS AND DESIGN","DATA STRUCTURES AND ALGORITHMS"}
 	for _, sub := range subjects {
 		client.Subject.
 			Create().
@@ -172,12 +177,30 @@ func main() {
 	}
 
 	// Set Degrees Data
-	degrees := []string{"We love environment", "We love environment",
-		"Love the world", "Health and Care"}
+	degrees := []string{"ปริญญาตรี", "ปริญญาโท",
+		"ปริญญาเอก"}
 	for _, deg := range degrees {
 		client.Degree.
 			Create().
 			SetDegreeName(deg).
+			Save(context.Background())
+	}
+
+	// Set Year Data
+	years := []int{2555,2556,2557,2558,2559,2560,2561,2562,2563,2564,2565,2566,2567,2568,2569,2570,2571,2572,2573,2574,2575}
+	for _, y := range years {
+		client.Year.
+			Create().
+			SetYEAR(y).
+			Save(context.Background())
+	}
+
+	// Set Term Data
+	terms := []int{1,2,3}
+	for _, te := range terms {
+		client.Term.
+			Create().
+			SetTERM(te).
 			Save(context.Background())
 	}
 
