@@ -59,7 +59,7 @@ func (ctl *CourseController) CreateCourse(c *gin.Context) {
 		return
 	}
 
-	subj, err := ctl.client.Subject.
+	sub, err := ctl.client.Subject.
 		Query().
 		Where(subject.IDEQ(int(obj.SubjectID))).
 		Only(context.Background())
@@ -86,7 +86,7 @@ func (ctl *CourseController) CreateCourse(c *gin.Context) {
 	cou, err := ctl.client.Course.
 		Create().
 		SetDepartmentID(d).
-		SetSubjectID(subj).
+		SetSubjectID(sub).
 		SetDegreeID(deg).
 		SetCourseName(obj.CourseName).
 		Save(context.Background())

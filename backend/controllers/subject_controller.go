@@ -135,14 +135,14 @@ func (ctl *SubjectController) ListSubject(c *gin.Context) {
 
 // NewSubjectController creates and registers handles for the subject controller
 func NewSubjectController(router gin.IRouter, client *ent.Client) *SubjectController {
-	subs := &SubjectController{
+	subjc := &SubjectController{
 		client: client,
 		router: router,
 	}
 
-	subs.register()
+	subjc.register()
 
-	return subs
+	return subjc
 
 }
 

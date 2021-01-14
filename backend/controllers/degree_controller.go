@@ -76,7 +76,7 @@ func (ctl *DegreeController) GetDegree(c *gin.Context) {
 		return
 	}
 
-	dep, err := ctl.client.Degree.
+	deg, err := ctl.client.Degree.
 		Query().
 		Where(degree.IDEQ(int(id))).
 		Only(context.Background())
@@ -87,7 +87,7 @@ func (ctl *DegreeController) GetDegree(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, dep)
+	c.JSON(200, deg)
 }
 
 // ListDegree handles request to get a list of degree entities
