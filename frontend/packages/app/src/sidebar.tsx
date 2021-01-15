@@ -1,8 +1,9 @@
 import React from 'react';
 import HomeIcon from '@material-ui/icons/Home';
-import CreateComponentIcon from '@material-ui/icons/AddCircleOutline';
-import YouTube from '@material-ui/icons/YouTube';
+import AccountCircleSharpIcon from '@material-ui/icons/AccountCircleSharp';
+//import AssignmentSharpIcon from '@material-ui/icons/AssignmentSharp';
 import SignOut from '@material-ui/icons/Settings';
+//import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 
 
 import {
@@ -10,8 +11,8 @@ import {
   SidebarItem,
   SidebarDivider,
   SidebarSpace,
-  SidebarUserSettings,
-  SidebarThemeToggle,
+  //SidebarUserSettings,
+  //SidebarThemeToggle,
   SidebarPinButton,
 } from '@backstage/core';
 
@@ -19,18 +20,26 @@ export const AppSidebar = () => (
   <Sidebar>
     <SidebarDivider />
     {/* Global nav, not org-specific */}
-    <SidebarItem icon={HomeIcon} to="" text="Home" />
+    <SidebarItem icon={HomeIcon} to="welcome" text="Home" />
     {/* <SidebarItem icon={CreateComponentIcon} to="create" text="Create..." />
     <SidebarItem icon={CreateComponentIcon} to="welcome" text="Welcome" /> */}
+    
     <SidebarItem
-      icon={YouTube}
-      to="playlist_video"
-      text="Playlist Video"
+      icon={AccountCircleSharpIcon}
+      to="course"
+      text="Create Course"
     />
+    
     <SidebarItem
-      icon={CreateComponentIcon}
-      to="watch_video"
-      text="Watch Video"
+      icon={AccountCircleSharpIcon}
+      to="courseclass"
+      text="Create Courseclass"
+    />
+    
+    <SidebarItem
+      icon={AccountCircleSharpIcon}
+      to="subjectsoffered"
+      text="Create Subjects Offered"
     />
 
     {/* End global nav */}

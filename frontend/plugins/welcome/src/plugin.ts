@@ -1,14 +1,20 @@
 import { createPlugin } from '@backstage/core';
 import WelcomePage from './components/WelcomePage';
-import WatchVideo from './components/WatchVideo'
-import SignIn from './components/SignIn'
-
+import Login from '../../../packages/app/src/components/Login';
+import Course from './components/CourseBuild';
+import Courseclass from './components/Courseclass';
+import EntSubjectsOffered from './components/SubjectsOffered'
+//import Sign from './components/Sign-in';
 
 export const plugin = createPlugin({
   id: 'welcome',
   register({ router }) {
     router.registerRoute('/', WelcomePage);
-    router.registerRoute('/watch_video', WatchVideo);
-    router.registerRoute('/signin', SignIn);
+    router.registerRoute('/welcome', WelcomePage);
+    router.registerRoute('/course', Course);
+    router.registerRoute('/courseclass', Courseclass);
+    router.registerRoute('/subjectsoffered', EntSubjectsOffered);
+    router.registerRoute('/Login', Login);
+    //router.registerRoute('/Sign-in', Sign);
   },
 });
