@@ -104,7 +104,10 @@ func (ctl *InstructorInfoController) CreateInstructorInfo(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, u)
+	c.JSON(200, gin.H{
+		"status": true,
+		"data":   u,
+	})
 }
 
 // GetInstructorInfo handles GET requests to retrieve a instructorinfo entity
@@ -138,10 +141,7 @@ func (ctl *InstructorInfoController) GetInstructorInfo(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{
-		"status": true,
-		"data":   u,
-	})
+	c.JSON(200, u)
 }
 
 // ListInstructorInfo handles request to get a list of instructorinfo entities
