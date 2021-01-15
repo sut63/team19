@@ -20,10 +20,12 @@ import {
 import { makeStyles, } from '@material-ui/core/styles';
 import { DefaultApi } from '../../api/apis';
 import SaveIcon from '@material-ui/icons/Save'; // icon save
-import { EntYear } from '../../api/models/EntYear'; // import interfa Year
-import { EntTerm } from '../../api/models/EntTerm'; // import interfa Term
+import { EntClassdate } from '../../api/models/EntClassdate'; // import interface Classdate
+import { EntClasstime } from '../../api/models/EntClasstime'; // import interface Classtime
+import { EntClassroom } from '../../api/models/EntClassroom'; // import interface Classroom
 import { EntSubject } from '../../api/models/EntSubject'; // import interface Subjects
-import { EntDegree } from '../../api/models/EntDegree'; // import interface Degree
+
+import { EntInstructorInfo } from '../../api/models/EntInstructorInfo'; // import interface InstructorInfo
 import Swal from 'sweetalert2'; // alert
 
 const useStyles = makeStyles(theme => ({
@@ -52,25 +54,26 @@ const useStyles = makeStyles(theme => ({
 
   
 
-interface  EntSubjectsOffered  {
-  Subject :    number;
-  Year  :    number;
-  Degree  :    number;
-  Term :       number;
-  AMOUNT :      string;
-  STATUS :      string;
+interface  Courseclass  {
+  
+  day :    number;
+	time    :      number;
+	instructor  :  number;
+	subject :  number;
+	room    :  number;
 }
 
-const EntSubjectsOffered: FC<{}> = () => {
+const Courseclass: FC<{}> = () => {
   const classes = useStyles();
   const http = new DefaultApi();
 
-  const [subjectsoffered, setSubjectsOffered] = React.useState<Partial<EntSubjectsOffered>>({});
-
+  const [courseclass, setCourseclass] = React.useState<Partial<Courseclass>>({});
   const [subject, setSubject] = React.useState<EntSubject[]>([]);
-  const [degree, setDegree] = React.useState<EntDegree[]>([]);
-  const [year, setYear] = React.useState<EntYear[]>([]);
-  const [term, setTerm] = React.useState<EntTerm[]>([]);
+  const [instructor, setInstructor] = React.useState<EntInstructorInfo[]>([]);
+  const [classdate, setClassdate] = React.useState<EntClassdate[]>([]);
+  const [classtime, setClasstime] = React.useState<EntClasstime[]>([]);
+  const [classroom, setClassroom] = React.useState<EntClassroom[]>([]);
+  
     // alert setting
     const Toast = Swal.mixin({
       toast: true,
@@ -83,52 +86,58 @@ const EntSubjectsOffered: FC<{}> = () => {
         toast.addEventListener('mouseleave', Swal.resumeTimer);
       },
     });
+
   const getSubject = async () => {
     const res = await http.listSubject({ limit: 10, offset: 0 });
     setSubject(res);
   };
 
-  const getDegree = async () => {
-    const res = await http.listDegree({ limit: 10, offset: 0 });
-    setDegree(res);
+  const getInstructor = async () => {
+    const res = await http.listInstructorinfo({ limit: 10, offset: 0 });
+    setInstructor(res);
   };
 
-  const getYear = async () => {
-    const res = await http.listYear({ limit: 10, offset: 0 });
-    setYear(res);
+  const getClassdate = async () => {
+    const res = await http.listClassdate({ limit: 10, offset: 0 });
+    setClassdate(res);
   };
-  const getTerm = async () => {
-    const res = await http.listTerm({ limit: 10, offset: 0 });
-    setTerm(res);
+  const getClasstime = async () => {
+    const res = await http.listClasstime({ limit: 10, offset: 0 });
+    setClasstime(res);
+  };
+  const getClassroom = async () => {
+    const res = await http.listClassroom({ limit: 10, offset: 0 });
+    setClassroom(res);
   };
 
   // Lifecycle Hooks
   useEffect(() => {
     getSubject();
-    getYear();
-    getDegree();
-    getTerm();
+    getInstructor();
+    getClassdate();
+    getClasstime();
+    getClassroom();
   }, []);
 
   // set data to object so
   const handleChange = (
     event: React.ChangeEvent<{ name?: string; value: unknown }>,
   ) => {
-    const name = event.target.name as keyof typeof EntSubjectsOffered;
+    const name = event.target.name as keyof typeof Courseclass;
     const { value } = event.target;
-    setSubjectsOffered({ ...subjectsoffered, [name]: value });
-    console.log(subjectsoffered);
+    setCourseclass({ ...courseclass, [name]: value });
+    console.log(courseclass);
   };
   // function save data
   function save() {
-    const apiUrl = 'http://localhost:8080/api/v1/Subjectsoffereds';
+    const apiUrl = 'http://localhost:8080/api/v1/courseclasss';
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(subjectsoffered),
+      body: JSON.stringify(courseclass),
     };
 
-    console.log(subjectsoffered); // log ดูข้อมูล สามารถ Inspect ดูข้อมูลได้ F12 เลือก Tab Console
+    console.log(courseclass); // log ดูข้อมูล สามารถ Inspect ดูข้อมูลได้ F12 เลือก Tab Console
 
     fetch(apiUrl, requestOptions)
       .then(response => response.json())
@@ -150,7 +159,7 @@ const EntSubjectsOffered: FC<{}> = () => {
  return (
    <Page theme={pageTheme.home}>
      <Header
-       title={`ระบบบันทึกรายวิชาที่เปิดสอน`}
+       title={`ระบบสร้างแผนการสอนอาจารย์`}
        subtitle=""
      >
        <Button
@@ -168,16 +177,41 @@ const EntSubjectsOffered: FC<{}> = () => {
           <Grid container spacing={3}>
             <Grid item xs={12}></Grid>
             <Grid item xs={3}>
-              <div className={classes.paper}>รายวิชา</div>
+              <div className={classes.paper}>รายชื่อ</div>
+            </Grid>
+            <Grid item xs={9}>
+      <FormControl fullWidth  variant="outlined" 
+        className={classes.formControl}>
+        <InputLabel>เลือกอาจารย์</InputLabel>
+        <Select
+          name="instructor"
+          type="number"
+          value={courseclass.instructor || ''}
+          onChange={handleChange}
+        >
+          {instructor.map(item => {
+                    return (
+                      <MenuItem key={item.id} value={item.id}>
+                        {item.nAME}
+                      </MenuItem>
+                    );
+                  })}
+        </Select>
+      </FormControl>
+      </Grid>
+            
+
+            <Grid item xs={3}>
+              <div className={classes.paper}>เลือกรายวิชา</div>
             </Grid>
             <Grid item xs={9}>
       <FormControl fullWidth  variant="outlined" 
         className={classes.formControl}>
         <InputLabel>เลือกรายวิชา</InputLabel>
         <Select
-          name="Subject"
+          name="subject"
           type="number"
-          value={subjectsoffered.Subject || ''}
+          value={courseclass.subject || ''}
           onChange={handleChange}
         >
           {subject.map(item => {
@@ -188,52 +222,27 @@ const EntSubjectsOffered: FC<{}> = () => {
                     );
                   })}
         </Select>
-      </FormControl>
-      </Grid>
-            
-
-            <Grid item xs={3}>
-              <div className={classes.paper}>ปีการศึกษา</div>
-            </Grid>
-            <Grid item xs={9}>
-      <FormControl fullWidth  variant="outlined" 
-        className={classes.formControl}>
-        <InputLabel>เลือกปีการศึกษา</InputLabel>
-        <Select
-          name="Year"
-          type="number"
-          value={subjectsoffered.Year || ''}
-          onChange={handleChange}
-        >
-          {year.map(item => {
-                    return (
-                      <MenuItem key={item.id} value={item.id}>
-                        {item.yEAR}
-                      </MenuItem>
-                    );
-                  })}
-        </Select>
         
       </FormControl>
       </Grid>
 
       <Grid item xs={3}>
-              <div className={classes.paper}>ภาคการศึกษา</div>
+              <div className={classes.paper}>เลือกห้องเรียน</div>
             </Grid>
             <Grid item xs={9}>
       <FormControl fullWidth  variant="outlined" 
         className={classes.formControl}>
-        <InputLabel>เลือกภาคการศึกษา</InputLabel>
+        <InputLabel>เลือกห้องเรียน</InputLabel>
         <Select
-          name="Term"
+          name="room"
           type="number"
-          value={subjectsoffered.Term || ''}
+          value={courseclass.room || ''}
           onChange={handleChange}
         >
-          {term.map(item => {
+          {classroom.map(item => {
                     return (
                       <MenuItem key={item.id} value={item.id}>
-                        {item.tERM}
+                        {item.rOOM}
                       </MenuItem>
                     );
                   })}
@@ -243,23 +252,23 @@ const EntSubjectsOffered: FC<{}> = () => {
       </Grid>
 
             <Grid item xs={3}>
-              <div className={classes.paper}>ระดับการศึกษา</div>
+              <div className={classes.paper}>เลือกวันสอน</div>
             </Grid>
             <Grid item xs={9}>
       <div>
       <FormControl fullWidth  variant="outlined"
         className={classes.formControl}>
-        <InputLabel id="demo-simple-select-label">เลือกระดับการศึกษา</InputLabel>
+        <InputLabel id="demo-simple-select-label">จ.-อา.</InputLabel>
         <Select
-          name="Degree"
+          name="day"
           type="number"
-          value={subjectsoffered.Degree || ''}
+          value={courseclass.day || ''}
           onChange={handleChange}
         >
-          {degree.map(item => {
+          {classdate.map(item => {
                     return (
                       <MenuItem key={item.id} value={item.id}>
-                        {item.degreeName}
+                        {item.dAY}
                       </MenuItem>
                     );
                   })}
@@ -267,25 +276,33 @@ const EntSubjectsOffered: FC<{}> = () => {
       </FormControl>
       </div>
       </Grid>
+
       <Grid item xs={3}>
-              <div className={classes.paper}>จำนวนที่รับ</div>
+              <div className={classes.paper}>เลือกเวลาสอน</div>
             </Grid>
             <Grid item xs={9}>
-      <form className={classes.root} noValidate autoComplete="off" >
-        <TextField label="กรอกจำนวนที่รับ"name ="AMOUNT" type="string" 
-        value={subjectsoffered.AMOUNT } onChange={handleChange} className={classes.textField}
-                  />
-      </form>
+      <div>
+      <FormControl fullWidth  variant="outlined"
+        className={classes.formControl}>
+        <InputLabel id="demo-simple-select-label">เวลาสอน</InputLabel>
+        <Select
+          name="time"
+          type="number"
+          value={courseclass.time || ''}
+          onChange={handleChange}
+        >
+          {classtime.map(item => {
+                    return (
+                      <MenuItem key={item.id} value={item.id}>
+                        {item.tIME}
+                      </MenuItem>
+                    );
+                  })}
+        </Select>
+      </FormControl>
+      </div>
       </Grid>
-      <Grid item xs={3}>
-              <div className={classes.paper}>สถานะ</div>
-            </Grid>
-            <Grid item xs={9}>
-            <form className={classes.root} noValidate autoComplete="off">
-      <TextField  label="สถานะ" name ="STATUS" type="string" 
-      value={subjectsoffered.STATUS } onChange={handleChange} className={classes.textField}/>
-    </form>      
-      </Grid>
+      
           <Grid item xs={3}></Grid>
           <Grid item xs={9}>
              <Button
@@ -304,4 +321,4 @@ const EntSubjectsOffered: FC<{}> = () => {
    </Page>
  );
 }
-export default EntSubjectsOffered;
+export default Courseclass;
