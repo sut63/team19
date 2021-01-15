@@ -99,6 +99,10 @@ func main() {
 	controllers.NewSubjectController(v1, client)
 	controllers.NewDegreeController(v1, client)
 	controllers.NewSubjectsOfferedController(v1, client)
+	controllers.NewClassdateController(v1, client)
+	controllers.NewClasstimeController(v1, client)
+	controllers.NewCourseclassController(v1, client)
+	controllers.NewClassroomController(v1, client)
 
 	// Set Departments Data
 	departments := Departments{
@@ -165,7 +169,34 @@ func main() {
 			SetTITLE(t).
 			Save(context.Background())
 	}
-
+	// Set Classdate Data
+	classdates := []string{"Monday", "Tuesday", "Wednesday",
+		"Thursday", "Friday", "Saturday", "Sunday"}
+	for _, cd := range classdates {
+		client.Classdate.
+			Create().
+			SetDAY(cd).
+			Save(context.Background())
+	}
+	// Set Classtime Data
+	classtimes := []string{"8.00 - 10.00", "9.00 - 12.00", "10.00 - 12.00",
+		"13.00 - 15.00", "13.00 - 16.00", "14.00 - 16.00", "15.00 - 17.00", "16.00 - 18.00", "17.00 - 19.00"}
+	for _, ct := range classtimes {
+		client.Classtime.
+			Create().
+			SetTIME(ct).
+			Save(context.Background())
+	}
+	//Set Classroom Data
+	classrooms := []string{"00", "01", "02",
+		"03", "04", "05", "06", "07", "08", "09"}
+	for _, cr := range classrooms {
+		client.Classroom.
+			Create().
+			SetROOM(cr).
+			Save(context.Background())
+	}
+	
 	// Set Subjects Data
 	subjects := []string{"102105 ORGANIC CHEMISTRY",
 	"103102  CALCULUS ",
