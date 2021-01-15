@@ -1,27 +1,58 @@
-import React, { FC } from 'react';
+import React, { FC,useState } from 'react';
 import * as plugins from './plugins';
 import { createApp, SidebarPage } from '@backstage/core';
 import { AppSidebar } from './sidebar';
-import SignIn from './components/SignIn';
+import Login from './components/Login/Login';
+import Sign from './components/Sign-in/Sign-in'
 
-const app = createApp({
-  plugins: Object.values(plugins),
-});
+const App: FC<{}> = () => {
 
-const AppProvider = app.getProvider();
-const AppRouter = app.getRouter();
-const AppRoutes = app.getRoutes();
+  const app = createApp({
+    plugins: Object.values(plugins),
+  });
+  
+  const AppProvider = app.getProvider();
+  const AppRouter = app.getRouter();
+  const AppRoutes = app.getRoutes();
+  
+  const [Session,setSession]  = useState({
+    isLoggedIn: false,
+    isSignIn: false,
+    currentUser: null,
+    errorMessage: null
+  
+  });
 
-const App: FC<{}> = () => (
+  if(Session.isLoggedIn){
+
+  }
+
+  if(Session.isSignIn){
+
+  }
+
+return(
   <AppProvider>
-    <AppRouter>
-      {/* <SignIn></SignIn> */}
-      <SidebarPage>
-        <AppSidebar />
-        <AppRoutes />
-      </SidebarPage>
+      <AppRouter>
+        <SidebarPage>
+            {Session.isSignIn ? (
+             <header>
+              {Session.isLoggedIn ? (
+                <header>
+                  <AppRoutes/>
+                  <AppSidebar/>
+                </header>
+              ) : (
+              <Sign setSession = {setSession}/>
+              )}
+             </header>
+            ) : (
+              <Login setSession = {setSession}/>
+            )}
+        </SidebarPage>     
     </AppRouter>
   </AppProvider>
-);
+  );
+};
 
 export default App;

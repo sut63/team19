@@ -178,7 +178,7 @@ interface currency{
 	
 }
 
-const WelcomePage: FC<{}> = () => {
+const Course: FC<{}> = () => {
 const classes = useStyles();
 
 
@@ -392,4 +392,4 @@ const handleChange = ( event: React.ChangeEvent<{ name?: string; value: unknown 
  );
 };
  
-export default WelcomePage;
+export default Course;
