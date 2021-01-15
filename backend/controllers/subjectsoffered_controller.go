@@ -6,12 +6,12 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/term19/app/ent"
-	"github.com/term19/app/ent/subject"
-	"github.com/term19/app/ent/subjectsoffered"
-	"github.com/term19/app/ent/year"
-	"github.com/term19/app/ent/term"
-	"github.com/term19/app/ent/degree"
+	"github.com/team19/app/ent"
+	"github.com/team19/app/ent/degree"
+	"github.com/team19/app/ent/subject"
+	"github.com/team19/app/ent/subjectsoffered"
+	"github.com/team19/app/ent/term"
+	"github.com/team19/app/ent/year"
 )
 
 // SubjectsOfferedController defines the struct for the SubjectsOffered controller
@@ -19,13 +19,15 @@ type SubjectsOfferedController struct {
 	client *ent.Client
 	router gin.IRouter
 }
+
+// SubjectsOffered defines the struct for the SubjectsOffered
 type SubjectsOffered struct {
-	AMOUNT       string
-	STATUS       string
-	Subject     int
-	Degree      int
-	Year      int
-	Term      int
+	AMOUNT  string
+	STATUS  string
+	Subject int
+	Degree  int
+	Year    int
+	Term    int
 }
 
 // CreateSubjectsOffered handles POST requests for adding SubjectsOffered entities
@@ -47,7 +49,7 @@ func (ctl *SubjectsOfferedController) CreateSubjectsOffered(c *gin.Context) {
 		})
 		return
 	}
-    y, err := ctl.client.Year.
+	y, err := ctl.client.Year.
 		Query().
 		Where(year.IDEQ(int(obj.Year))).
 		Only(context.Background())
@@ -92,13 +94,12 @@ func (ctl *SubjectsOfferedController) CreateSubjectsOffered(c *gin.Context) {
 		return
 	}
 
-	
 	so, err := ctl.client.SubjectsOffered.
 		Create().
 		SetAMOUNT(obj.AMOUNT).
 		SetSTATUS(obj.STATUS).
 		SetSubject(s).
-		SetEducationLevel(deg).
+		SetDegree(deg).
 		SetYear(y).
 		SetTerm(t).
 		Save(context.Background())
@@ -112,7 +113,7 @@ func (ctl *SubjectsOfferedController) CreateSubjectsOffered(c *gin.Context) {
 
 	c.JSON(200, gin.H{
 		"state": true,
-		"data":   so,
+		"data":  so,
 	})
 }
 
