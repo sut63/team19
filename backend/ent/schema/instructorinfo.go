@@ -28,5 +28,6 @@ func (InstructorInfo) Edges() []ent.Edge {
 		edge.From("instructorroom", InstructorRoom.Type).Ref("instructorinfos").Unique(),
 		edge.From("department", Department.Type).Ref("instructorinfos").Unique(),
 		edge.To("instructor", Course.Type).StorageKey(edge.Column("InstructorInfo_id")),
+		edge.To("courseclasses", Courseclass.Type).StorageKey(edge.Column("InstructorInfo_id")),
 	}
 }
