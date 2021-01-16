@@ -23,11 +23,11 @@ type CourseclassController struct {
 
 // Courseclass defines the struct for the courseclass
 type Courseclass struct {
-	day        int
-	time       int
-	instructor int
-	subject    int
-	room       int
+	Day        int
+	Time       int
+	Instructor int
+	Subject    int
+	Room       int
 }
 
 // CreateCourseclass handles POST requests for adding courseclass entities
@@ -52,7 +52,7 @@ func (ctl *CourseclassController) CreateCourseclass(c *gin.Context) {
 
 	d, err := ctl.client.Classdate.
 		Query().
-		Where(classdate.IDEQ(int(obj.day))).
+		Where(classdate.IDEQ(int(obj.Day))).
 		Only(context.Background())
 
 	if err != nil {
@@ -64,7 +64,7 @@ func (ctl *CourseclassController) CreateCourseclass(c *gin.Context) {
 
 	ir, err := ctl.client.Classtime.
 		Query().
-		Where(classtime.IDEQ(int(obj.time))).
+		Where(classtime.IDEQ(int(obj.Time))).
 		Only(context.Background())
 
 	if err != nil {
@@ -76,7 +76,7 @@ func (ctl *CourseclassController) CreateCourseclass(c *gin.Context) {
 
 	cr, err := ctl.client.Classroom.
 		Query().
-		Where(classroom.IDEQ(int(obj.room))).
+		Where(classroom.IDEQ(int(obj.Room))).
 		Only(context.Background())
 
 	if err != nil {
@@ -88,7 +88,7 @@ func (ctl *CourseclassController) CreateCourseclass(c *gin.Context) {
 
 	t, err := ctl.client.InstructorInfo.
 		Query().
-		Where(instructorinfo.IDEQ(int(obj.instructor))).
+		Where(instructorinfo.IDEQ(int(obj.Instructor))).
 		Only(context.Background())
 
 	if err != nil {
@@ -100,7 +100,7 @@ func (ctl *CourseclassController) CreateCourseclass(c *gin.Context) {
 
 	a, err := ctl.client.Subject.
 		Query().
-		Where(subject.IDEQ(int(obj.subject))).
+		Where(subject.IDEQ(int(obj.Subject))).
 		Only(context.Background())
 
 	if err != nil {
