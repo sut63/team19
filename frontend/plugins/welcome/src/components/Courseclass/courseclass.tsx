@@ -143,7 +143,7 @@ const Courseclass: FC<{}> = () => {
       .then(response => response.json())
       .then(data => {
         console.log(data);
-        if (data.state === true) {
+        if (data.status === true) {
           Toast.fire({
             icon: 'success',
             title: 'บันทึกข้อมูลสำเร็จ',
