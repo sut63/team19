@@ -1,10 +1,10 @@
 import React from 'react';
 import HomeIcon from '@material-ui/icons/Home';
-import AccountCircleSharpIcon from '@material-ui/icons/AccountCircleSharp';
-//import AssignmentSharpIcon from '@material-ui/icons/AssignmentSharp';
+import TableChartIcon from '@material-ui/icons/TableChart';
 import SignOut from '@material-ui/icons/Settings';
-//import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
-
+import BallotIcon from '@material-ui/icons/Ballot';
+import SubjectIcon from '@material-ui/icons/Subject';
+//import AccountCircleSharpIcon from '@material-ui/icons/AccountCircleSharp';
 
 import {
   Sidebar,
@@ -16,7 +16,16 @@ import {
   SidebarPinButton,
 } from '@backstage/core';
 
-export const AppSidebar = () => (
+export const AppSidebar = ({setSession}) => {
+
+  function LinklogOut(){
+    setSession ({
+      isLoggedIn : false,
+      isSignIn : false
+    });
+  }
+
+  return (
   <Sidebar>
     <SidebarDivider />
     {/* Global nav, not org-specific */}
@@ -25,19 +34,19 @@ export const AppSidebar = () => (
     <SidebarItem icon={CreateComponentIcon} to="welcome" text="Welcome" /> */}
     
     <SidebarItem
-      icon={AccountCircleSharpIcon}
+      icon={BallotIcon}
       to="course"
       text="Create Course"
     />
     
     <SidebarItem
-      icon={AccountCircleSharpIcon}
+      icon={TableChartIcon}
       to="courseclass"
-      text="Create Courseclass"
+      text="Create Class"
     />
     
     <SidebarItem
-      icon={AccountCircleSharpIcon}
+      icon={SubjectIcon}
       to="subjectsoffered"
       text="Create Subjects Offered"
     />
@@ -48,10 +57,11 @@ export const AppSidebar = () => (
     <SidebarDivider />
     <SidebarItem
       icon={SignOut}
-      to="sign_out"
-      text="Sign Out"
+      onClick = {LinklogOut}
+      to="Login"
+      text="Log Out"
     />
     {/* <SidebarUserSettings  /> */}
     <SidebarPinButton />
   </Sidebar>
-);
+  )};

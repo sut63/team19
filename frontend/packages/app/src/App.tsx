@@ -40,7 +40,7 @@ return(
               {Session.isLoggedIn ? (
                 <header>
                   <AppRoutes/>
-                  <AppSidebar/>
+                  <AppSidebar setSession = {setSession} />
                 </header>
               ) : (
               <Sign setSession = {setSession}/>
