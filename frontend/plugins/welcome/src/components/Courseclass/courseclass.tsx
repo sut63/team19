@@ -162,14 +162,6 @@ const Courseclass: FC<{}> = () => {
        title={`ระบบสร้างแผนการสอนอาจารย์`}
        subtitle=""
      >
-       <Button
-               style={{ marginLeft: 20 }}
-               component={RouterLink}
-               to="/"
-               variant="contained"color="primary"
-             >
-               ออกจากระบบ
-       </Button>
      </Header>
      <Content>
        <ContentHeader title="บันทึกข้อมูล"></ContentHeader>
