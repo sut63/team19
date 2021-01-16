@@ -103,6 +103,7 @@ func main() {
 	controllers.NewClasstimeController(v1, client)
 	controllers.NewCourseclassController(v1, client)
 	controllers.NewClassroomController(v1, client)
+	controllers.NewCourseController(v1, client)
 
 	// Set Departments Data
 	departments := Departments{
@@ -196,30 +197,30 @@ func main() {
 			SetROOM(cr).
 			Save(context.Background())
 	}
-	
+
 	// Set Subjects Data
 	subjects := []string{"102105 ORGANIC CHEMISTRY",
-	"103102  CALCULUS ",
-	"109209 MEDICAL BIOCHEMISTRY",
-	"116200  EMBRYOLOGY",
-	"104110 CELL BIOLOGY",
-	"116203 MEDICAL IMMUNOLOGY",
-	"202241 LAW IN DAILY LIFE",
-	"214302 COMPUTER SERVICES",
-	"109302 NUTRITION AND METABOLISM",
-	"116208 NERVOUS SYSTEM",
-	"116303 DIGESTIVE SYSTEM",
-	"116301 RESPIRATORY SYSTEM",
-	"116308 MEDICAL TOXICOLOGY",
-	"116307 HEMATOPOIETIC",
-	"202108 DIGITAL LITERACY",
-	"202201  LIFE SKILLS",
-	"523301 COMPUTER STATISTICS",
-	"523101 COMPUTER PROGRAMMING",
-	"525101  ENGINEERING GRAPHICS",
-	"523211 DATABASE SYSTEMS",
-	"523332 SOFTWARE ENGINEERING",
-	"213101 ENGLISH FOR COMMUNICATION"}
+		"103102  CALCULUS ",
+		"109209 MEDICAL BIOCHEMISTRY",
+		"116200  EMBRYOLOGY",
+		"104110 CELL BIOLOGY",
+		"116203 MEDICAL IMMUNOLOGY",
+		"202241 LAW IN DAILY LIFE",
+		"214302 COMPUTER SERVICES",
+		"109302 NUTRITION AND METABOLISM",
+		"116208 NERVOUS SYSTEM",
+		"116303 DIGESTIVE SYSTEM",
+		"116301 RESPIRATORY SYSTEM",
+		"116308 MEDICAL TOXICOLOGY",
+		"116307 HEMATOPOIETIC",
+		"202108 DIGITAL LITERACY",
+		"202201  LIFE SKILLS",
+		"523301 COMPUTER STATISTICS",
+		"523101 COMPUTER PROGRAMMING",
+		"525101  ENGINEERING GRAPHICS",
+		"523211 DATABASE SYSTEMS",
+		"523332 SOFTWARE ENGINEERING",
+		"213101 ENGLISH FOR COMMUNICATION"}
 	for _, sub := range subjects {
 		client.Subject.
 			Create().
@@ -229,12 +230,12 @@ func main() {
 
 	// Set Degrees Data
 	degrees := []string{"ปริญญาตรี",
-	"ปริญญาโท",
-	"ปริญญาเอก",
-	"ปริญญาตรีเพิ่มขึ้นอีกสาขาหนึ่ง",
-	"ผู้ร่วมเรียนปริญญาตรี",
-	"ผู้ร่วมเรียนปริญญาโท",
-	"นักศึกษาหลักสูตรนานาชาติ"}
+		"ปริญญาโท",
+		"ปริญญาเอก",
+		"ปริญญาตรีเพิ่มขึ้นอีกสาขาหนึ่ง",
+		"ผู้ร่วมเรียนปริญญาตรี",
+		"ผู้ร่วมเรียนปริญญาโท",
+		"นักศึกษาหลักสูตรนานาชาติ"}
 	for _, deg := range degrees {
 		client.Degree.
 			Create().
@@ -243,7 +244,7 @@ func main() {
 	}
 
 	// Set Year Data
-	years := []int{2555,2556,2557,2558,2559,2560,2561,2562,2563,2564,2565,2566,2567,2568,2569,2570,2571,2572,2573,2574,2575}
+	years := []int{2555, 2556, 2557, 2558, 2559, 2560, 2561, 2562, 2563, 2564, 2565, 2566, 2567, 2568, 2569, 2570, 2571, 2572, 2573, 2574, 2575}
 	for _, y := range years {
 		client.Year.
 			Create().
@@ -252,7 +253,7 @@ func main() {
 	}
 
 	// Set Term Data
-	terms := []int{1,2,3}
+	terms := []int{1, 2, 3}
 	for _, te := range terms {
 		client.Term.
 			Create().

@@ -47,16 +47,16 @@ const useStyles = makeStyles((theme: Theme) =>
 
     
     text0: {  
-      marginLeft: theme.spacing(32),
+      marginLeft: theme.spacing(-130),
       marginRight: theme.spacing(4),
       marginTop: theme.spacing(3),
       fontSize: 20,
     },
 
     text1: {  //ชื่อชมรม
-        marginLeft: theme.spacing(30),
+        marginLeft: theme.spacing(-130),
         marginRight: theme.spacing(4),
-        marginTop: theme.spacing(20),
+        marginTop: theme.spacing(8),
         fontSize: 20,
     },
     text2: {
@@ -65,16 +65,20 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: 20,
   },
   text3: {
-    marginLeft: theme.spacing(25),
+    marginLeft: theme.spacing(-130),
     marginTop: theme.spacing(4),
     fontSize: 20,
 },
 
 text4: {
-  marginLeft: theme.spacing(20), 
-  fontSize: 25,
+  marginLeft: theme.spacing(15), 
+  marginRight: theme.spacing(114), 
+  fontSize: 30,
   color: "white",
 },
+
+
+
 
 
 
@@ -95,17 +99,10 @@ text6: {
 },
 
 
-text7: {
-  marginLeft: theme.spacing(90),
-  marginTop: theme.spacing(1),
-  marginBottom:  theme.spacing(1),
-  fontSize: 14,
-  color: "#f8bbd0",
-},
 
 
 text8: {
-  marginLeft: theme.spacing(28),
+  marginLeft: theme.spacing(-130),
   marginTop: theme.spacing(4),
   marginBottom:  theme.spacing(1),
   fontSize: 21,
@@ -114,26 +111,26 @@ text8: {
 
 
   box1: {
-    marginLeft: theme.spacing(9.5),
+    marginLeft: theme.spacing(15),
     marginTop: theme.spacing(2),
     width: '60ch',  
 },
 
   box2: {
-    marginLeft: theme.spacing(13),
+    marginLeft: theme.spacing(11.5),
     marginTop: theme.spacing(2),
     width: '60ch',  
   },
 
   box3: {
-    marginLeft: theme.spacing(10),
-    marginTop: theme.spacing(20),
+    marginLeft: theme.spacing(13),
+    marginTop: theme.spacing(5),
     width: '60ch',  
 },
 
 
   textfill1: {  //ชื่อกิจกรรม
-    marginLeft: theme.spacing(13),
+    marginLeft: theme.spacing(14),
     marginTop: theme.spacing(2),
     width: '60ch',
   },
@@ -141,20 +138,12 @@ text8: {
   
   
   button: {
-    marginTop: theme.spacing(6),
-    marginLeft: theme.spacing(60),
+    marginTop: theme.spacing(8),
+    marginLeft: theme.spacing(-100),
     display: 'flex',
     flexWrap: 'wrap',
     
   },
-
-  button1: {
-    width: '50ch',
-    
-    
-  },
-  
-
   }),
 );
 
@@ -202,7 +191,7 @@ const api = new DefaultApi();
 });
 
 const handleChange = ( event: React.ChangeEvent<{ name?: string; value: unknown }>,) =>{
-    const name = event.target.name as keyof typeof WelcomePage;
+    const name = event.target.name as keyof typeof Course;
     const { value } = event.target;
     setCurrency({ ...currency, [name] : value });
     console.log(currency);
@@ -268,22 +257,23 @@ const handleChange = ( event: React.ChangeEvent<{ name?: string; value: unknown 
   }
  return (
    <Page theme={pageTheme.home}>
+
+    <div>
      
-     <div>
+     
         <MuiThemeProvider theme={theme}>
-          <AppBar color="primary" className="app-header">
+          <AppBar position="static" color="primary">
            <Toolbar>
-           
-              <FormControl className={classes.text4} > <text>| สร้างหลักสูตร | </text></FormControl>
-              <PersonIcon className={classes.text7} style={{ fontSize: 100}} ></PersonIcon>
-              <FormControl className={classes.text6} > <text>chanwit</text> </FormControl>
-              <FormControl className={classes.text5} > <text>Logout</text> </FormControl>
+          
+              <FormControl className={classes.text4} > <text>Course</text></FormControl>
+              <PersonIcon style={{ fontSize: 100}} ></PersonIcon>
+            
            </Toolbar>
           </AppBar>
         </MuiThemeProvider>
-      </div>
-
-
+      
+      
+    </div>
     
 
      <Content>
@@ -393,3 +383,4 @@ const handleChange = ( event: React.ChangeEvent<{ name?: string; value: unknown 
 };
  
 export default Course;
+
