@@ -143,7 +143,10 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/ent.SubjectsOffered"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ent.SubjectsOffered"
+                            }
                         }
                     },
                     "400": {
@@ -771,7 +774,10 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/ent.Courseclass"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ent.Courseclass"
+                            }
                         }
                     },
                     "400": {
@@ -997,7 +1003,10 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/ent.Course"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ent.Course"
+                            }
                         }
                     },
                     "400": {
@@ -1491,7 +1500,10 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/ent.InstructorInfo"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ent.InstructorInfo"
+                            }
                         }
                     },
                     "400": {
@@ -2560,6 +2572,14 @@ var doc = `{
                     "description": "CourseName holds the value of the \"Course_name\" field.",
                     "type": "string"
                 },
+                "Course_year": {
+                    "description": "CourseYear holds the value of the \"Course_year\" field.",
+                    "type": "string"
+                },
+                "Teacher_id": {
+                    "description": "TeacherID holds the value of the \"Teacher_id\" field.",
+                    "type": "string"
+                },
                 "degree_id": {
                     "type": "integer"
                 },
@@ -2570,9 +2590,6 @@ var doc = `{
                 },
                 "id": {
                     "description": "ID of the ent.",
-                    "type": "integer"
-                },
-                "instructorInfo_id": {
                     "type": "integer"
                 },
                 "subject_id": {
@@ -2592,11 +2609,6 @@ var doc = `{
                     "description": "DepartmentID holds the value of the Department_id edge.",
                     "type": "object",
                     "$ref": "#/definitions/ent.Department"
-                },
-                "instructorInfoID": {
-                    "description": "InstructorInfoID holds the value of the InstructorInfo_id edge.",
-                    "type": "object",
-                    "$ref": "#/definitions/ent.InstructorInfo"
                 },
                 "subjectID": {
                     "description": "SubjectID holds the value of the Subject_id edge.",
@@ -2619,6 +2631,10 @@ var doc = `{
                 },
                 "instructorInfo_id": {
                     "type": "integer"
+                },
+                "tablecode": {
+                    "description": "Tablecode holds the value of the \"tablecode\" field.",
+                    "type": "string"
                 }
             }
         },
@@ -2775,13 +2791,6 @@ var doc = `{
                     "type": "object",
                     "$ref": "#/definitions/ent.Department"
                 },
-                "instructor": {
-                    "description": "Instructor holds the value of the instructor edge.",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/ent.Course"
-                    }
-                },
                 "instructorroom": {
                     "description": "Instructorroom holds the value of the instructorroom edge.",
                     "type": "object",
@@ -2877,6 +2886,10 @@ var doc = `{
             "properties": {
                 "AMOUNT": {
                     "description": "AMOUNT holds the value of the \"AMOUNT\" field.",
+                    "type": "string"
+                },
+                "Remain": {
+                    "description": "Remain holds the value of the \"Remain\" field.",
                     "type": "string"
                 },
                 "STATUS": {

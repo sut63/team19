@@ -74,10 +74,10 @@ export function EntSubjectsOfferedEdgesFromJSONTyped(json: any, ignoreDiscrimina
     }
     return {
         
-        'degree': !exists(json, 'degree') ? undefined : EntDegreeFromJSON(json['degree']),
-        'subject': !exists(json, 'subject') ? undefined : EntSubjectFromJSON(json['subject']),
-        'term': !exists(json, 'term') ? undefined : EntTermFromJSON(json['term']),
-        'year': !exists(json, 'year') ? undefined : EntYearFromJSON(json['year']),
+        'degree': !exists(json, 'Degree') ? undefined : EntDegreeFromJSON(json['Degree']),
+        'subject': !exists(json, 'Subject') ? undefined : EntSubjectFromJSON(json['Subject']),
+        'term': !exists(json, 'Term') ? undefined : EntTermFromJSON(json['Term']),
+        'year': !exists(json, 'Year') ? undefined : EntYearFromJSON(json['Year']),
     };
 }
 

@@ -65,8 +65,13 @@ const HeaderCustom = {
   const Sign: FC = ({ setSession })  => {
     const classes = useStyles();
     const api = new DefaultApi();
-    
+    const [to, setTo] = React.useState("");
+
     const [instructors, setInstructor] = React.useState<Partial<instructor>>({});
+    const [phoneError, setPhoneError] = React.useState('');
+    const [nameError, setNameError] = React.useState('');
+    const [emailError, setEmailError] = React.useState('');
+    const [passwordError, setPasswordError] = React.useState('');
 
     const [departments, setDepartments] = React.useState<EntDepartment[]>([]);
     const [instructorrooms, setInstructorRooms] = React.useState<EntInstructorRoom[]>([]);
@@ -94,26 +99,96 @@ const HeaderCustom = {
         getTitles();
       }, []);
 
-  // alert setting
-  const Toast = Swal.mixin({
-  toast: true,
-  position: 'top-end',
-  showConfirmButton: false,
-  timer: 3000,
-  timerProgressBar: true,
-  didOpen: toast => {
-    toast.addEventListener('mouseenter', Swal.stopTimer);
-    toast.addEventListener('mouseleave', Swal.resumeTimer);
-    },
-  });
-    
-    // set data to object instructors
-    const handleChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>,) => {
+  // set data to object instructors
+  const handleChange = (event: React.ChangeEvent<{ name?: string; value: any }>,) => {
     const name = event.target.name as keyof typeof Sign;
     const { value } = event.target;
+    const validateValue = value.toString()
+    checkPattern(name, validateValue)
     setInstructor({ ...instructors, [name]: value });
     console.log(instructors);
     };
+
+  // alert setting
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: toast => {
+      toast.addEventListener('mouseenter', Swal.stopTimer);
+      toast.addEventListener('mouseleave', Swal.resumeTimer);
+      },
+    });
+
+  // Function for validate email
+  const validateEmail = (email: string) => {
+    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  }
+
+  // Function for validate name
+  const validateName = (val: string) => {
+    return val.match("[A-Z]");
+  }
+
+  // Function for validate phonenumber
+  const validatePhone = (val: string) => {
+    return val.match("[0]+[9]\\d{8}$|[0]+[8]\\d{8}$|[0]+[6]\\d{8}$"); // \\d[0-9]{6,7}$ for need 9-10 digits
+  }
+
+  // Function for validate password
+  const validatePassword = (val: string) => {
+    return val.match("[^\s]");
+  }
+
+  // Check Pattern of Input Data
+  const checkPattern  = (name: string, value: string) => {
+    switch(name) {
+      case 'phonenumber':
+        validatePhone(value) ? setPhoneError('') : setPhoneError('Your Phone-Number must begin with 09 08 or 06 and limit 10 digits');
+        return;
+      case 'name':
+        validateName(value) ? setNameError('') : setNameError('Your name must begin with Uppercase');
+        return;
+      case 'email':
+        validateEmail(value) ? setEmailError('') : setEmailError('Invalid Pattern of Email')
+        return;
+      case 'password':
+        validatePassword(value) ? setPasswordError('') : setPasswordError('Your Password is Empty')
+        return;
+      default:
+        return;
+    }
+  }
+
+  const alertMessage = (icon: any, title: any) => {
+    Toast.fire({
+      icon: icon,
+      title: title,
+    });
+  }
+
+  const checkCaseSaveError = (field: string) => {
+    switch(field) {
+      case 'PHONENUMBER':
+        alertMessage("error","Your Phone-Number must begin with 09 08 or 06 and limit 10 digits");
+        return;
+      case 'NAME':
+        alertMessage("error","Your name must begin with Uppercase");
+        return;
+      case 'EMAIL':
+        alertMessage("error","Invalid Pattern of Email");
+        return;
+      case 'PASSWORD':
+          alertMessage("error","Your Password is Empty");
+          return;
+      default:
+        alertMessage("error","Save Error");
+        return;
+    }
+  }
 
     // clear input form
     function clear() {
@@ -143,15 +218,15 @@ const HeaderCustom = {
         console.log(data);
         if (data.status === true) {
           clear();
+          LinkIn();
+          setTo("/Login")
           Toast.fire({
             icon: 'success',
-            title: 'บันทึกข้อมูลสำเร็จ',
+            title: 'Save Success',
           });
         } else {
-          Toast.fire({
-            icon: 'error',
-            title: 'บันทึกข้อมูลไม่สำเร็จ',
-          });
+          checkCaseSaveError(data.error.Name)
+          setTo("/")
         }
       });
     };
@@ -199,6 +274,8 @@ const HeaderCustom = {
                       label="Name Surname"
                       name="name"
                       type="string"
+                      error = {nameError ? true : false}
+                      helperText= {nameError}
                       value={instructors.name || ''} // (undefined || '') = ''
                       className={classes.textField}
                       onChange={handleChange}
@@ -215,6 +292,8 @@ const HeaderCustom = {
                       label="PhoneNumber"
                       name="phonenumber"
                       type="string"
+                      error = {phoneError ? true : false}
+                      helperText= {phoneError}
                       value={instructors.phonenumber || ''} // (undefined || '') = ''
                       className={classes.textField}
                       onChange={handleChange}
@@ -231,6 +310,8 @@ const HeaderCustom = {
                       label="Email"
                       name="email"
                       type="string"
+                      error = {emailError ? true : false}
+                      helperText= {emailError}
                       value={instructors.email || ''} // (undefined || '') = ''
                       className={classes.textField}
                       onChange={handleChange}
@@ -247,6 +328,8 @@ const HeaderCustom = {
                       label="Password"
                       name="password"
                       type="password"
+                      error = {passwordError ? true : false}
+                      helperText= {passwordError}
                       value={instructors.password || ''} // (undefined || '') = ''
                       className={classes.textField}
                       onChange={handleChange}
@@ -323,11 +406,10 @@ const HeaderCustom = {
                 color="primary"
                 size="large"
                 component={RouterLink}
-                to="/Login"
+                to={to}
                 startIcon={<PersonIcon />}
                 onClick={() =>{
                   save();
-                  LinkIn();
                 }}>
                 Sign-in
               </Button>

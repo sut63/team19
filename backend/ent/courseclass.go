@@ -17,9 +17,11 @@ import (
 
 // Courseclass is the model entity for the Courseclass schema.
 type Courseclass struct {
-	config
+	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
+	// Tablecode holds the value of the "tablecode" field.
+	Tablecode string `json:"tablecode,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the CourseclassQuery when eager-loading is set.
 	Edges             CourseclassEdges `json:"edges"`
@@ -120,7 +122,8 @@ func (e CourseclassEdges) SubjectOrErr() (*Subject, error) {
 // scanValues returns the types for scanning values from sql.Rows.
 func (*Courseclass) scanValues() []interface{} {
 	return []interface{}{
-		&sql.NullInt64{}, // id
+		&sql.NullInt64{},  // id
+		&sql.NullString{}, // tablecode
 	}
 }
 
@@ -147,7 +150,12 @@ func (c *Courseclass) assignValues(values ...interface{}) error {
 	}
 	c.ID = int(value.Int64)
 	values = values[1:]
-	values = values[0:]
+	if value, ok := values[0].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field tablecode", values[0])
+	} else if value.Valid {
+		c.Tablecode = value.String
+	}
+	values = values[1:]
 	if len(values) == len(courseclass.ForeignKeys) {
 		if value, ok := values[0].(*sql.NullInt64); !ok {
 			return fmt.Errorf("unexpected type %T for edge-field classdate_id", value)
@@ -231,6 +239,8 @@ func (c *Courseclass) String() string {
 	var builder strings.Builder
 	builder.WriteString("Courseclass(")
 	builder.WriteString(fmt.Sprintf("id=%v", c.ID))
+	builder.WriteString(", tablecode=")
+	builder.WriteString(c.Tablecode)
 	builder.WriteByte(')')
 	return builder.String()
 }

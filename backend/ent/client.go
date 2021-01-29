@@ -583,22 +583,6 @@ func (c *CourseClient) GetX(ctx context.Context, id int) *Course {
 	return co
 }
 
-// QueryInstructorInfoID queries the InstructorInfo_id edge of a Course.
-func (c *CourseClient) QueryInstructorInfoID(co *Course) *InstructorInfoQuery {
-	query := &InstructorInfoQuery{config: c.config}
-	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
-		id := co.ID
-		step := sqlgraph.NewStep(
-			sqlgraph.From(course.Table, course.FieldID, id),
-			sqlgraph.To(instructorinfo.Table, instructorinfo.FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, true, course.InstructorInfoIDTable, course.InstructorInfoIDColumn),
-		)
-		fromV = sqlgraph.Neighbors(co.driver.Dialect(), step)
-		return fromV, nil
-	}
-	return query
-}
-
 // QueryDepartmentID queries the Department_id edge of a Course.
 func (c *CourseClient) QueryDepartmentID(co *Course) *DepartmentQuery {
 	query := &DepartmentQuery{config: c.config}
@@ -1164,22 +1148,6 @@ func (c *InstructorInfoClient) QueryDepartment(ii *InstructorInfo) *DepartmentQu
 			sqlgraph.From(instructorinfo.Table, instructorinfo.FieldID, id),
 			sqlgraph.To(department.Table, department.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, instructorinfo.DepartmentTable, instructorinfo.DepartmentColumn),
-		)
-		fromV = sqlgraph.Neighbors(ii.driver.Dialect(), step)
-		return fromV, nil
-	}
-	return query
-}
-
-// QueryInstructor queries the instructor edge of a InstructorInfo.
-func (c *InstructorInfoClient) QueryInstructor(ii *InstructorInfo) *CourseQuery {
-	query := &CourseQuery{config: c.config}
-	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
-		id := ii.ID
-		step := sqlgraph.NewStep(
-			sqlgraph.From(instructorinfo.Table, instructorinfo.FieldID, id),
-			sqlgraph.To(course.Table, course.FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, instructorinfo.InstructorTable, instructorinfo.InstructorColumn),
 		)
 		fromV = sqlgraph.Neighbors(ii.driver.Dialect(), step)
 		return fromV, nil

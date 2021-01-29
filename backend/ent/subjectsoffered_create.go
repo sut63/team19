@@ -35,6 +35,12 @@ func (soc *SubjectsOfferedCreate) SetSTATUS(s string) *SubjectsOfferedCreate {
 	return soc
 }
 
+// SetRemain sets the Remain field.
+func (soc *SubjectsOfferedCreate) SetRemain(s string) *SubjectsOfferedCreate {
+	soc.mutation.SetRemain(s)
+	return soc
+}
+
 // SetSubjectID sets the Subject edge to Subject by id.
 func (soc *SubjectsOfferedCreate) SetSubjectID(id int) *SubjectsOfferedCreate {
 	soc.mutation.SetSubjectID(id)
@@ -134,6 +140,14 @@ func (soc *SubjectsOfferedCreate) Save(ctx context.Context) (*SubjectsOffered, e
 			return nil, &ValidationError{Name: "STATUS", err: fmt.Errorf("ent: validator failed for field \"STATUS\": %w", err)}
 		}
 	}
+	if _, ok := soc.mutation.Remain(); !ok {
+		return nil, &ValidationError{Name: "Remain", err: errors.New("ent: missing required field \"Remain\"")}
+	}
+	if v, ok := soc.mutation.Remain(); ok {
+		if err := subjectsoffered.RemainValidator(v); err != nil {
+			return nil, &ValidationError{Name: "Remain", err: fmt.Errorf("ent: validator failed for field \"Remain\": %w", err)}
+		}
+	}
 	var (
 		err  error
 		node *SubjectsOffered
@@ -209,6 +223,14 @@ func (soc *SubjectsOfferedCreate) createSpec() (*SubjectsOffered, *sqlgraph.Crea
 			Column: subjectsoffered.FieldSTATUS,
 		})
 		so.STATUS = value
+	}
+	if value, ok := soc.mutation.Remain(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: subjectsoffered.FieldRemain,
+		})
+		so.Remain = value
 	}
 	if nodes := soc.mutation.SubjectIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{

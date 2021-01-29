@@ -12,7 +12,7 @@ import {
 } from '@backstage/core';
 
 
-import PersonIcon from '@material-ui/icons/Person';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
 import { EntSubject } from '../../api/models/EntSubject'; //import ข้อมูลจาก backend
 import { EntDegree } from '../../api/models/EntDegree'; 
 import { EntDepartment } from '../../api/models/EntDepartment'; 
@@ -71,8 +71,8 @@ const useStyles = makeStyles((theme: Theme) =>
 },
 
 text4: {
-  marginLeft: theme.spacing(15), 
-  marginRight: theme.spacing(114), 
+  marginLeft: theme.spacing(3), 
+  marginRight: theme.spacing(124), 
   fontSize: 30,
   color: "white",
 },
@@ -98,6 +98,11 @@ text6: {
   color: "white",
 },
 
+text7: {
+  marginLeft: theme.spacing(10),
+  marginTop: theme.spacing(0),
+  color: "white",
+},
 
 
 
@@ -109,6 +114,21 @@ text8: {
   color: "white",
 },
 
+text9: {
+  marginLeft: theme.spacing(-130),
+  marginTop: theme.spacing(4),
+  marginBottom:  theme.spacing(1),
+  fontSize: 21,
+  color: "white",
+},
+
+text10: {
+  marginLeft: theme.spacing(-130),
+  marginTop: theme.spacing(4),
+  marginBottom:  theme.spacing(1),
+  fontSize: 21,
+  color: "white",
+},
 
   box1: {
     marginLeft: theme.spacing(15),
@@ -134,7 +154,18 @@ text8: {
     marginTop: theme.spacing(2),
     width: '60ch',
   },
+
+  textfill2: {  //ชื่อกิจกรรม
+    marginLeft: theme.spacing(14),
+  marginTop: theme.spacing(2),
+  width: '60ch',
+  },
   
+  textfill3: {  //ชื่อกิจกรรม
+    marginLeft: theme.spacing(16),
+    marginTop: theme.spacing(2),
+    width: '60ch',
+  },
   
   
   button: {
@@ -163,7 +194,9 @@ interface currency{
     DepartmentID :      number;
 	  SubjectID :         number;
 	  DegreeID  :         number;
-	  CourseName :        string;
+    CourseName :        string;
+    CourseYear :        string;
+    TeacherID :        string;
 	
 }
 
@@ -213,6 +246,31 @@ const handleChange = ( event: React.ChangeEvent<{ name?: string; value: unknown 
   setDegrees(res);
  };
 
+ const alertMessage = (icon: any, title: any) => {
+  Toast.fire({
+    icon: icon,
+    title: title,
+  });
+}
+
+const checkCaseSaveError = (field: string) => {
+  switch(field){
+    case 'Teacher_id':
+      alertMessage("error","รหัสอาจารย์ขึ้นต้นด้วย T ตามด้วยตัวเลข 7 หลัก");
+      return;
+    case 'Course_name':
+       alertMessage("error","ชื่อหลักสูตรต้องเป็น a-z หรือ A-Z หรือ 0-9");
+       return; 
+    case 'Course_year':
+         alertMessage("error","ปีของหลักสูตรต้องเป็นตัวเลข จำนวนเต็มบวก");
+         return;  
+     default:
+       alertMessage("error","บันทึกข้อมูลไม่สำเร็จ");
+       return;
+  }
+}
+
+
 
 
  
@@ -248,10 +306,7 @@ const handleChange = ( event: React.ChangeEvent<{ name?: string; value: unknown 
             title: 'บันทึกข้อมูลสำเร็จ',
           });
         } else {
-          Toast.fire({
-            icon: 'error',
-            title: 'บันทึกข้อมูลไม่สำเร็จ',
-          });
+          checkCaseSaveError(data.error.Name)
         }
       });
   }
@@ -265,8 +320,12 @@ const handleChange = ( event: React.ChangeEvent<{ name?: string; value: unknown 
           <AppBar position="static" color="primary">
            <Toolbar>
           
-              <FormControl className={classes.text4} > <text>Course</text></FormControl>
-              <PersonIcon style={{ fontSize: 100}} ></PersonIcon>
+              <MenuBookIcon className={classes.text7} style={{ fontSize: 100}} ></MenuBookIcon>
+              <FormControl className={classes.text4} > <text>Course</text>
+              
+              
+              </FormControl>
+              
             
            </Toolbar>
           </AppBar>
@@ -358,7 +417,7 @@ const handleChange = ( event: React.ChangeEvent<{ name?: string; value: unknown 
       <div>
       <FormControl className={classes.text8} >  <text >ชื่อหลักสูตร</text> </FormControl>
        <FormControl className={classes.textfill1} >
-           <TextField id="outlined-basic"  variant="outlined" 
+           <TextField id="Course_name"  variant="outlined" 
            name="CourseName"
            defaultValue="พิมพ์ชื่อหลักสูตร"
            value = {currency.CourseName}
@@ -366,13 +425,30 @@ const handleChange = ( event: React.ChangeEvent<{ name?: string; value: unknown 
            />
       </FormControl>
       </div>
-      
-      
 
-     
-     
-      
-      
+      <div>
+      <FormControl className={classes.text9} >  <text >รหัสอาจารย์</text> </FormControl>
+       <FormControl className={classes.textfill2} >
+           <TextField id="Teacher_id"  variant="outlined" 
+           name="TeacherID"
+           defaultValue="พิมพ์รหัสอาจารย์"
+           value = {currency.TeacherID}
+           onChange={handleChange}
+           />
+      </FormControl>
+      </div>
+
+      <div>
+      <FormControl className={classes.text10} >  <text >ปีหลักสูตร</text> </FormControl>
+       <FormControl className={classes.textfill3} >
+           <TextField id="Course_year"  variant="outlined" 
+           name="CourseYear"
+           defaultValue="พิมพ์ปีของหลักสูตร"
+           value = {currency.CourseYear}
+           onChange={handleChange}
+           />
+      </FormControl>
+      </div>
 
       <div className={classes.button}>
       <Button size="large" variant="contained" color="secondary" onClick = {save}> บันทึกหลักสูตร </Button>

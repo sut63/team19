@@ -1,6 +1,9 @@
 package schema
 
 import (
+	"regexp"
+	"errors"
+
 	"github.com/facebookincubator/ent"
 	"github.com/facebookincubator/ent/schema/edge"
 	"github.com/facebookincubator/ent/schema/field"
@@ -15,8 +18,27 @@ type SubjectsOffered struct {
 func (SubjectsOffered) Fields() []ent.Field {
 	return []ent.Field{
 
-		field.String("AMOUNT").NotEmpty(),
-		field.String("STATUS").NotEmpty(),
+		field.String("AMOUNT").Validate(func(s string) error {
+			match, _ := regexp.MatchString("[0123456789]",s)
+			if !match {
+				return errors.New("รูปแบบจำนวนที่รับไม่ถูกต้อง")
+			}
+			return nil
+	}),
+		field.String("STATUS").Validate(func(s string) error {
+			match, _ := regexp.MatchString("Open",s)
+			if !match {
+				return errors.New("รูปแบบสถานะไม่ถูกต้อง")
+			}
+			return nil
+	}),
+	field.String("Remain").Validate(func(s string) error {
+		match, _ := regexp.MatchString("[0123456789]",s)
+		if !match {
+			return errors.New("รูปแบบคงเหลือไม่ถูกต้อง")
+		}
+		return nil
+}),
 	}
 }
 

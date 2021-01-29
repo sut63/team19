@@ -42,13 +42,11 @@ type InstructorInfoEdges struct {
 	Instructorroom *InstructorRoom
 	// Department holds the value of the department edge.
 	Department *Department
-	// Instructor holds the value of the instructor edge.
-	Instructor []*Course
 	// Courseclasses holds the value of the courseclasses edge.
 	Courseclasses []*Courseclass
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [5]bool
+	loadedTypes [4]bool
 }
 
 // TitleOrErr returns the Title value or an error if the edge
@@ -93,19 +91,10 @@ func (e InstructorInfoEdges) DepartmentOrErr() (*Department, error) {
 	return nil, &NotLoadedError{edge: "department"}
 }
 
-// InstructorOrErr returns the Instructor value or an error if the edge
-// was not loaded in eager-loading.
-func (e InstructorInfoEdges) InstructorOrErr() ([]*Course, error) {
-	if e.loadedTypes[3] {
-		return e.Instructor, nil
-	}
-	return nil, &NotLoadedError{edge: "instructor"}
-}
-
 // CourseclassesOrErr returns the Courseclasses value or an error if the edge
 // was not loaded in eager-loading.
 func (e InstructorInfoEdges) CourseclassesOrErr() ([]*Courseclass, error) {
-	if e.loadedTypes[4] {
+	if e.loadedTypes[3] {
 		return e.Courseclasses, nil
 	}
 	return nil, &NotLoadedError{edge: "courseclasses"}
@@ -200,11 +189,6 @@ func (ii *InstructorInfo) QueryInstructorroom() *InstructorRoomQuery {
 // QueryDepartment queries the department edge of the InstructorInfo.
 func (ii *InstructorInfo) QueryDepartment() *DepartmentQuery {
 	return (&InstructorInfoClient{config: ii.config}).QueryDepartment(ii)
-}
-
-// QueryInstructor queries the instructor edge of the InstructorInfo.
-func (ii *InstructorInfo) QueryInstructor() *CourseQuery {
-	return (&InstructorInfoClient{config: ii.config}).QueryInstructor(ii)
 }
 
 // QueryCourseclasses queries the courseclasses edge of the InstructorInfo.

@@ -32,6 +32,12 @@ func (cu *CourseclassUpdate) Where(ps ...predicate.Courseclass) *CourseclassUpda
 	return cu
 }
 
+// SetTablecode sets the tablecode field.
+func (cu *CourseclassUpdate) SetTablecode(s string) *CourseclassUpdate {
+	cu.mutation.SetTablecode(s)
+	return cu
+}
+
 // SetClasstimeID sets the classtime edge to Classtime by id.
 func (cu *CourseclassUpdate) SetClasstimeID(id int) *CourseclassUpdate {
 	cu.mutation.SetClasstimeID(id)
@@ -164,6 +170,11 @@ func (cu *CourseclassUpdate) ClearSubject() *CourseclassUpdate {
 
 // Save executes the query and returns the number of rows/vertices matched by this operation.
 func (cu *CourseclassUpdate) Save(ctx context.Context) (int, error) {
+	if v, ok := cu.mutation.Tablecode(); ok {
+		if err := courseclass.TablecodeValidator(v); err != nil {
+			return 0, &ValidationError{Name: "tablecode", err: fmt.Errorf("ent: validator failed for field \"tablecode\": %w", err)}
+		}
+	}
 
 	var (
 		err      error
@@ -231,6 +242,13 @@ func (cu *CourseclassUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := cu.mutation.Tablecode(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: courseclass.FieldTablecode,
+		})
 	}
 	if cu.mutation.ClasstimeCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -425,6 +443,12 @@ type CourseclassUpdateOne struct {
 	mutation *CourseclassMutation
 }
 
+// SetTablecode sets the tablecode field.
+func (cuo *CourseclassUpdateOne) SetTablecode(s string) *CourseclassUpdateOne {
+	cuo.mutation.SetTablecode(s)
+	return cuo
+}
+
 // SetClasstimeID sets the classtime edge to Classtime by id.
 func (cuo *CourseclassUpdateOne) SetClasstimeID(id int) *CourseclassUpdateOne {
 	cuo.mutation.SetClasstimeID(id)
@@ -557,6 +581,11 @@ func (cuo *CourseclassUpdateOne) ClearSubject() *CourseclassUpdateOne {
 
 // Save executes the query and returns the updated entity.
 func (cuo *CourseclassUpdateOne) Save(ctx context.Context) (*Courseclass, error) {
+	if v, ok := cuo.mutation.Tablecode(); ok {
+		if err := courseclass.TablecodeValidator(v); err != nil {
+			return nil, &ValidationError{Name: "tablecode", err: fmt.Errorf("ent: validator failed for field \"tablecode\": %w", err)}
+		}
+	}
 
 	var (
 		err  error
@@ -623,6 +652,13 @@ func (cuo *CourseclassUpdateOne) sqlSave(ctx context.Context) (c *Courseclass, e
 		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing Courseclass.ID for update")}
 	}
 	_spec.Node.ID.Value = id
+	if value, ok := cuo.mutation.Tablecode(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: courseclass.FieldTablecode,
+		})
+	}
 	if cuo.mutation.ClasstimeCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,

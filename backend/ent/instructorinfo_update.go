@@ -9,7 +9,6 @@ import (
 	"github.com/facebookincubator/ent/dialect/sql"
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
-	"github.com/team19/app/ent/course"
 	"github.com/team19/app/ent/courseclass"
 	"github.com/team19/app/ent/department"
 	"github.com/team19/app/ent/instructorinfo"
@@ -113,21 +112,6 @@ func (iiu *InstructorInfoUpdate) SetDepartment(d *Department) *InstructorInfoUpd
 	return iiu.SetDepartmentID(d.ID)
 }
 
-// AddInstructorIDs adds the instructor edge to Course by ids.
-func (iiu *InstructorInfoUpdate) AddInstructorIDs(ids ...int) *InstructorInfoUpdate {
-	iiu.mutation.AddInstructorIDs(ids...)
-	return iiu
-}
-
-// AddInstructor adds the instructor edges to Course.
-func (iiu *InstructorInfoUpdate) AddInstructor(c ...*Course) *InstructorInfoUpdate {
-	ids := make([]int, len(c))
-	for i := range c {
-		ids[i] = c[i].ID
-	}
-	return iiu.AddInstructorIDs(ids...)
-}
-
 // AddCourseclassIDs adds the courseclasses edge to Courseclass by ids.
 func (iiu *InstructorInfoUpdate) AddCourseclassIDs(ids ...int) *InstructorInfoUpdate {
 	iiu.mutation.AddCourseclassIDs(ids...)
@@ -166,21 +150,6 @@ func (iiu *InstructorInfoUpdate) ClearDepartment() *InstructorInfoUpdate {
 	return iiu
 }
 
-// RemoveInstructorIDs removes the instructor edge to Course by ids.
-func (iiu *InstructorInfoUpdate) RemoveInstructorIDs(ids ...int) *InstructorInfoUpdate {
-	iiu.mutation.RemoveInstructorIDs(ids...)
-	return iiu
-}
-
-// RemoveInstructor removes instructor edges to Course.
-func (iiu *InstructorInfoUpdate) RemoveInstructor(c ...*Course) *InstructorInfoUpdate {
-	ids := make([]int, len(c))
-	for i := range c {
-		ids[i] = c[i].ID
-	}
-	return iiu.RemoveInstructorIDs(ids...)
-}
-
 // RemoveCourseclassIDs removes the courseclasses edge to Courseclass by ids.
 func (iiu *InstructorInfoUpdate) RemoveCourseclassIDs(ids ...int) *InstructorInfoUpdate {
 	iiu.mutation.RemoveCourseclassIDs(ids...)
@@ -198,6 +167,26 @@ func (iiu *InstructorInfoUpdate) RemoveCourseclasses(c ...*Courseclass) *Instruc
 
 // Save executes the query and returns the number of rows/vertices matched by this operation.
 func (iiu *InstructorInfoUpdate) Save(ctx context.Context) (int, error) {
+	if v, ok := iiu.mutation.NAME(); ok {
+		if err := instructorinfo.NAMEValidator(v); err != nil {
+			return 0, &ValidationError{Name: "NAME", err: fmt.Errorf("ent: validator failed for field \"NAME\": %w", err)}
+		}
+	}
+	if v, ok := iiu.mutation.PHONENUMBER(); ok {
+		if err := instructorinfo.PHONENUMBERValidator(v); err != nil {
+			return 0, &ValidationError{Name: "PHONENUMBER", err: fmt.Errorf("ent: validator failed for field \"PHONENUMBER\": %w", err)}
+		}
+	}
+	if v, ok := iiu.mutation.EMAIL(); ok {
+		if err := instructorinfo.EMAILValidator(v); err != nil {
+			return 0, &ValidationError{Name: "EMAIL", err: fmt.Errorf("ent: validator failed for field \"EMAIL\": %w", err)}
+		}
+	}
+	if v, ok := iiu.mutation.PASSWORD(); ok {
+		if err := instructorinfo.PASSWORDValidator(v); err != nil {
+			return 0, &ValidationError{Name: "PASSWORD", err: fmt.Errorf("ent: validator failed for field \"PASSWORD\": %w", err)}
+		}
+	}
 
 	var (
 		err      error
@@ -399,44 +388,6 @@ func (iiu *InstructorInfoUpdate) sqlSave(ctx context.Context) (n int, err error)
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if nodes := iiu.mutation.RemovedInstructorIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2M,
-			Inverse: false,
-			Table:   instructorinfo.InstructorTable,
-			Columns: []string{instructorinfo.InstructorColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
-					Column: course.FieldID,
-				},
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := iiu.mutation.InstructorIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2M,
-			Inverse: false,
-			Table:   instructorinfo.InstructorTable,
-			Columns: []string{instructorinfo.InstructorColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
-					Column: course.FieldID,
-				},
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Add = append(_spec.Edges.Add, edge)
-	}
 	if nodes := iiu.mutation.RemovedCourseclassesIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
@@ -574,21 +525,6 @@ func (iiuo *InstructorInfoUpdateOne) SetDepartment(d *Department) *InstructorInf
 	return iiuo.SetDepartmentID(d.ID)
 }
 
-// AddInstructorIDs adds the instructor edge to Course by ids.
-func (iiuo *InstructorInfoUpdateOne) AddInstructorIDs(ids ...int) *InstructorInfoUpdateOne {
-	iiuo.mutation.AddInstructorIDs(ids...)
-	return iiuo
-}
-
-// AddInstructor adds the instructor edges to Course.
-func (iiuo *InstructorInfoUpdateOne) AddInstructor(c ...*Course) *InstructorInfoUpdateOne {
-	ids := make([]int, len(c))
-	for i := range c {
-		ids[i] = c[i].ID
-	}
-	return iiuo.AddInstructorIDs(ids...)
-}
-
 // AddCourseclassIDs adds the courseclasses edge to Courseclass by ids.
 func (iiuo *InstructorInfoUpdateOne) AddCourseclassIDs(ids ...int) *InstructorInfoUpdateOne {
 	iiuo.mutation.AddCourseclassIDs(ids...)
@@ -627,21 +563,6 @@ func (iiuo *InstructorInfoUpdateOne) ClearDepartment() *InstructorInfoUpdateOne 
 	return iiuo
 }
 
-// RemoveInstructorIDs removes the instructor edge to Course by ids.
-func (iiuo *InstructorInfoUpdateOne) RemoveInstructorIDs(ids ...int) *InstructorInfoUpdateOne {
-	iiuo.mutation.RemoveInstructorIDs(ids...)
-	return iiuo
-}
-
-// RemoveInstructor removes instructor edges to Course.
-func (iiuo *InstructorInfoUpdateOne) RemoveInstructor(c ...*Course) *InstructorInfoUpdateOne {
-	ids := make([]int, len(c))
-	for i := range c {
-		ids[i] = c[i].ID
-	}
-	return iiuo.RemoveInstructorIDs(ids...)
-}
-
 // RemoveCourseclassIDs removes the courseclasses edge to Courseclass by ids.
 func (iiuo *InstructorInfoUpdateOne) RemoveCourseclassIDs(ids ...int) *InstructorInfoUpdateOne {
 	iiuo.mutation.RemoveCourseclassIDs(ids...)
@@ -659,6 +580,26 @@ func (iiuo *InstructorInfoUpdateOne) RemoveCourseclasses(c ...*Courseclass) *Ins
 
 // Save executes the query and returns the updated entity.
 func (iiuo *InstructorInfoUpdateOne) Save(ctx context.Context) (*InstructorInfo, error) {
+	if v, ok := iiuo.mutation.NAME(); ok {
+		if err := instructorinfo.NAMEValidator(v); err != nil {
+			return nil, &ValidationError{Name: "NAME", err: fmt.Errorf("ent: validator failed for field \"NAME\": %w", err)}
+		}
+	}
+	if v, ok := iiuo.mutation.PHONENUMBER(); ok {
+		if err := instructorinfo.PHONENUMBERValidator(v); err != nil {
+			return nil, &ValidationError{Name: "PHONENUMBER", err: fmt.Errorf("ent: validator failed for field \"PHONENUMBER\": %w", err)}
+		}
+	}
+	if v, ok := iiuo.mutation.EMAIL(); ok {
+		if err := instructorinfo.EMAILValidator(v); err != nil {
+			return nil, &ValidationError{Name: "EMAIL", err: fmt.Errorf("ent: validator failed for field \"EMAIL\": %w", err)}
+		}
+	}
+	if v, ok := iiuo.mutation.PASSWORD(); ok {
+		if err := instructorinfo.PASSWORDValidator(v); err != nil {
+			return nil, &ValidationError{Name: "PASSWORD", err: fmt.Errorf("ent: validator failed for field \"PASSWORD\": %w", err)}
+		}
+	}
 
 	var (
 		err  error
@@ -850,44 +791,6 @@ func (iiuo *InstructorInfoUpdateOne) sqlSave(ctx context.Context) (ii *Instructo
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: department.FieldID,
-				},
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Add = append(_spec.Edges.Add, edge)
-	}
-	if nodes := iiuo.mutation.RemovedInstructorIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2M,
-			Inverse: false,
-			Table:   instructorinfo.InstructorTable,
-			Columns: []string{instructorinfo.InstructorColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
-					Column: course.FieldID,
-				},
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := iiuo.mutation.InstructorIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2M,
-			Inverse: false,
-			Table:   instructorinfo.InstructorTable,
-			Columns: []string{instructorinfo.InstructorColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
-					Column: course.FieldID,
 				},
 			},
 		}

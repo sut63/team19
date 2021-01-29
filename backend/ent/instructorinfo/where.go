@@ -647,34 +647,6 @@ func HasDepartmentWith(preds ...predicate.Department) predicate.InstructorInfo {
 	})
 }
 
-// HasInstructor applies the HasEdge predicate on the "instructor" edge.
-func HasInstructor() predicate.InstructorInfo {
-	return predicate.InstructorInfo(func(s *sql.Selector) {
-		step := sqlgraph.NewStep(
-			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(InstructorTable, FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, InstructorTable, InstructorColumn),
-		)
-		sqlgraph.HasNeighbors(s, step)
-	})
-}
-
-// HasInstructorWith applies the HasEdge predicate on the "instructor" edge with a given conditions (other predicates).
-func HasInstructorWith(preds ...predicate.Course) predicate.InstructorInfo {
-	return predicate.InstructorInfo(func(s *sql.Selector) {
-		step := sqlgraph.NewStep(
-			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(InstructorInverseTable, FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, InstructorTable, InstructorColumn),
-		)
-		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
-			for _, p := range preds {
-				p(s)
-			}
-		})
-	})
-}
-
 // HasCourseclasses applies the HasEdge predicate on the "courseclasses" edge.
 func HasCourseclasses() predicate.InstructorInfo {
 	return predicate.InstructorInfo(func(s *sql.Selector) {

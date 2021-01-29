@@ -33,6 +33,18 @@ export interface EntCourse {
      */
     courseName?: string;
     /**
+     * CourseYear holds the value of the "Course_year" field.
+     * @type {string}
+     * @memberof EntCourse
+     */
+    courseYear?: string;
+    /**
+     * TeacherID holds the value of the "Teacher_id" field.
+     * @type {string}
+     * @memberof EntCourse
+     */
+    teacherId?: string;
+    /**
      * 
      * @type {number}
      * @memberof EntCourse
@@ -55,12 +67,6 @@ export interface EntCourse {
      * @type {number}
      * @memberof EntCourse
      */
-    instructorInfoId?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof EntCourse
-     */
     subjectId?: number;
 }
 
@@ -75,10 +81,11 @@ export function EntCourseFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     return {
         
         'courseName': !exists(json, 'Course_name') ? undefined : json['Course_name'],
+        'courseYear': !exists(json, 'Course_year') ? undefined : json['Course_year'],
+        'teacherId': !exists(json, 'Teacher_id') ? undefined : json['Teacher_id'],
         'degreeId': !exists(json, 'degree_id') ? undefined : json['degree_id'],
         'edges': !exists(json, 'edges') ? undefined : EntCourseEdgesFromJSON(json['edges']),
         'id': !exists(json, 'id') ? undefined : json['id'],
-        'instructorInfoId': !exists(json, 'instructorInfo_id') ? undefined : json['instructorInfo_id'],
         'subjectId': !exists(json, 'subject_id') ? undefined : json['subject_id'],
     };
 }
@@ -93,10 +100,11 @@ export function EntCourseToJSON(value?: EntCourse | null): any {
     return {
         
         'Course_name': value.courseName,
+        'Course_year': value.courseYear,
+        'Teacher_id': value.teacherId,
         'degree_id': value.degreeId,
         'edges': EntCourseEdgesToJSON(value.edges),
         'id': value.id,
-        'instructorInfo_id': value.instructorInfoId,
         'subject_id': value.subjectId,
     };
 }

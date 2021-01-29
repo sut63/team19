@@ -9,7 +9,6 @@ import (
 
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
-	"github.com/team19/app/ent/course"
 	"github.com/team19/app/ent/courseclass"
 	"github.com/team19/app/ent/department"
 	"github.com/team19/app/ent/instructorinfo"
@@ -105,21 +104,6 @@ func (iic *InstructorInfoCreate) SetDepartment(d *Department) *InstructorInfoCre
 	return iic.SetDepartmentID(d.ID)
 }
 
-// AddInstructorIDs adds the instructor edge to Course by ids.
-func (iic *InstructorInfoCreate) AddInstructorIDs(ids ...int) *InstructorInfoCreate {
-	iic.mutation.AddInstructorIDs(ids...)
-	return iic
-}
-
-// AddInstructor adds the instructor edges to Course.
-func (iic *InstructorInfoCreate) AddInstructor(c ...*Course) *InstructorInfoCreate {
-	ids := make([]int, len(c))
-	for i := range c {
-		ids[i] = c[i].ID
-	}
-	return iic.AddInstructorIDs(ids...)
-}
-
 // AddCourseclassIDs adds the courseclasses edge to Courseclass by ids.
 func (iic *InstructorInfoCreate) AddCourseclassIDs(ids ...int) *InstructorInfoCreate {
 	iic.mutation.AddCourseclassIDs(ids...)
@@ -145,14 +129,34 @@ func (iic *InstructorInfoCreate) Save(ctx context.Context) (*InstructorInfo, err
 	if _, ok := iic.mutation.NAME(); !ok {
 		return nil, &ValidationError{Name: "NAME", err: errors.New("ent: missing required field \"NAME\"")}
 	}
+	if v, ok := iic.mutation.NAME(); ok {
+		if err := instructorinfo.NAMEValidator(v); err != nil {
+			return nil, &ValidationError{Name: "NAME", err: fmt.Errorf("ent: validator failed for field \"NAME\": %w", err)}
+		}
+	}
 	if _, ok := iic.mutation.PHONENUMBER(); !ok {
 		return nil, &ValidationError{Name: "PHONENUMBER", err: errors.New("ent: missing required field \"PHONENUMBER\"")}
+	}
+	if v, ok := iic.mutation.PHONENUMBER(); ok {
+		if err := instructorinfo.PHONENUMBERValidator(v); err != nil {
+			return nil, &ValidationError{Name: "PHONENUMBER", err: fmt.Errorf("ent: validator failed for field \"PHONENUMBER\": %w", err)}
+		}
 	}
 	if _, ok := iic.mutation.EMAIL(); !ok {
 		return nil, &ValidationError{Name: "EMAIL", err: errors.New("ent: missing required field \"EMAIL\"")}
 	}
+	if v, ok := iic.mutation.EMAIL(); ok {
+		if err := instructorinfo.EMAILValidator(v); err != nil {
+			return nil, &ValidationError{Name: "EMAIL", err: fmt.Errorf("ent: validator failed for field \"EMAIL\": %w", err)}
+		}
+	}
 	if _, ok := iic.mutation.PASSWORD(); !ok {
 		return nil, &ValidationError{Name: "PASSWORD", err: errors.New("ent: missing required field \"PASSWORD\"")}
+	}
+	if v, ok := iic.mutation.PASSWORD(); ok {
+		if err := instructorinfo.PASSWORDValidator(v); err != nil {
+			return nil, &ValidationError{Name: "PASSWORD", err: fmt.Errorf("ent: validator failed for field \"PASSWORD\": %w", err)}
+		}
 	}
 	var (
 		err  error
@@ -295,25 +299,6 @@ func (iic *InstructorInfoCreate) createSpec() (*InstructorInfo, *sqlgraph.Create
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: department.FieldID,
-				},
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges = append(_spec.Edges, edge)
-	}
-	if nodes := iic.mutation.InstructorIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2M,
-			Inverse: false,
-			Table:   instructorinfo.InstructorTable,
-			Columns: []string{instructorinfo.InstructorColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
-					Column: course.FieldID,
 				},
 			},
 		}

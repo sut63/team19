@@ -61,6 +61,7 @@ interface login {
 const Login : FC = ({ setSession })  => {
   const classes = useStyles();
   const api = new DefaultApi();
+  const [to, setTo] = React.useState("");
 
   const [login, setLogin] = React.useState<Partial<login>>({});
   const [instructors, setInstructor] = React.useState<EntInstructorInfo[]>([]);
@@ -87,11 +88,11 @@ const Login : FC = ({ setSession })  => {
     instructors.map((item: any) => {
       if (item.eMAIL == login.email && item.pASSWORD == login.password) {
         Linklogin();
-        alert('Success')
+        setTo("/welcome")
       }
       else{
         clear();
-        alert('Error')
+        setTo("/")
       }
     });
   };
@@ -159,7 +160,7 @@ const Login : FC = ({ setSession })  => {
             color="primary"
             className={classes.submit}
             component={RouterLink}
-            to="welcome"
+            to={to}
             onClick = {Login}
           >
             Login

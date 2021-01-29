@@ -91,10 +91,135 @@ func IDLTE(id int) predicate.Course {
 	})
 }
 
+// CourseYear applies equality check predicate on the "Course_year" field. It's identical to CourseYearEQ.
+func CourseYear(v string) predicate.Course {
+	return predicate.Course(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldCourseYear), v))
+	})
+}
+
 // CourseName applies equality check predicate on the "Course_name" field. It's identical to CourseNameEQ.
 func CourseName(v string) predicate.Course {
 	return predicate.Course(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldCourseName), v))
+	})
+}
+
+// TeacherID applies equality check predicate on the "Teacher_id" field. It's identical to TeacherIDEQ.
+func TeacherID(v string) predicate.Course {
+	return predicate.Course(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldTeacherID), v))
+	})
+}
+
+// CourseYearEQ applies the EQ predicate on the "Course_year" field.
+func CourseYearEQ(v string) predicate.Course {
+	return predicate.Course(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldCourseYear), v))
+	})
+}
+
+// CourseYearNEQ applies the NEQ predicate on the "Course_year" field.
+func CourseYearNEQ(v string) predicate.Course {
+	return predicate.Course(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldCourseYear), v))
+	})
+}
+
+// CourseYearIn applies the In predicate on the "Course_year" field.
+func CourseYearIn(vs ...string) predicate.Course {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Course(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldCourseYear), v...))
+	})
+}
+
+// CourseYearNotIn applies the NotIn predicate on the "Course_year" field.
+func CourseYearNotIn(vs ...string) predicate.Course {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Course(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldCourseYear), v...))
+	})
+}
+
+// CourseYearGT applies the GT predicate on the "Course_year" field.
+func CourseYearGT(v string) predicate.Course {
+	return predicate.Course(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldCourseYear), v))
+	})
+}
+
+// CourseYearGTE applies the GTE predicate on the "Course_year" field.
+func CourseYearGTE(v string) predicate.Course {
+	return predicate.Course(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldCourseYear), v))
+	})
+}
+
+// CourseYearLT applies the LT predicate on the "Course_year" field.
+func CourseYearLT(v string) predicate.Course {
+	return predicate.Course(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldCourseYear), v))
+	})
+}
+
+// CourseYearLTE applies the LTE predicate on the "Course_year" field.
+func CourseYearLTE(v string) predicate.Course {
+	return predicate.Course(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldCourseYear), v))
+	})
+}
+
+// CourseYearContains applies the Contains predicate on the "Course_year" field.
+func CourseYearContains(v string) predicate.Course {
+	return predicate.Course(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldCourseYear), v))
+	})
+}
+
+// CourseYearHasPrefix applies the HasPrefix predicate on the "Course_year" field.
+func CourseYearHasPrefix(v string) predicate.Course {
+	return predicate.Course(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldCourseYear), v))
+	})
+}
+
+// CourseYearHasSuffix applies the HasSuffix predicate on the "Course_year" field.
+func CourseYearHasSuffix(v string) predicate.Course {
+	return predicate.Course(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldCourseYear), v))
+	})
+}
+
+// CourseYearEqualFold applies the EqualFold predicate on the "Course_year" field.
+func CourseYearEqualFold(v string) predicate.Course {
+	return predicate.Course(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldCourseYear), v))
+	})
+}
+
+// CourseYearContainsFold applies the ContainsFold predicate on the "Course_year" field.
+func CourseYearContainsFold(v string) predicate.Course {
+	return predicate.Course(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldCourseYear), v))
 	})
 }
 
@@ -209,31 +334,114 @@ func CourseNameContainsFold(v string) predicate.Course {
 	})
 }
 
-// HasInstructorInfoID applies the HasEdge predicate on the "InstructorInfo_id" edge.
-func HasInstructorInfoID() predicate.Course {
+// TeacherIDEQ applies the EQ predicate on the "Teacher_id" field.
+func TeacherIDEQ(v string) predicate.Course {
 	return predicate.Course(func(s *sql.Selector) {
-		step := sqlgraph.NewStep(
-			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(InstructorInfoIDTable, FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, true, InstructorInfoIDTable, InstructorInfoIDColumn),
-		)
-		sqlgraph.HasNeighbors(s, step)
+		s.Where(sql.EQ(s.C(FieldTeacherID), v))
 	})
 }
 
-// HasInstructorInfoIDWith applies the HasEdge predicate on the "InstructorInfo_id" edge with a given conditions (other predicates).
-func HasInstructorInfoIDWith(preds ...predicate.InstructorInfo) predicate.Course {
+// TeacherIDNEQ applies the NEQ predicate on the "Teacher_id" field.
+func TeacherIDNEQ(v string) predicate.Course {
 	return predicate.Course(func(s *sql.Selector) {
-		step := sqlgraph.NewStep(
-			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(InstructorInfoIDInverseTable, FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, true, InstructorInfoIDTable, InstructorInfoIDColumn),
-		)
-		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
-			for _, p := range preds {
-				p(s)
-			}
-		})
+		s.Where(sql.NEQ(s.C(FieldTeacherID), v))
+	})
+}
+
+// TeacherIDIn applies the In predicate on the "Teacher_id" field.
+func TeacherIDIn(vs ...string) predicate.Course {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Course(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldTeacherID), v...))
+	})
+}
+
+// TeacherIDNotIn applies the NotIn predicate on the "Teacher_id" field.
+func TeacherIDNotIn(vs ...string) predicate.Course {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Course(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldTeacherID), v...))
+	})
+}
+
+// TeacherIDGT applies the GT predicate on the "Teacher_id" field.
+func TeacherIDGT(v string) predicate.Course {
+	return predicate.Course(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldTeacherID), v))
+	})
+}
+
+// TeacherIDGTE applies the GTE predicate on the "Teacher_id" field.
+func TeacherIDGTE(v string) predicate.Course {
+	return predicate.Course(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldTeacherID), v))
+	})
+}
+
+// TeacherIDLT applies the LT predicate on the "Teacher_id" field.
+func TeacherIDLT(v string) predicate.Course {
+	return predicate.Course(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldTeacherID), v))
+	})
+}
+
+// TeacherIDLTE applies the LTE predicate on the "Teacher_id" field.
+func TeacherIDLTE(v string) predicate.Course {
+	return predicate.Course(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldTeacherID), v))
+	})
+}
+
+// TeacherIDContains applies the Contains predicate on the "Teacher_id" field.
+func TeacherIDContains(v string) predicate.Course {
+	return predicate.Course(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldTeacherID), v))
+	})
+}
+
+// TeacherIDHasPrefix applies the HasPrefix predicate on the "Teacher_id" field.
+func TeacherIDHasPrefix(v string) predicate.Course {
+	return predicate.Course(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldTeacherID), v))
+	})
+}
+
+// TeacherIDHasSuffix applies the HasSuffix predicate on the "Teacher_id" field.
+func TeacherIDHasSuffix(v string) predicate.Course {
+	return predicate.Course(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldTeacherID), v))
+	})
+}
+
+// TeacherIDEqualFold applies the EqualFold predicate on the "Teacher_id" field.
+func TeacherIDEqualFold(v string) predicate.Course {
+	return predicate.Course(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldTeacherID), v))
+	})
+}
+
+// TeacherIDContainsFold applies the ContainsFold predicate on the "Teacher_id" field.
+func TeacherIDContainsFold(v string) predicate.Course {
+	return predicate.Course(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldTeacherID), v))
 	})
 }
 

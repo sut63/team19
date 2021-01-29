@@ -12,7 +12,6 @@ import (
 	"github.com/team19/app/ent/course"
 	"github.com/team19/app/ent/degree"
 	"github.com/team19/app/ent/department"
-	"github.com/team19/app/ent/instructorinfo"
 	"github.com/team19/app/ent/predicate"
 	"github.com/team19/app/ent/subject"
 )
@@ -31,29 +30,22 @@ func (cu *CourseUpdate) Where(ps ...predicate.Course) *CourseUpdate {
 	return cu
 }
 
+// SetCourseYear sets the Course_year field.
+func (cu *CourseUpdate) SetCourseYear(s string) *CourseUpdate {
+	cu.mutation.SetCourseYear(s)
+	return cu
+}
+
 // SetCourseName sets the Course_name field.
 func (cu *CourseUpdate) SetCourseName(s string) *CourseUpdate {
 	cu.mutation.SetCourseName(s)
 	return cu
 }
 
-// SetInstructorInfoIDID sets the InstructorInfo_id edge to InstructorInfo by id.
-func (cu *CourseUpdate) SetInstructorInfoIDID(id int) *CourseUpdate {
-	cu.mutation.SetInstructorInfoIDID(id)
+// SetTeacherID sets the Teacher_id field.
+func (cu *CourseUpdate) SetTeacherID(s string) *CourseUpdate {
+	cu.mutation.SetTeacherID(s)
 	return cu
-}
-
-// SetNillableInstructorInfoIDID sets the InstructorInfo_id edge to InstructorInfo by id if the given value is not nil.
-func (cu *CourseUpdate) SetNillableInstructorInfoIDID(id *int) *CourseUpdate {
-	if id != nil {
-		cu = cu.SetInstructorInfoIDID(*id)
-	}
-	return cu
-}
-
-// SetInstructorInfoID sets the InstructorInfo_id edge to InstructorInfo.
-func (cu *CourseUpdate) SetInstructorInfoID(i *InstructorInfo) *CourseUpdate {
-	return cu.SetInstructorInfoIDID(i.ID)
 }
 
 // SetDepartmentIDID sets the Department_id edge to Department by id.
@@ -118,12 +110,6 @@ func (cu *CourseUpdate) Mutation() *CourseMutation {
 	return cu.mutation
 }
 
-// ClearInstructorInfoID clears the InstructorInfo_id edge to InstructorInfo.
-func (cu *CourseUpdate) ClearInstructorInfoID() *CourseUpdate {
-	cu.mutation.ClearInstructorInfoID()
-	return cu
-}
-
 // ClearDepartmentID clears the Department_id edge to Department.
 func (cu *CourseUpdate) ClearDepartmentID() *CourseUpdate {
 	cu.mutation.ClearDepartmentID()
@@ -144,9 +130,19 @@ func (cu *CourseUpdate) ClearSubjectID() *CourseUpdate {
 
 // Save executes the query and returns the number of rows/vertices matched by this operation.
 func (cu *CourseUpdate) Save(ctx context.Context) (int, error) {
+	if v, ok := cu.mutation.CourseYear(); ok {
+		if err := course.CourseYearValidator(v); err != nil {
+			return 0, &ValidationError{Name: "Course_year", err: fmt.Errorf("ent: validator failed for field \"Course_year\": %w", err)}
+		}
+	}
 	if v, ok := cu.mutation.CourseName(); ok {
 		if err := course.CourseNameValidator(v); err != nil {
 			return 0, &ValidationError{Name: "Course_name", err: fmt.Errorf("ent: validator failed for field \"Course_name\": %w", err)}
+		}
+	}
+	if v, ok := cu.mutation.TeacherID(); ok {
+		if err := course.TeacherIDValidator(v); err != nil {
+			return 0, &ValidationError{Name: "Teacher_id", err: fmt.Errorf("ent: validator failed for field \"Teacher_id\": %w", err)}
 		}
 	}
 
@@ -217,6 +213,13 @@ func (cu *CourseUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
+	if value, ok := cu.mutation.CourseYear(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: course.FieldCourseYear,
+		})
+	}
 	if value, ok := cu.mutation.CourseName(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -224,40 +227,12 @@ func (cu *CourseUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: course.FieldCourseName,
 		})
 	}
-	if cu.mutation.InstructorInfoIDCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2O,
-			Inverse: true,
-			Table:   course.InstructorInfoIDTable,
-			Columns: []string{course.InstructorInfoIDColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
-					Column: instructorinfo.FieldID,
-				},
-			},
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := cu.mutation.InstructorInfoIDIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2O,
-			Inverse: true,
-			Table:   course.InstructorInfoIDTable,
-			Columns: []string{course.InstructorInfoIDColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
-					Column: instructorinfo.FieldID,
-				},
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	if value, ok := cu.mutation.TeacherID(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: course.FieldTeacherID,
+		})
 	}
 	if cu.mutation.DepartmentIDCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -382,29 +357,22 @@ type CourseUpdateOne struct {
 	mutation *CourseMutation
 }
 
+// SetCourseYear sets the Course_year field.
+func (cuo *CourseUpdateOne) SetCourseYear(s string) *CourseUpdateOne {
+	cuo.mutation.SetCourseYear(s)
+	return cuo
+}
+
 // SetCourseName sets the Course_name field.
 func (cuo *CourseUpdateOne) SetCourseName(s string) *CourseUpdateOne {
 	cuo.mutation.SetCourseName(s)
 	return cuo
 }
 
-// SetInstructorInfoIDID sets the InstructorInfo_id edge to InstructorInfo by id.
-func (cuo *CourseUpdateOne) SetInstructorInfoIDID(id int) *CourseUpdateOne {
-	cuo.mutation.SetInstructorInfoIDID(id)
+// SetTeacherID sets the Teacher_id field.
+func (cuo *CourseUpdateOne) SetTeacherID(s string) *CourseUpdateOne {
+	cuo.mutation.SetTeacherID(s)
 	return cuo
-}
-
-// SetNillableInstructorInfoIDID sets the InstructorInfo_id edge to InstructorInfo by id if the given value is not nil.
-func (cuo *CourseUpdateOne) SetNillableInstructorInfoIDID(id *int) *CourseUpdateOne {
-	if id != nil {
-		cuo = cuo.SetInstructorInfoIDID(*id)
-	}
-	return cuo
-}
-
-// SetInstructorInfoID sets the InstructorInfo_id edge to InstructorInfo.
-func (cuo *CourseUpdateOne) SetInstructorInfoID(i *InstructorInfo) *CourseUpdateOne {
-	return cuo.SetInstructorInfoIDID(i.ID)
 }
 
 // SetDepartmentIDID sets the Department_id edge to Department by id.
@@ -469,12 +437,6 @@ func (cuo *CourseUpdateOne) Mutation() *CourseMutation {
 	return cuo.mutation
 }
 
-// ClearInstructorInfoID clears the InstructorInfo_id edge to InstructorInfo.
-func (cuo *CourseUpdateOne) ClearInstructorInfoID() *CourseUpdateOne {
-	cuo.mutation.ClearInstructorInfoID()
-	return cuo
-}
-
 // ClearDepartmentID clears the Department_id edge to Department.
 func (cuo *CourseUpdateOne) ClearDepartmentID() *CourseUpdateOne {
 	cuo.mutation.ClearDepartmentID()
@@ -495,9 +457,19 @@ func (cuo *CourseUpdateOne) ClearSubjectID() *CourseUpdateOne {
 
 // Save executes the query and returns the updated entity.
 func (cuo *CourseUpdateOne) Save(ctx context.Context) (*Course, error) {
+	if v, ok := cuo.mutation.CourseYear(); ok {
+		if err := course.CourseYearValidator(v); err != nil {
+			return nil, &ValidationError{Name: "Course_year", err: fmt.Errorf("ent: validator failed for field \"Course_year\": %w", err)}
+		}
+	}
 	if v, ok := cuo.mutation.CourseName(); ok {
 		if err := course.CourseNameValidator(v); err != nil {
 			return nil, &ValidationError{Name: "Course_name", err: fmt.Errorf("ent: validator failed for field \"Course_name\": %w", err)}
+		}
+	}
+	if v, ok := cuo.mutation.TeacherID(); ok {
+		if err := course.TeacherIDValidator(v); err != nil {
+			return nil, &ValidationError{Name: "Teacher_id", err: fmt.Errorf("ent: validator failed for field \"Teacher_id\": %w", err)}
 		}
 	}
 
@@ -566,6 +538,13 @@ func (cuo *CourseUpdateOne) sqlSave(ctx context.Context) (c *Course, err error) 
 		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing Course.ID for update")}
 	}
 	_spec.Node.ID.Value = id
+	if value, ok := cuo.mutation.CourseYear(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: course.FieldCourseYear,
+		})
+	}
 	if value, ok := cuo.mutation.CourseName(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -573,40 +552,12 @@ func (cuo *CourseUpdateOne) sqlSave(ctx context.Context) (c *Course, err error) 
 			Column: course.FieldCourseName,
 		})
 	}
-	if cuo.mutation.InstructorInfoIDCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2O,
-			Inverse: true,
-			Table:   course.InstructorInfoIDTable,
-			Columns: []string{course.InstructorInfoIDColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
-					Column: instructorinfo.FieldID,
-				},
-			},
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := cuo.mutation.InstructorInfoIDIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2O,
-			Inverse: true,
-			Table:   course.InstructorInfoIDTable,
-			Columns: []string{course.InstructorInfoIDColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
-					Column: instructorinfo.FieldID,
-				},
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	if value, ok := cuo.mutation.TeacherID(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: course.FieldTeacherID,
+		})
 	}
 	if cuo.mutation.DepartmentIDCleared() {
 		edge := &sqlgraph.EdgeSpec{

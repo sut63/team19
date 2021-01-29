@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 
 	"github.com/gin-contrib/cors"
@@ -11,6 +12,9 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/team19/app/controllers"
 	"github.com/team19/app/ent"
+	"github.com/team19/app/ent/department"
+	"github.com/team19/app/ent/instructorroom"
+	"github.com/team19/app/ent/title"
 )
 
 // Departments defines the struct for the departments
@@ -33,6 +37,22 @@ type InstructorRooms struct {
 type InstructorRoom struct {
 	ROOM     string
 	BUILDING string
+}
+
+// InstructorInfos defines the struct for the instructorinfos
+type InstructorInfos struct {
+	InstructorInfo []InstructorInfo
+}
+
+// InstructorInfo defines the struct for the instructorinfo
+type InstructorInfo struct {
+	NAME             string
+	PHONENUMBER      string
+	EMAIL            string
+	PASSWORD         string
+	departmentID     int
+	instructorroomID int
+	titleID          int
 }
 
 // @title SUT SA Example API
@@ -258,6 +278,86 @@ func main() {
 		client.Term.
 			Create().
 			SetTERM(te).
+			Save(context.Background())
+	}
+
+	// Set InstructorRooms Data
+	instructorinfos := InstructorInfos{
+		InstructorInfo: []InstructorInfo{
+			{"Example", "0900000000", "example@email.com", "1234", 4, 1, 7},
+			{"Master", "0900000001", "master@email.com", "1234", 4, 1, 6},
+			{"Rinda", "0900000002", "rinda@email.com", "1234", 4, 1, 5},
+			{"Smart", "0900000003", "smart@email.com", "1234", 4, 1, 4},
+			{"Lilly", "0900000004", "lilly@email.com", "1234", 4, 1, 4},
+			{"Krit", "0999999999", "krit@email.com", "krit", 4, 1, 7},
+			{"Pat", "0999999998", "pat@email.com", "pat", 4, 1, 6},
+			{"Art", "0999999997", "art@email.com", "art", 4, 1, 5},
+			{"Kwan", "0999999996", "kwan@email.com", "kwan", 4, 1, 4},
+			{"Empty", "0900000005", "empty@email.com", "1234", 4, 1, 1},
+			{"Ford", "0800000001", "ford@email.com", "1234", 1, 2, 7},
+			{"Utaga", "0800000002", "utaga@email.com", "1234", 2, 3, 7},
+			{"Tran", "0800000003", "tran@email.com", "1234", 3, 4, 7},
+			{"Caral", "0800000004", "aral@email.com", "1234", 5, 5, 7},
+			{"Meranin", "0800000005", "meranin@email.com", "1234", 6, 6, 7},
+			{"Caramel", "0800000006", "caramel@email.com", "1234", 7, 7, 7},
+			{"Pernjit", "0800000007", "pernjit@email.com", "1234", 8, 8, 7},
+			{"Polygon", "0800000008", "polygon@email.com", "1234", 9, 9, 7},
+			{"Tesla", "0800000009", "tesla@email.com", "1234", 10, 10, 7},
+			{"Schindler", "0800000010", "schindler@email.com", "1234", 11, 2, 7},
+			{"Slime", "0800000011", "slime@email.com", "1234", 12, 3, 7},
+			{"Lake", "0600000001", "lake@email.com", "1234", 13, 4, 7},
+			{"Circuit", "0600000002", "circuit@email.com", "1234", 14, 5, 7},
+			{"Ceo", "0600000003", "ceo@email.com", "1234", 15, 6, 7},
+			{"Roboto", "0600000004", "roboto@email.com", "1234", 16, 7, 7},
+			{"Gacha", "0600000005", "gacha@email.com", "1234", 17, 8, 7},
+			{"Plane", "0600000006", "plane@email.com", "1234", 18, 9, 7},
+			{"Luara", "0600000007", "luara@email.com", "1234", 19, 10, 7},
+			{"Aura", "0600000008", "aura@email.com", "1234", 20, 2, 7},
+			{"Kaye", "0600000009", "kaye@email.com", "1234", 21, 3, 7},
+		},
+	}
+
+	for _, ii := range instructorinfos.InstructorInfo {
+
+		d, err := client.Department.
+			Query().
+			Where(department.IDEQ(int(ii.departmentID))).
+			Only(context.Background())
+
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+
+		ir, err := client.InstructorRoom.
+			Query().
+			Where(instructorroom.IDEQ(int(ii.instructorroomID))).
+			Only(context.Background())
+
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+
+		t, err := client.Title.
+			Query().
+			Where(title.IDEQ(int(ii.titleID))).
+			Only(context.Background())
+
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+
+		client.InstructorInfo.
+			Create().
+			SetNAME(ii.NAME).
+			SetPHONENUMBER(ii.PHONENUMBER).
+			SetEMAIL(ii.EMAIL).
+			SetPASSWORD(ii.PASSWORD).
+			SetDepartment(d).
+			SetInstructorroom(ir).
+			SetTitle(t).
 			Save(context.Background())
 	}
 
