@@ -43,6 +43,12 @@ func (sou *SubjectsOfferedUpdate) SetSTATUS(s string) *SubjectsOfferedUpdate {
 	return sou
 }
 
+// SetRemain sets the Remain field.
+func (sou *SubjectsOfferedUpdate) SetRemain(s string) *SubjectsOfferedUpdate {
+	sou.mutation.SetRemain(s)
+	return sou
+}
+
 // SetSubjectID sets the Subject edge to Subject by id.
 func (sou *SubjectsOfferedUpdate) SetSubjectID(id int) *SubjectsOfferedUpdate {
 	sou.mutation.SetSubjectID(id)
@@ -160,6 +166,11 @@ func (sou *SubjectsOfferedUpdate) Save(ctx context.Context) (int, error) {
 			return 0, &ValidationError{Name: "STATUS", err: fmt.Errorf("ent: validator failed for field \"STATUS\": %w", err)}
 		}
 	}
+	if v, ok := sou.mutation.Remain(); ok {
+		if err := subjectsoffered.RemainValidator(v); err != nil {
+			return 0, &ValidationError{Name: "Remain", err: fmt.Errorf("ent: validator failed for field \"Remain\": %w", err)}
+		}
+	}
 
 	var (
 		err      error
@@ -240,6 +251,13 @@ func (sou *SubjectsOfferedUpdate) sqlSave(ctx context.Context) (n int, err error
 			Type:   field.TypeString,
 			Value:  value,
 			Column: subjectsoffered.FieldSTATUS,
+		})
+	}
+	if value, ok := sou.mutation.Remain(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: subjectsoffered.FieldRemain,
 		})
 	}
 	if sou.mutation.SubjectCleared() {
@@ -412,6 +430,12 @@ func (souo *SubjectsOfferedUpdateOne) SetSTATUS(s string) *SubjectsOfferedUpdate
 	return souo
 }
 
+// SetRemain sets the Remain field.
+func (souo *SubjectsOfferedUpdateOne) SetRemain(s string) *SubjectsOfferedUpdateOne {
+	souo.mutation.SetRemain(s)
+	return souo
+}
+
 // SetSubjectID sets the Subject edge to Subject by id.
 func (souo *SubjectsOfferedUpdateOne) SetSubjectID(id int) *SubjectsOfferedUpdateOne {
 	souo.mutation.SetSubjectID(id)
@@ -529,6 +553,11 @@ func (souo *SubjectsOfferedUpdateOne) Save(ctx context.Context) (*SubjectsOffere
 			return nil, &ValidationError{Name: "STATUS", err: fmt.Errorf("ent: validator failed for field \"STATUS\": %w", err)}
 		}
 	}
+	if v, ok := souo.mutation.Remain(); ok {
+		if err := subjectsoffered.RemainValidator(v); err != nil {
+			return nil, &ValidationError{Name: "Remain", err: fmt.Errorf("ent: validator failed for field \"Remain\": %w", err)}
+		}
+	}
 
 	var (
 		err  error
@@ -607,6 +636,13 @@ func (souo *SubjectsOfferedUpdateOne) sqlSave(ctx context.Context) (so *Subjects
 			Type:   field.TypeString,
 			Value:  value,
 			Column: subjectsoffered.FieldSTATUS,
+		})
+	}
+	if value, ok := souo.mutation.Remain(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: subjectsoffered.FieldRemain,
 		})
 	}
 	if souo.mutation.SubjectCleared() {

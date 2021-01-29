@@ -10,7 +10,6 @@ import (
 	"github.com/team19/app/ent/course"
 	"github.com/team19/app/ent/degree"
 	"github.com/team19/app/ent/department"
-	"github.com/team19/app/ent/instructorinfo"
 	"github.com/team19/app/ent/subject"
 )
 
@@ -19,21 +18,22 @@ type Course struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
+	// CourseYear holds the value of the "Course_year" field.
+	CourseYear string `json:"Course_year,omitempty"`
 	// CourseName holds the value of the "Course_name" field.
 	CourseName string `json:"Course_name,omitempty"`
+	// TeacherID holds the value of the "Teacher_id" field.
+	TeacherID string `json:"Teacher_id,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the CourseQuery when eager-loading is set.
-	Edges             CourseEdges `json:"edges"`
-	Degree_id         *int
-	department_id     *int
-	InstructorInfo_id *int
-	Subject_id        *int
+	Edges         CourseEdges `json:"edges"`
+	Degree_id     *int
+	department_id *int
+	Subject_id    *int
 }
 
 // CourseEdges holds the relations/edges for other nodes in the graph.
 type CourseEdges struct {
-	// InstructorInfoID holds the value of the InstructorInfo_id edge.
-	InstructorInfoID *InstructorInfo
 	// DepartmentID holds the value of the Department_id edge.
 	DepartmentID *Department
 	// DegreeID holds the value of the Degree_id edge.
@@ -42,27 +42,13 @@ type CourseEdges struct {
 	SubjectID *Subject
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [4]bool
-}
-
-// InstructorInfoIDOrErr returns the InstructorInfoID value or an error if the edge
-// was not loaded in eager-loading, or loaded but was not found.
-func (e CourseEdges) InstructorInfoIDOrErr() (*InstructorInfo, error) {
-	if e.loadedTypes[0] {
-		if e.InstructorInfoID == nil {
-			// The edge InstructorInfo_id was loaded in eager-loading,
-			// but was not found.
-			return nil, &NotFoundError{label: instructorinfo.Label}
-		}
-		return e.InstructorInfoID, nil
-	}
-	return nil, &NotLoadedError{edge: "InstructorInfo_id"}
+	loadedTypes [3]bool
 }
 
 // DepartmentIDOrErr returns the DepartmentID value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
 func (e CourseEdges) DepartmentIDOrErr() (*Department, error) {
-	if e.loadedTypes[1] {
+	if e.loadedTypes[0] {
 		if e.DepartmentID == nil {
 			// The edge Department_id was loaded in eager-loading,
 			// but was not found.
@@ -76,7 +62,7 @@ func (e CourseEdges) DepartmentIDOrErr() (*Department, error) {
 // DegreeIDOrErr returns the DegreeID value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
 func (e CourseEdges) DegreeIDOrErr() (*Degree, error) {
-	if e.loadedTypes[2] {
+	if e.loadedTypes[1] {
 		if e.DegreeID == nil {
 			// The edge Degree_id was loaded in eager-loading,
 			// but was not found.
@@ -90,7 +76,7 @@ func (e CourseEdges) DegreeIDOrErr() (*Degree, error) {
 // SubjectIDOrErr returns the SubjectID value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
 func (e CourseEdges) SubjectIDOrErr() (*Subject, error) {
-	if e.loadedTypes[3] {
+	if e.loadedTypes[2] {
 		if e.SubjectID == nil {
 			// The edge Subject_id was loaded in eager-loading,
 			// but was not found.
@@ -105,7 +91,9 @@ func (e CourseEdges) SubjectIDOrErr() (*Subject, error) {
 func (*Course) scanValues() []interface{} {
 	return []interface{}{
 		&sql.NullInt64{},  // id
+		&sql.NullString{}, // Course_year
 		&sql.NullString{}, // Course_name
+		&sql.NullString{}, // Teacher_id
 	}
 }
 
@@ -114,7 +102,6 @@ func (*Course) fkValues() []interface{} {
 	return []interface{}{
 		&sql.NullInt64{}, // Degree_id
 		&sql.NullInt64{}, // department_id
-		&sql.NullInt64{}, // InstructorInfo_id
 		&sql.NullInt64{}, // Subject_id
 	}
 }
@@ -132,11 +119,21 @@ func (c *Course) assignValues(values ...interface{}) error {
 	c.ID = int(value.Int64)
 	values = values[1:]
 	if value, ok := values[0].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field Course_name", values[0])
+		return fmt.Errorf("unexpected type %T for field Course_year", values[0])
+	} else if value.Valid {
+		c.CourseYear = value.String
+	}
+	if value, ok := values[1].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field Course_name", values[1])
 	} else if value.Valid {
 		c.CourseName = value.String
 	}
-	values = values[1:]
+	if value, ok := values[2].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field Teacher_id", values[2])
+	} else if value.Valid {
+		c.TeacherID = value.String
+	}
+	values = values[3:]
 	if len(values) == len(course.ForeignKeys) {
 		if value, ok := values[0].(*sql.NullInt64); !ok {
 			return fmt.Errorf("unexpected type %T for edge-field Degree_id", value)
@@ -151,12 +148,6 @@ func (c *Course) assignValues(values ...interface{}) error {
 			*c.department_id = int(value.Int64)
 		}
 		if value, ok := values[2].(*sql.NullInt64); !ok {
-			return fmt.Errorf("unexpected type %T for edge-field InstructorInfo_id", value)
-		} else if value.Valid {
-			c.InstructorInfo_id = new(int)
-			*c.InstructorInfo_id = int(value.Int64)
-		}
-		if value, ok := values[3].(*sql.NullInt64); !ok {
 			return fmt.Errorf("unexpected type %T for edge-field Subject_id", value)
 		} else if value.Valid {
 			c.Subject_id = new(int)
@@ -164,11 +155,6 @@ func (c *Course) assignValues(values ...interface{}) error {
 		}
 	}
 	return nil
-}
-
-// QueryInstructorInfoID queries the InstructorInfo_id edge of the Course.
-func (c *Course) QueryInstructorInfoID() *InstructorInfoQuery {
-	return (&CourseClient{config: c.config}).QueryInstructorInfoID(c)
 }
 
 // QueryDepartmentID queries the Department_id edge of the Course.
@@ -209,8 +195,12 @@ func (c *Course) String() string {
 	var builder strings.Builder
 	builder.WriteString("Course(")
 	builder.WriteString(fmt.Sprintf("id=%v", c.ID))
+	builder.WriteString(", Course_year=")
+	builder.WriteString(c.CourseYear)
 	builder.WriteString(", Course_name=")
 	builder.WriteString(c.CourseName)
+	builder.WriteString(", Teacher_id=")
+	builder.WriteString(c.TeacherID)
 	builder.WriteByte(')')
 	return builder.String()
 }

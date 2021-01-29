@@ -12,7 +12,6 @@ import (
 	"github.com/team19/app/ent/course"
 	"github.com/team19/app/ent/degree"
 	"github.com/team19/app/ent/department"
-	"github.com/team19/app/ent/instructorinfo"
 	"github.com/team19/app/ent/subject"
 )
 
@@ -23,29 +22,22 @@ type CourseCreate struct {
 	hooks    []Hook
 }
 
+// SetCourseYear sets the Course_year field.
+func (cc *CourseCreate) SetCourseYear(s string) *CourseCreate {
+	cc.mutation.SetCourseYear(s)
+	return cc
+}
+
 // SetCourseName sets the Course_name field.
 func (cc *CourseCreate) SetCourseName(s string) *CourseCreate {
 	cc.mutation.SetCourseName(s)
 	return cc
 }
 
-// SetInstructorInfoIDID sets the InstructorInfo_id edge to InstructorInfo by id.
-func (cc *CourseCreate) SetInstructorInfoIDID(id int) *CourseCreate {
-	cc.mutation.SetInstructorInfoIDID(id)
+// SetTeacherID sets the Teacher_id field.
+func (cc *CourseCreate) SetTeacherID(s string) *CourseCreate {
+	cc.mutation.SetTeacherID(s)
 	return cc
-}
-
-// SetNillableInstructorInfoIDID sets the InstructorInfo_id edge to InstructorInfo by id if the given value is not nil.
-func (cc *CourseCreate) SetNillableInstructorInfoIDID(id *int) *CourseCreate {
-	if id != nil {
-		cc = cc.SetInstructorInfoIDID(*id)
-	}
-	return cc
-}
-
-// SetInstructorInfoID sets the InstructorInfo_id edge to InstructorInfo.
-func (cc *CourseCreate) SetInstructorInfoID(i *InstructorInfo) *CourseCreate {
-	return cc.SetInstructorInfoIDID(i.ID)
 }
 
 // SetDepartmentIDID sets the Department_id edge to Department by id.
@@ -112,12 +104,28 @@ func (cc *CourseCreate) Mutation() *CourseMutation {
 
 // Save creates the Course in the database.
 func (cc *CourseCreate) Save(ctx context.Context) (*Course, error) {
+	if _, ok := cc.mutation.CourseYear(); !ok {
+		return nil, &ValidationError{Name: "Course_year", err: errors.New("ent: missing required field \"Course_year\"")}
+	}
+	if v, ok := cc.mutation.CourseYear(); ok {
+		if err := course.CourseYearValidator(v); err != nil {
+			return nil, &ValidationError{Name: "Course_year", err: fmt.Errorf("ent: validator failed for field \"Course_year\": %w", err)}
+		}
+	}
 	if _, ok := cc.mutation.CourseName(); !ok {
 		return nil, &ValidationError{Name: "Course_name", err: errors.New("ent: missing required field \"Course_name\"")}
 	}
 	if v, ok := cc.mutation.CourseName(); ok {
 		if err := course.CourseNameValidator(v); err != nil {
 			return nil, &ValidationError{Name: "Course_name", err: fmt.Errorf("ent: validator failed for field \"Course_name\": %w", err)}
+		}
+	}
+	if _, ok := cc.mutation.TeacherID(); !ok {
+		return nil, &ValidationError{Name: "Teacher_id", err: errors.New("ent: missing required field \"Teacher_id\"")}
+	}
+	if v, ok := cc.mutation.TeacherID(); ok {
+		if err := course.TeacherIDValidator(v); err != nil {
+			return nil, &ValidationError{Name: "Teacher_id", err: fmt.Errorf("ent: validator failed for field \"Teacher_id\": %w", err)}
 		}
 	}
 	var (
@@ -180,6 +188,14 @@ func (cc *CourseCreate) createSpec() (*Course, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
+	if value, ok := cc.mutation.CourseYear(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: course.FieldCourseYear,
+		})
+		c.CourseYear = value
+	}
 	if value, ok := cc.mutation.CourseName(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -188,24 +204,13 @@ func (cc *CourseCreate) createSpec() (*Course, *sqlgraph.CreateSpec) {
 		})
 		c.CourseName = value
 	}
-	if nodes := cc.mutation.InstructorInfoIDIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2O,
-			Inverse: true,
-			Table:   course.InstructorInfoIDTable,
-			Columns: []string{course.InstructorInfoIDColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
-					Column: instructorinfo.FieldID,
-				},
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges = append(_spec.Edges, edge)
+	if value, ok := cc.mutation.TeacherID(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: course.FieldTeacherID,
+		})
+		c.TeacherID = value
 	}
 	if nodes := cc.mutation.DepartmentIDIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{

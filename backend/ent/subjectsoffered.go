@@ -23,6 +23,8 @@ type SubjectsOffered struct {
 	AMOUNT string `json:"AMOUNT,omitempty"`
 	// STATUS holds the value of the "STATUS" field.
 	STATUS string `json:"STATUS,omitempty"`
+	// Remain holds the value of the "Remain" field.
+	Remain string `json:"Remain,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the SubjectsOfferedQuery when eager-loading is set.
 	Edges      SubjectsOfferedEdges `json:"edges"`
@@ -109,6 +111,7 @@ func (*SubjectsOffered) scanValues() []interface{} {
 		&sql.NullInt64{},  // id
 		&sql.NullString{}, // AMOUNT
 		&sql.NullString{}, // STATUS
+		&sql.NullString{}, // Remain
 	}
 }
 
@@ -144,7 +147,12 @@ func (so *SubjectsOffered) assignValues(values ...interface{}) error {
 	} else if value.Valid {
 		so.STATUS = value.String
 	}
-	values = values[2:]
+	if value, ok := values[2].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field Remain", values[2])
+	} else if value.Valid {
+		so.Remain = value.String
+	}
+	values = values[3:]
 	if len(values) == len(subjectsoffered.ForeignKeys) {
 		if value, ok := values[0].(*sql.NullInt64); !ok {
 			return fmt.Errorf("unexpected type %T for edge-field Degree_id", value)
@@ -221,6 +229,8 @@ func (so *SubjectsOffered) String() string {
 	builder.WriteString(so.AMOUNT)
 	builder.WriteString(", STATUS=")
 	builder.WriteString(so.STATUS)
+	builder.WriteString(", Remain=")
+	builder.WriteString(so.Remain)
 	builder.WriteByte(')')
 	return builder.String()
 }

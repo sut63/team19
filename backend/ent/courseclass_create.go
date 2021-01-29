@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
@@ -21,6 +22,12 @@ type CourseclassCreate struct {
 	config
 	mutation *CourseclassMutation
 	hooks    []Hook
+}
+
+// SetTablecode sets the tablecode field.
+func (cc *CourseclassCreate) SetTablecode(s string) *CourseclassCreate {
+	cc.mutation.SetTablecode(s)
+	return cc
 }
 
 // SetClasstimeID sets the classtime edge to Classtime by id.
@@ -125,6 +132,14 @@ func (cc *CourseclassCreate) Mutation() *CourseclassMutation {
 
 // Save creates the Courseclass in the database.
 func (cc *CourseclassCreate) Save(ctx context.Context) (*Courseclass, error) {
+	if _, ok := cc.mutation.Tablecode(); !ok {
+		return nil, &ValidationError{Name: "tablecode", err: errors.New("ent: missing required field \"tablecode\"")}
+	}
+	if v, ok := cc.mutation.Tablecode(); ok {
+		if err := courseclass.TablecodeValidator(v); err != nil {
+			return nil, &ValidationError{Name: "tablecode", err: fmt.Errorf("ent: validator failed for field \"tablecode\": %w", err)}
+		}
+	}
 	var (
 		err  error
 		node *Courseclass
@@ -185,6 +200,14 @@ func (cc *CourseclassCreate) createSpec() (*Courseclass, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
+	if value, ok := cc.mutation.Tablecode(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: courseclass.FieldTablecode,
+		})
+		c.Tablecode = value
+	}
 	if nodes := cc.mutation.ClasstimeIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,

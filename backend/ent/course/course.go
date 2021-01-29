@@ -7,11 +7,13 @@ const (
 	Label = "course"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
+	// FieldCourseYear holds the string denoting the course_year field in the database.
+	FieldCourseYear = "course_year"
 	// FieldCourseName holds the string denoting the course_name field in the database.
 	FieldCourseName = "course_name"
+	// FieldTeacherID holds the string denoting the teacher_id field in the database.
+	FieldTeacherID = "teacher_id"
 
-	// EdgeInstructorInfoID holds the string denoting the instructorinfo_id edge name in mutations.
-	EdgeInstructorInfoID = "InstructorInfo_id"
 	// EdgeDepartmentID holds the string denoting the department_id edge name in mutations.
 	EdgeDepartmentID = "Department_id"
 	// EdgeDegreeID holds the string denoting the degree_id edge name in mutations.
@@ -21,13 +23,6 @@ const (
 
 	// Table holds the table name of the course in the database.
 	Table = "courses"
-	// InstructorInfoIDTable is the table the holds the InstructorInfo_id relation/edge.
-	InstructorInfoIDTable = "courses"
-	// InstructorInfoIDInverseTable is the table name for the InstructorInfo entity.
-	// It exists in this package in order to avoid circular dependency with the "instructorinfo" package.
-	InstructorInfoIDInverseTable = "instructor_infos"
-	// InstructorInfoIDColumn is the table column denoting the InstructorInfo_id relation/edge.
-	InstructorInfoIDColumn = "InstructorInfo_id"
 	// DepartmentIDTable is the table the holds the Department_id relation/edge.
 	DepartmentIDTable = "courses"
 	// DepartmentIDInverseTable is the table name for the Department entity.
@@ -54,18 +49,23 @@ const (
 // Columns holds all SQL columns for course fields.
 var Columns = []string{
 	FieldID,
+	FieldCourseYear,
 	FieldCourseName,
+	FieldTeacherID,
 }
 
 // ForeignKeys holds the SQL foreign-keys that are owned by the Course type.
 var ForeignKeys = []string{
 	"Degree_id",
 	"department_id",
-	"InstructorInfo_id",
 	"Subject_id",
 }
 
 var (
+	// CourseYearValidator is a validator for the "Course_year" field. It is called by the builders before save.
+	CourseYearValidator func(string) error
 	// CourseNameValidator is a validator for the "Course_name" field. It is called by the builders before save.
 	CourseNameValidator func(string) error
+	// TeacherIDValidator is a validator for the "Teacher_id" field. It is called by the builders before save.
+	TeacherIDValidator func(string) error
 )

@@ -1,6 +1,8 @@
 package schema
 
 import (
+	"regexp"
+
 	"github.com/facebookincubator/ent"
 	"github.com/facebookincubator/ent/schema/edge"
 	"github.com/facebookincubator/ent/schema/field"
@@ -15,15 +17,15 @@ type Course struct {
 func (Course) Fields() []ent.Field {
 	return []ent.Field{
 
-		field.String("Course_name").NotEmpty(),
+		field.String("Course_year").Match(regexp.MustCompile("[0-9]")),
+		field.String("Course_name").Match(regexp.MustCompile("[a-zA-Z0-9]")),
+		field.String("Teacher_id").Match(regexp.MustCompile("[T]\\d{7}")),
 	}
 }
 
 // Edges of the Course.
 func (Course) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.From("InstructorInfo_id", InstructorInfo.Type).
-			Ref("instructor").Unique(),
 
 		edge.From("Department_id", Department.Type).
 			Ref("department").Unique(),

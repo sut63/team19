@@ -1,6 +1,10 @@
 package schema
 
 import (
+	"errors"
+	"regexp"
+	"strings"
+
 	"github.com/facebookincubator/ent"
 	"github.com/facebookincubator/ent/schema/edge"
 	"github.com/facebookincubator/ent/schema/field"
@@ -14,10 +18,25 @@ type InstructorInfo struct {
 // Fields of the InstructorInfo.
 func (InstructorInfo) Fields() []ent.Field {
 	return []ent.Field{
-		field.String("NAME").Unique(),
-		field.String("PHONENUMBER").Unique(),
-		field.String("EMAIL").Unique(),
-		field.String("PASSWORD"),
+		field.String("NAME").
+			Match(regexp.MustCompile("[a-zA-Z_]+$")).
+			Validate(func(s string) error {
+				if strings.ToLower(s) == s {
+					return errors.New("Your name must begin with Uppercase")
+				}
+				return nil
+			}).Unique().NotEmpty(),
+		field.String("PHONENUMBER").Unique().
+			//Match(regexp.MustCompile("[0]+[9]||[0]+[8]||[0]+[6]")).
+			Validate(func(s string) error {
+				match, _ := regexp.MatchString("[0]+[9]\\d{8}$|[0]+[8]\\d{8}$|[0]+[6]\\d{8}$", s)
+				if !match {
+					return errors.New("Your Phone-number must begin with 09 08 or 06 and limit 10 digits")
+				}
+				return nil
+			}).NotEmpty(),
+		field.String("EMAIL").Unique().NotEmpty(),
+		field.String("PASSWORD").NotEmpty(),
 	}
 }
 
@@ -27,7 +46,6 @@ func (InstructorInfo) Edges() []ent.Edge {
 		edge.From("title", Title.Type).Ref("instructorinfos").Unique(),
 		edge.From("instructorroom", InstructorRoom.Type).Ref("instructorinfos").Unique(),
 		edge.From("department", Department.Type).Ref("instructorinfos").Unique(),
-		edge.To("instructor", Course.Type).StorageKey(edge.Column("InstructorInfo_id")),
 		edge.To("courseclasses", Courseclass.Type).StorageKey(edge.Column("InstructorInfo_id")),
 	}
 }

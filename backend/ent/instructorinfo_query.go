@@ -12,7 +12,6 @@ import (
 	"github.com/facebookincubator/ent/dialect/sql"
 	"github.com/facebookincubator/ent/dialect/sql/sqlgraph"
 	"github.com/facebookincubator/ent/schema/field"
-	"github.com/team19/app/ent/course"
 	"github.com/team19/app/ent/courseclass"
 	"github.com/team19/app/ent/department"
 	"github.com/team19/app/ent/instructorinfo"
@@ -33,7 +32,6 @@ type InstructorInfoQuery struct {
 	withTitle          *TitleQuery
 	withInstructorroom *InstructorRoomQuery
 	withDepartment     *DepartmentQuery
-	withInstructor     *CourseQuery
 	withCourseclasses  *CourseclassQuery
 	withFKs            bool
 	// intermediate query (i.e. traversal path).
@@ -112,24 +110,6 @@ func (iiq *InstructorInfoQuery) QueryDepartment() *DepartmentQuery {
 			sqlgraph.From(instructorinfo.Table, instructorinfo.FieldID, iiq.sqlQuery()),
 			sqlgraph.To(department.Table, department.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, instructorinfo.DepartmentTable, instructorinfo.DepartmentColumn),
-		)
-		fromU = sqlgraph.SetNeighbors(iiq.driver.Dialect(), step)
-		return fromU, nil
-	}
-	return query
-}
-
-// QueryInstructor chains the current query on the instructor edge.
-func (iiq *InstructorInfoQuery) QueryInstructor() *CourseQuery {
-	query := &CourseQuery{config: iiq.config}
-	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := iiq.prepareQuery(ctx); err != nil {
-			return nil, err
-		}
-		step := sqlgraph.NewStep(
-			sqlgraph.From(instructorinfo.Table, instructorinfo.FieldID, iiq.sqlQuery()),
-			sqlgraph.To(course.Table, course.FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, instructorinfo.InstructorTable, instructorinfo.InstructorColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(iiq.driver.Dialect(), step)
 		return fromU, nil
@@ -367,17 +347,6 @@ func (iiq *InstructorInfoQuery) WithDepartment(opts ...func(*DepartmentQuery)) *
 	return iiq
 }
 
-//  WithInstructor tells the query-builder to eager-loads the nodes that are connected to
-// the "instructor" edge. The optional arguments used to configure the query builder of the edge.
-func (iiq *InstructorInfoQuery) WithInstructor(opts ...func(*CourseQuery)) *InstructorInfoQuery {
-	query := &CourseQuery{config: iiq.config}
-	for _, opt := range opts {
-		opt(query)
-	}
-	iiq.withInstructor = query
-	return iiq
-}
-
 //  WithCourseclasses tells the query-builder to eager-loads the nodes that are connected to
 // the "courseclasses" edge. The optional arguments used to configure the query builder of the edge.
 func (iiq *InstructorInfoQuery) WithCourseclasses(opts ...func(*CourseclassQuery)) *InstructorInfoQuery {
@@ -456,11 +425,10 @@ func (iiq *InstructorInfoQuery) sqlAll(ctx context.Context) ([]*InstructorInfo, 
 		nodes       = []*InstructorInfo{}
 		withFKs     = iiq.withFKs
 		_spec       = iiq.querySpec()
-		loadedTypes = [5]bool{
+		loadedTypes = [4]bool{
 			iiq.withTitle != nil,
 			iiq.withInstructorroom != nil,
 			iiq.withDepartment != nil,
-			iiq.withInstructor != nil,
 			iiq.withCourseclasses != nil,
 		}
 	)
@@ -566,34 +534,6 @@ func (iiq *InstructorInfoQuery) sqlAll(ctx context.Context) ([]*InstructorInfo, 
 			for i := range nodes {
 				nodes[i].Edges.Department = n
 			}
-		}
-	}
-
-	if query := iiq.withInstructor; query != nil {
-		fks := make([]driver.Value, 0, len(nodes))
-		nodeids := make(map[int]*InstructorInfo)
-		for i := range nodes {
-			fks = append(fks, nodes[i].ID)
-			nodeids[nodes[i].ID] = nodes[i]
-		}
-		query.withFKs = true
-		query.Where(predicate.Course(func(s *sql.Selector) {
-			s.Where(sql.InValues(instructorinfo.InstructorColumn, fks...))
-		}))
-		neighbors, err := query.All(ctx)
-		if err != nil {
-			return nil, err
-		}
-		for _, n := range neighbors {
-			fk := n.InstructorInfo_id
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "InstructorInfo_id" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
-			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "InstructorInfo_id" returned %v for node %v`, *fk, n.ID)
-			}
-			node.Edges.Instructor = append(node.Edges.Instructor, n)
 		}
 	}
 

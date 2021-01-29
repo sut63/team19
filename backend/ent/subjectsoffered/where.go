@@ -105,6 +105,13 @@ func STATUS(v string) predicate.SubjectsOffered {
 	})
 }
 
+// Remain applies equality check predicate on the "Remain" field. It's identical to RemainEQ.
+func Remain(v string) predicate.SubjectsOffered {
+	return predicate.SubjectsOffered(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldRemain), v))
+	})
+}
+
 // AMOUNTEQ applies the EQ predicate on the "AMOUNT" field.
 func AMOUNTEQ(v string) predicate.SubjectsOffered {
 	return predicate.SubjectsOffered(func(s *sql.Selector) {
@@ -324,6 +331,117 @@ func STATUSEqualFold(v string) predicate.SubjectsOffered {
 func STATUSContainsFold(v string) predicate.SubjectsOffered {
 	return predicate.SubjectsOffered(func(s *sql.Selector) {
 		s.Where(sql.ContainsFold(s.C(FieldSTATUS), v))
+	})
+}
+
+// RemainEQ applies the EQ predicate on the "Remain" field.
+func RemainEQ(v string) predicate.SubjectsOffered {
+	return predicate.SubjectsOffered(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldRemain), v))
+	})
+}
+
+// RemainNEQ applies the NEQ predicate on the "Remain" field.
+func RemainNEQ(v string) predicate.SubjectsOffered {
+	return predicate.SubjectsOffered(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldRemain), v))
+	})
+}
+
+// RemainIn applies the In predicate on the "Remain" field.
+func RemainIn(vs ...string) predicate.SubjectsOffered {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SubjectsOffered(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldRemain), v...))
+	})
+}
+
+// RemainNotIn applies the NotIn predicate on the "Remain" field.
+func RemainNotIn(vs ...string) predicate.SubjectsOffered {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SubjectsOffered(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldRemain), v...))
+	})
+}
+
+// RemainGT applies the GT predicate on the "Remain" field.
+func RemainGT(v string) predicate.SubjectsOffered {
+	return predicate.SubjectsOffered(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldRemain), v))
+	})
+}
+
+// RemainGTE applies the GTE predicate on the "Remain" field.
+func RemainGTE(v string) predicate.SubjectsOffered {
+	return predicate.SubjectsOffered(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldRemain), v))
+	})
+}
+
+// RemainLT applies the LT predicate on the "Remain" field.
+func RemainLT(v string) predicate.SubjectsOffered {
+	return predicate.SubjectsOffered(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldRemain), v))
+	})
+}
+
+// RemainLTE applies the LTE predicate on the "Remain" field.
+func RemainLTE(v string) predicate.SubjectsOffered {
+	return predicate.SubjectsOffered(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldRemain), v))
+	})
+}
+
+// RemainContains applies the Contains predicate on the "Remain" field.
+func RemainContains(v string) predicate.SubjectsOffered {
+	return predicate.SubjectsOffered(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldRemain), v))
+	})
+}
+
+// RemainHasPrefix applies the HasPrefix predicate on the "Remain" field.
+func RemainHasPrefix(v string) predicate.SubjectsOffered {
+	return predicate.SubjectsOffered(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldRemain), v))
+	})
+}
+
+// RemainHasSuffix applies the HasSuffix predicate on the "Remain" field.
+func RemainHasSuffix(v string) predicate.SubjectsOffered {
+	return predicate.SubjectsOffered(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldRemain), v))
+	})
+}
+
+// RemainEqualFold applies the EqualFold predicate on the "Remain" field.
+func RemainEqualFold(v string) predicate.SubjectsOffered {
+	return predicate.SubjectsOffered(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldRemain), v))
+	})
+}
+
+// RemainContainsFold applies the ContainsFold predicate on the "Remain" field.
+func RemainContainsFold(v string) predicate.SubjectsOffered {
+	return predicate.SubjectsOffered(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldRemain), v))
 	})
 }
 

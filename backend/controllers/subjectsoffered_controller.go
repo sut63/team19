@@ -24,6 +24,7 @@ type SubjectsOfferedController struct {
 type SubjectsOffered struct {
 	AMOUNT  string
 	STATUS  string
+	Remain  string
 	Subject int
 	Degree  int
 	Year    int
@@ -98,6 +99,7 @@ func (ctl *SubjectsOfferedController) CreateSubjectsOffered(c *gin.Context) {
 		Create().
 		SetAMOUNT(obj.AMOUNT).
 		SetSTATUS(obj.STATUS).
+		SetRemain(obj.Remain).
 		SetSubject(s).
 		SetDegree(deg).
 		SetYear(y).
@@ -105,15 +107,17 @@ func (ctl *SubjectsOfferedController) CreateSubjectsOffered(c *gin.Context) {
 		Save(context.Background())
 
 	if err != nil {
+		fmt.Println(err)
 		c.JSON(400, gin.H{
-			"error": "saving failed",
+			"status": false,
+			"error":  err,
 		})
 		return
 	}
 
 	c.JSON(200, gin.H{
-		"state": true,
-		"data":  so,
+		"status": true,
+		"data":   so,
 	})
 }
 
@@ -123,7 +127,7 @@ func (ctl *SubjectsOfferedController) CreateSubjectsOffered(c *gin.Context) {
 // @ID get-SubjectsOffered
 // @Produce  json
 // @Param id path int true "SubjectsOffered ID"
-// @Success 200 {object} ent.SubjectsOffered
+// @Success 200 {array} ent.SubjectsOffered
 // @Failure 400 {object} gin.H
 // @Failure 404 {object} gin.H
 // @Failure 500 {object} gin.H
@@ -139,8 +143,12 @@ func (ctl *SubjectsOfferedController) GetSubjectsOffered(c *gin.Context) {
 
 	so, err := ctl.client.SubjectsOffered.
 		Query().
+		WithSubject().
+		WithYear().
+		WithDegree().
+		WithTerm().
 		Where(subjectsoffered.IDEQ(int(id))).
-		Only(context.Background())
+		All(context.Background())
 	if err != nil {
 		c.JSON(404, gin.H{
 			"error": err.Error(),
@@ -191,7 +199,9 @@ func (ctl *SubjectsOfferedController) ListSubjectsOffered(c *gin.Context) {
 		Offset(offset).
 		All(context.Background())
 	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
+		c.JSON(400, gin.H{
+			"error": err.Error(),
+		})
 		return
 	}
 
@@ -283,7 +293,7 @@ func NewSubjectsOfferedController(router gin.IRouter, client *ent.Client) *Subje
 
 // InitSubjectsOfferedController registers routes to the main engine
 func (ctl *SubjectsOfferedController) register() {
-	SubjectsOffereds := ctl.router.Group("/Subjectsoffereds")
+	SubjectsOffereds := ctl.router.Group("/SubjectsOffereds")
 
 	SubjectsOffereds.GET("", ctl.ListSubjectsOffered)
 

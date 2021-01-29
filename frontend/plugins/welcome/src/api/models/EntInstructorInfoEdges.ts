@@ -14,10 +14,6 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    EntCourse,
-    EntCourseFromJSON,
-    EntCourseFromJSONTyped,
-    EntCourseToJSON,
     EntCourseclass,
     EntCourseclassFromJSON,
     EntCourseclassFromJSONTyped,
@@ -55,12 +51,6 @@ export interface EntInstructorInfoEdges {
      */
     department?: EntDepartment;
     /**
-     * Instructor holds the value of the instructor edge.
-     * @type {Array<EntCourse>}
-     * @memberof EntInstructorInfoEdges
-     */
-    instructor?: Array<EntCourse>;
-    /**
      * 
      * @type {EntInstructorRoom}
      * @memberof EntInstructorInfoEdges
@@ -85,10 +75,9 @@ export function EntInstructorInfoEdgesFromJSONTyped(json: any, ignoreDiscriminat
     return {
         
         'courseclasses': !exists(json, 'courseclasses') ? undefined : ((json['courseclasses'] as Array<any>).map(EntCourseclassFromJSON)),
-        'department': !exists(json, 'department') ? undefined : EntDepartmentFromJSON(json['department']),
-        'instructor': !exists(json, 'instructor') ? undefined : ((json['instructor'] as Array<any>).map(EntCourseFromJSON)),
-        'instructorroom': !exists(json, 'instructorroom') ? undefined : EntInstructorRoomFromJSON(json['instructorroom']),
-        'title': !exists(json, 'title') ? undefined : EntTitleFromJSON(json['title']),
+        'department': !exists(json, 'Department') ? undefined : EntDepartmentFromJSON(json['Department']),
+        'instructorroom': !exists(json, 'Instructorroom') ? undefined : EntInstructorRoomFromJSON(json['Instructorroom']),
+        'title': !exists(json, 'Title') ? undefined : EntTitleFromJSON(json['Title']),
     };
 }
 
@@ -103,7 +92,6 @@ export function EntInstructorInfoEdgesToJSON(value?: EntInstructorInfoEdges | nu
         
         'courseclasses': value.courseclasses === undefined ? undefined : ((value.courseclasses as Array<any>).map(EntCourseclassToJSON)),
         'department': EntDepartmentToJSON(value.department),
-        'instructor': value.instructor === undefined ? undefined : ((value.instructor as Array<any>).map(EntCourseToJSON)),
         'instructorroom': EntInstructorRoomToJSON(value.instructorroom),
         'title': EntTitleToJSON(value.title),
     };

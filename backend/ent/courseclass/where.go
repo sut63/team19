@@ -91,6 +91,124 @@ func IDLTE(id int) predicate.Courseclass {
 	})
 }
 
+// Tablecode applies equality check predicate on the "tablecode" field. It's identical to TablecodeEQ.
+func Tablecode(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldTablecode), v))
+	})
+}
+
+// TablecodeEQ applies the EQ predicate on the "tablecode" field.
+func TablecodeEQ(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldTablecode), v))
+	})
+}
+
+// TablecodeNEQ applies the NEQ predicate on the "tablecode" field.
+func TablecodeNEQ(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldTablecode), v))
+	})
+}
+
+// TablecodeIn applies the In predicate on the "tablecode" field.
+func TablecodeIn(vs ...string) predicate.Courseclass {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Courseclass(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldTablecode), v...))
+	})
+}
+
+// TablecodeNotIn applies the NotIn predicate on the "tablecode" field.
+func TablecodeNotIn(vs ...string) predicate.Courseclass {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Courseclass(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldTablecode), v...))
+	})
+}
+
+// TablecodeGT applies the GT predicate on the "tablecode" field.
+func TablecodeGT(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldTablecode), v))
+	})
+}
+
+// TablecodeGTE applies the GTE predicate on the "tablecode" field.
+func TablecodeGTE(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldTablecode), v))
+	})
+}
+
+// TablecodeLT applies the LT predicate on the "tablecode" field.
+func TablecodeLT(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldTablecode), v))
+	})
+}
+
+// TablecodeLTE applies the LTE predicate on the "tablecode" field.
+func TablecodeLTE(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldTablecode), v))
+	})
+}
+
+// TablecodeContains applies the Contains predicate on the "tablecode" field.
+func TablecodeContains(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldTablecode), v))
+	})
+}
+
+// TablecodeHasPrefix applies the HasPrefix predicate on the "tablecode" field.
+func TablecodeHasPrefix(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldTablecode), v))
+	})
+}
+
+// TablecodeHasSuffix applies the HasSuffix predicate on the "tablecode" field.
+func TablecodeHasSuffix(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldTablecode), v))
+	})
+}
+
+// TablecodeEqualFold applies the EqualFold predicate on the "tablecode" field.
+func TablecodeEqualFold(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldTablecode), v))
+	})
+}
+
+// TablecodeContainsFold applies the ContainsFold predicate on the "tablecode" field.
+func TablecodeContainsFold(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldTablecode), v))
+	})
+}
+
 // HasClasstime applies the HasEdge predicate on the "classtime" edge.
 func HasClasstime() predicate.Courseclass {
 	return predicate.Courseclass(func(s *sql.Selector) {

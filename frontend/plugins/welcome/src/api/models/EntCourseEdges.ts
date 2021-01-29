@@ -22,10 +22,6 @@ import {
     EntDepartmentFromJSON,
     EntDepartmentFromJSONTyped,
     EntDepartmentToJSON,
-    EntInstructorInfo,
-    EntInstructorInfoFromJSON,
-    EntInstructorInfoFromJSONTyped,
-    EntInstructorInfoToJSON,
     EntSubject,
     EntSubjectFromJSON,
     EntSubjectFromJSONTyped,
@@ -52,12 +48,6 @@ export interface EntCourseEdges {
     departmentID?: EntDepartment;
     /**
      * 
-     * @type {EntInstructorInfo}
-     * @memberof EntCourseEdges
-     */
-    instructorInfoID?: EntInstructorInfo;
-    /**
-     * 
      * @type {EntSubject}
      * @memberof EntCourseEdges
      */
@@ -74,10 +64,9 @@ export function EntCourseEdgesFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'degreeID': !exists(json, 'degreeID') ? undefined : EntDegreeFromJSON(json['degreeID']),
-        'departmentID': !exists(json, 'departmentID') ? undefined : EntDepartmentFromJSON(json['departmentID']),
-        'instructorInfoID': !exists(json, 'instructorInfoID') ? undefined : EntInstructorInfoFromJSON(json['instructorInfoID']),
-        'subjectID': !exists(json, 'subjectID') ? undefined : EntSubjectFromJSON(json['subjectID']),
+        'degreeID': !exists(json, 'DegreeID') ? undefined : EntDegreeFromJSON(json['DegreeID']),
+        'departmentID': !exists(json, 'DepartmentID') ? undefined : EntDepartmentFromJSON(json['DepartmentID']),
+        'subjectID': !exists(json, 'SubjectID') ? undefined : EntSubjectFromJSON(json['SubjectID']),
     };
 }
 
@@ -92,7 +81,6 @@ export function EntCourseEdgesToJSON(value?: EntCourseEdges | null): any {
         
         'degreeID': EntDegreeToJSON(value.degreeID),
         'departmentID': EntDepartmentToJSON(value.departmentID),
-        'instructorInfoID': EntInstructorInfoToJSON(value.instructorInfoID),
         'subjectID': EntSubjectToJSON(value.subjectID),
     };
 }

@@ -14,7 +14,6 @@ import (
 	"github.com/team19/app/ent/course"
 	"github.com/team19/app/ent/degree"
 	"github.com/team19/app/ent/department"
-	"github.com/team19/app/ent/instructorinfo"
 	"github.com/team19/app/ent/predicate"
 	"github.com/team19/app/ent/subject"
 )
@@ -28,11 +27,10 @@ type CourseQuery struct {
 	unique     []string
 	predicates []predicate.Course
 	// eager-loading edges.
-	withInstructorInfoID *InstructorInfoQuery
-	withDepartmentID     *DepartmentQuery
-	withDegreeID         *DegreeQuery
-	withSubjectID        *SubjectQuery
-	withFKs              bool
+	withDepartmentID *DepartmentQuery
+	withDegreeID     *DegreeQuery
+	withSubjectID    *SubjectQuery
+	withFKs          bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -60,24 +58,6 @@ func (cq *CourseQuery) Offset(offset int) *CourseQuery {
 func (cq *CourseQuery) Order(o ...OrderFunc) *CourseQuery {
 	cq.order = append(cq.order, o...)
 	return cq
-}
-
-// QueryInstructorInfoID chains the current query on the InstructorInfo_id edge.
-func (cq *CourseQuery) QueryInstructorInfoID() *InstructorInfoQuery {
-	query := &InstructorInfoQuery{config: cq.config}
-	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := cq.prepareQuery(ctx); err != nil {
-			return nil, err
-		}
-		step := sqlgraph.NewStep(
-			sqlgraph.From(course.Table, course.FieldID, cq.sqlQuery()),
-			sqlgraph.To(instructorinfo.Table, instructorinfo.FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, true, course.InstructorInfoIDTable, course.InstructorInfoIDColumn),
-		)
-		fromU = sqlgraph.SetNeighbors(cq.driver.Dialect(), step)
-		return fromU, nil
-	}
-	return query
 }
 
 // QueryDepartmentID chains the current query on the Department_id edge.
@@ -313,17 +293,6 @@ func (cq *CourseQuery) Clone() *CourseQuery {
 	}
 }
 
-//  WithInstructorInfoID tells the query-builder to eager-loads the nodes that are connected to
-// the "InstructorInfo_id" edge. The optional arguments used to configure the query builder of the edge.
-func (cq *CourseQuery) WithInstructorInfoID(opts ...func(*InstructorInfoQuery)) *CourseQuery {
-	query := &InstructorInfoQuery{config: cq.config}
-	for _, opt := range opts {
-		opt(query)
-	}
-	cq.withInstructorInfoID = query
-	return cq
-}
-
 //  WithDepartmentID tells the query-builder to eager-loads the nodes that are connected to
 // the "Department_id" edge. The optional arguments used to configure the query builder of the edge.
 func (cq *CourseQuery) WithDepartmentID(opts ...func(*DepartmentQuery)) *CourseQuery {
@@ -363,12 +332,12 @@ func (cq *CourseQuery) WithSubjectID(opts ...func(*SubjectQuery)) *CourseQuery {
 // Example:
 //
 //	var v []struct {
-//		CourseName string `json:"Course_name,omitempty"`
+//		CourseYear string `json:"Course_year,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.Course.Query().
-//		GroupBy(course.FieldCourseName).
+//		GroupBy(course.FieldCourseYear).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -389,11 +358,11 @@ func (cq *CourseQuery) GroupBy(field string, fields ...string) *CourseGroupBy {
 // Example:
 //
 //	var v []struct {
-//		CourseName string `json:"Course_name,omitempty"`
+//		CourseYear string `json:"Course_year,omitempty"`
 //	}
 //
 //	client.Course.Query().
-//		Select(course.FieldCourseName).
+//		Select(course.FieldCourseYear).
 //		Scan(ctx, &v)
 //
 func (cq *CourseQuery) Select(field string, fields ...string) *CourseSelect {
@@ -424,14 +393,13 @@ func (cq *CourseQuery) sqlAll(ctx context.Context) ([]*Course, error) {
 		nodes       = []*Course{}
 		withFKs     = cq.withFKs
 		_spec       = cq.querySpec()
-		loadedTypes = [4]bool{
-			cq.withInstructorInfoID != nil,
+		loadedTypes = [3]bool{
 			cq.withDepartmentID != nil,
 			cq.withDegreeID != nil,
 			cq.withSubjectID != nil,
 		}
 	)
-	if cq.withInstructorInfoID != nil || cq.withDepartmentID != nil || cq.withDegreeID != nil || cq.withSubjectID != nil {
+	if cq.withDepartmentID != nil || cq.withDegreeID != nil || cq.withSubjectID != nil {
 		withFKs = true
 	}
 	if withFKs {
@@ -459,31 +427,6 @@ func (cq *CourseQuery) sqlAll(ctx context.Context) ([]*Course, error) {
 	}
 	if len(nodes) == 0 {
 		return nodes, nil
-	}
-
-	if query := cq.withInstructorInfoID; query != nil {
-		ids := make([]int, 0, len(nodes))
-		nodeids := make(map[int][]*Course)
-		for i := range nodes {
-			if fk := nodes[i].InstructorInfo_id; fk != nil {
-				ids = append(ids, *fk)
-				nodeids[*fk] = append(nodeids[*fk], nodes[i])
-			}
-		}
-		query.Where(instructorinfo.IDIn(ids...))
-		neighbors, err := query.All(ctx)
-		if err != nil {
-			return nil, err
-		}
-		for _, n := range neighbors {
-			nodes, ok := nodeids[n.ID]
-			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "InstructorInfo_id" returned %v`, n.ID)
-			}
-			for i := range nodes {
-				nodes[i].Edges.InstructorInfoID = n
-			}
-		}
 	}
 
 	if query := cq.withDepartmentID; query != nil {

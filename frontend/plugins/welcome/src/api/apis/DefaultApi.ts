@@ -1082,7 +1082,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * get course by ID
      * Get a course entity by ID
      */
-    async getCourseRaw(requestParameters: GetCourseRequest): Promise<runtime.ApiResponse<EntCourse>> {
+    async getCourseRaw(requestParameters: GetCourseRequest): Promise<runtime.ApiResponse<Array<EntCourse>>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getCourse.');
         }
@@ -1098,14 +1098,14 @@ export class DefaultApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => EntCourseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(EntCourseFromJSON));
     }
 
     /**
      * get course by ID
      * Get a course entity by ID
      */
-    async getCourse(requestParameters: GetCourseRequest): Promise<EntCourse> {
+    async getCourse(requestParameters: GetCourseRequest): Promise<Array<EntCourse>> {
         const response = await this.getCourseRaw(requestParameters);
         return await response.value();
     }
@@ -1114,7 +1114,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * get courseclass by ID
      * Get a courseclass entity by ID
      */
-    async getCourseclassRaw(requestParameters: GetCourseclassRequest): Promise<runtime.ApiResponse<EntCourseclass>> {
+    async getCourseclassRaw(requestParameters: GetCourseclassRequest): Promise<runtime.ApiResponse<Array<EntCourseclass>>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getCourseclass.');
         }
@@ -1130,14 +1130,14 @@ export class DefaultApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => EntCourseclassFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(EntCourseclassFromJSON));
     }
 
     /**
      * get courseclass by ID
      * Get a courseclass entity by ID
      */
-    async getCourseclass(requestParameters: GetCourseclassRequest): Promise<EntCourseclass> {
+    async getCourseclass(requestParameters: GetCourseclassRequest): Promise<Array<EntCourseclass>> {
         const response = await this.getCourseclassRaw(requestParameters);
         return await response.value();
     }
@@ -1210,7 +1210,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * get instructorinfo by ID
      * Get a instructorinfo entity by ID
      */
-    async getInstructorinfoRaw(requestParameters: GetInstructorinfoRequest): Promise<runtime.ApiResponse<EntInstructorInfo>> {
+    async getInstructorinfoRaw(requestParameters: GetInstructorinfoRequest): Promise<runtime.ApiResponse<Array<EntInstructorInfo>>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getInstructorinfo.');
         }
@@ -1226,14 +1226,14 @@ export class DefaultApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => EntInstructorInfoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(EntInstructorInfoFromJSON));
     }
 
     /**
      * get instructorinfo by ID
      * Get a instructorinfo entity by ID
      */
-    async getInstructorinfo(requestParameters: GetInstructorinfoRequest): Promise<EntInstructorInfo> {
+    async getInstructorinfo(requestParameters: GetInstructorinfoRequest): Promise<Array<EntInstructorInfo>> {
         const response = await this.getInstructorinfoRaw(requestParameters);
         return await response.value();
     }
@@ -1306,7 +1306,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * get SubjectsOffered by ID
      * Get a SubjectsOffered entity by ID
      */
-    async getSubjectsOfferedRaw(requestParameters: GetSubjectsOfferedRequest): Promise<runtime.ApiResponse<EntSubjectsOffered>> {
+    async getSubjectsOfferedRaw(requestParameters: GetSubjectsOfferedRequest): Promise<runtime.ApiResponse<Array<EntSubjectsOffered>>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getSubjectsOffered.');
         }
@@ -1322,14 +1322,14 @@ export class DefaultApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => EntSubjectsOfferedFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(EntSubjectsOfferedFromJSON));
     }
 
     /**
      * get SubjectsOffered by ID
      * Get a SubjectsOffered entity by ID
      */
-    async getSubjectsOffered(requestParameters: GetSubjectsOfferedRequest): Promise<EntSubjectsOffered> {
+    async getSubjectsOffered(requestParameters: GetSubjectsOfferedRequest): Promise<Array<EntSubjectsOffered>> {
         const response = await this.getSubjectsOfferedRaw(requestParameters);
         return await response.value();
     }

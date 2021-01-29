@@ -22,8 +22,6 @@ const (
 	EdgeInstructorroom = "instructorroom"
 	// EdgeDepartment holds the string denoting the department edge name in mutations.
 	EdgeDepartment = "department"
-	// EdgeInstructor holds the string denoting the instructor edge name in mutations.
-	EdgeInstructor = "instructor"
 	// EdgeCourseclasses holds the string denoting the courseclasses edge name in mutations.
 	EdgeCourseclasses = "courseclasses"
 
@@ -50,13 +48,6 @@ const (
 	DepartmentInverseTable = "departments"
 	// DepartmentColumn is the table column denoting the department relation/edge.
 	DepartmentColumn = "department_id"
-	// InstructorTable is the table the holds the instructor relation/edge.
-	InstructorTable = "courses"
-	// InstructorInverseTable is the table name for the Course entity.
-	// It exists in this package in order to avoid circular dependency with the "course" package.
-	InstructorInverseTable = "courses"
-	// InstructorColumn is the table column denoting the instructor relation/edge.
-	InstructorColumn = "InstructorInfo_id"
 	// CourseclassesTable is the table the holds the courseclasses relation/edge.
 	CourseclassesTable = "courseclasses"
 	// CourseclassesInverseTable is the table name for the Courseclass entity.
@@ -81,3 +72,14 @@ var ForeignKeys = []string{
 	"instructorroom_id",
 	"title_id",
 }
+
+var (
+	// NAMEValidator is a validator for the "NAME" field. It is called by the builders before save.
+	NAMEValidator func(string) error
+	// PHONENUMBERValidator is a validator for the "PHONENUMBER" field. It is called by the builders before save.
+	PHONENUMBERValidator func(string) error
+	// EMAILValidator is a validator for the "EMAIL" field. It is called by the builders before save.
+	EMAILValidator func(string) error
+	// PASSWORDValidator is a validator for the "PASSWORD" field. It is called by the builders before save.
+	PASSWORDValidator func(string) error
+)

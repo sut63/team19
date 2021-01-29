@@ -23,6 +23,7 @@ type CourseclassController struct {
 
 // Courseclass defines the struct for the courseclass
 type Courseclass struct {
+	TableCode  string
 	Day        int
 	Time       int
 	Instructor int
@@ -112,6 +113,7 @@ func (ctl *CourseclassController) CreateCourseclass(c *gin.Context) {
 
 	u, err := ctl.client.Courseclass.
 		Create().
+		SetTablecode(obj.TableCode).
 		SetClassdate(d).
 		SetClasstime(ir).
 		SetInstructorInfo(t).
@@ -138,7 +140,7 @@ func (ctl *CourseclassController) CreateCourseclass(c *gin.Context) {
 // @ID get-courseclass
 // @Produce  json
 // @Param id path int true "Courseclass ID"
-// @Success 200 {object} ent.Courseclass
+// @Success 200 {array} ent.Courseclass
 // @Failure 400 {object} gin.H
 // @Failure 404 {object} gin.H
 // @Failure 500 {object} gin.H
@@ -153,8 +155,13 @@ func (ctl *CourseclassController) GetCourseclass(c *gin.Context) {
 	}
 	u, err := ctl.client.Courseclass.
 		Query().
+		WithClassdate().
+		WithClasstime().
+		WithInstructorInfo().
+		WithSubject().
+		WithClassroom().
 		Where(courseclass.IDEQ(int(id))).
-		Only(context.Background())
+		All(context.Background())
 
 	if err != nil {
 		c.JSON(404, gin.H{

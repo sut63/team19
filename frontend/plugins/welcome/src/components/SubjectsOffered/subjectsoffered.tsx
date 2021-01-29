@@ -1,4 +1,4 @@
-import React, { FC,useEffect } from 'react';
+import React, { Component, FC,useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import {
  Content,
@@ -58,6 +58,7 @@ interface  EntSubjectsOffered  {
   Degree  :    number;
   Term :       number;
   AMOUNT :      string;
+  Remain :      string;
   STATUS :      string;
 }
 
@@ -84,21 +85,21 @@ const EntSubjectsOffered: FC<{}> = () => {
       },
     });
   const getSubject = async () => {
-    const res = await http.listSubject({ limit: 10, offset: 0 });
+    const res = await http.listSubject({ limit: 100, offset: 0 });
     setSubject(res);
   };
 
   const getDegree = async () => {
-    const res = await http.listDegree({ limit: 10, offset: 0 });
+    const res = await http.listDegree({ limit: 100, offset: 0 });
     setDegree(res);
   };
 
   const getYear = async () => {
-    const res = await http.listYear({ limit: 10, offset: 0 });
+    const res = await http.listYear({ limit: 100, offset: 0 });
     setYear(res);
   };
   const getTerm = async () => {
-    const res = await http.listTerm({ limit: 10, offset: 0 });
+    const res = await http.listTerm({ limit: 100, offset: 0 });
     setTerm(res);
   };
 
@@ -119,9 +120,35 @@ const EntSubjectsOffered: FC<{}> = () => {
     setSubjectsOffered({ ...subjectsoffered, [name]: value });
     console.log(subjectsoffered);
   };
+
+  const alertMessage = (icon: any, title: any) => {
+    Toast.fire({
+      icon: icon,
+      title: title,
+    });
+  }
+
+  const checkCaseSaveError = (field: string) => {
+    switch(field){
+      case 'AMOUNT':
+        alertMessage("error","รูปแบบจำนวนที่รับไม่ถูกต้อง ต้องเป็นจำนวนเต็มบวก");
+        return;
+      case 'STATUS':
+         alertMessage("error","รูปแบบสถานะไม่ถูกต้อง สถานะคือ Open");
+         return;
+      case 'Remain':
+          alertMessage("error","รูปแบบคงเหลือไม่ถูกต้อง ต้องเป็นจำนวนเต็มบวก");
+          return;  
+       default:
+         alertMessage("error","บันทึกข้อมูลไม่สำเร็จ");
+         return;
+    }
+  }
+ 
+
   // function save data
   function save() {
-    const apiUrl = 'http://localhost:8080/api/v1/Subjectsoffereds';
+    const apiUrl = 'http://localhost:8080/api/v1/SubjectsOffereds';
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -134,16 +161,13 @@ const EntSubjectsOffered: FC<{}> = () => {
       .then(response => response.json())
       .then(data => {
         console.log(data);
-        if (data.state === true) {
+        if (data.status === true) {
           Toast.fire({
             icon: 'success',
             title: 'บันทึกข้อมูลสำเร็จ',
           });
-        } else {
-          Toast.fire({
-            icon: 'error',
-            title: 'บันทึกข้อมูลไม่สำเร็จ',
-          });
+        } else  {
+          checkCaseSaveError(data.error.Name)
         }
       });
   }
@@ -270,6 +294,16 @@ const EntSubjectsOffered: FC<{}> = () => {
       </form>
       </Grid>
       <Grid item xs={3}>
+              <div className={classes.paper}>คงเหลือ</div>
+            </Grid>
+            <Grid item xs={9}>
+      <form className={classes.root} noValidate autoComplete="off" >
+        <TextField label="กรอกคงเหลือ"name ="Remain" type="string" 
+        value={subjectsoffered.Remain } onChange={handleChange} className={classes.textField}
+                  />
+      </form>
+      </Grid>
+      <Grid item xs={3}>
               <div className={classes.paper}>สถานะ</div>
             </Grid>
             <Grid item xs={9}>
@@ -293,6 +327,7 @@ const EntSubjectsOffered: FC<{}> = () => {
           </Grid>
         </Container>
         </Content>
+
    </Page>
  );
 }

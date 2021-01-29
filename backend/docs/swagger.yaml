@@ -74,6 +74,12 @@ definitions:
       Course_name:
         description: CourseName holds the value of the "Course_name" field.
         type: string
+      Course_year:
+        description: CourseYear holds the value of the "Course_year" field.
+        type: string
+      Teacher_id:
+        description: TeacherID holds the value of the "Teacher_id" field.
+        type: string
       degree_id:
         type: integer
       edges:
@@ -84,8 +90,6 @@ definitions:
         type: object
       id:
         description: ID of the ent.
-        type: integer
-      instructorInfo_id:
         type: integer
       subject_id:
         type: integer
@@ -99,10 +103,6 @@ definitions:
       departmentID:
         $ref: '#/definitions/ent.Department'
         description: DepartmentID holds the value of the Department_id edge.
-        type: object
-      instructorInfoID:
-        $ref: '#/definitions/ent.InstructorInfo'
-        description: InstructorInfoID holds the value of the InstructorInfo_id edge.
         type: object
       subjectID:
         $ref: '#/definitions/ent.Subject'
@@ -122,6 +122,9 @@ definitions:
         type: integer
       instructorInfo_id:
         type: integer
+      tablecode:
+        description: Tablecode holds the value of the "tablecode" field.
+        type: string
     type: object
   ent.CourseclassEdges:
     properties:
@@ -240,11 +243,6 @@ definitions:
         $ref: '#/definitions/ent.Department'
         description: Department holds the value of the department edge.
         type: object
-      instructor:
-        description: Instructor holds the value of the instructor edge.
-        items:
-          $ref: '#/definitions/ent.Course'
-        type: array
       instructorroom:
         $ref: '#/definitions/ent.InstructorRoom'
         description: Instructorroom holds the value of the instructorroom edge.
@@ -317,6 +315,9 @@ definitions:
     properties:
       AMOUNT:
         description: AMOUNT holds the value of the "AMOUNT" field.
+        type: string
+      Remain:
+        description: Remain holds the value of the "Remain" field.
         type: string
       STATUS:
         description: STATUS holds the value of the "STATUS" field.
@@ -544,7 +545,9 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/ent.SubjectsOffered'
+            items:
+              $ref: '#/definitions/ent.SubjectsOffered'
+            type: array
         "400":
           description: Bad Request
           schema:
@@ -962,7 +965,9 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/ent.Courseclass'
+            items:
+              $ref: '#/definitions/ent.Courseclass'
+            type: array
         "400":
           description: Bad Request
           schema:
@@ -1113,7 +1118,9 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/ent.Course'
+            items:
+              $ref: '#/definitions/ent.Course'
+            type: array
         "400":
           description: Bad Request
           schema:
@@ -1442,7 +1449,9 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/ent.InstructorInfo'
+            items:
+              $ref: '#/definitions/ent.InstructorInfo'
+            type: array
         "400":
           description: Bad Request
           schema:

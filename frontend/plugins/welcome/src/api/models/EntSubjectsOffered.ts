@@ -33,6 +33,12 @@ export interface EntSubjectsOffered {
      */
     aMOUNT?: string;
     /**
+     * Remain holds the value of the "Remain" field.
+     * @type {string}
+     * @memberof EntSubjectsOffered
+     */
+    remain?: string;
+    /**
      * STATUS holds the value of the "STATUS" field.
      * @type {string}
      * @memberof EntSubjectsOffered
@@ -75,6 +81,7 @@ export function EntSubjectsOfferedFromJSONTyped(json: any, ignoreDiscriminator: 
     return {
         
         'aMOUNT': !exists(json, 'AMOUNT') ? undefined : json['AMOUNT'],
+        'remain': !exists(json, 'Remain') ? undefined : json['Remain'],
         'sTATUS': !exists(json, 'STATUS') ? undefined : json['STATUS'],
         'degreeId': !exists(json, 'degree_id') ? undefined : json['degree_id'],
         'edges': !exists(json, 'edges') ? undefined : EntSubjectsOfferedEdgesFromJSON(json['edges']),
@@ -93,6 +100,7 @@ export function EntSubjectsOfferedToJSON(value?: EntSubjectsOffered | null): any
     return {
         
         'AMOUNT': value.aMOUNT,
+        'Remain': value.remain,
         'STATUS': value.sTATUS,
         'degree_id': value.degreeId,
         'edges': EntSubjectsOfferedEdgesToJSON(value.edges),

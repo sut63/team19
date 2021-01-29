@@ -6,12 +6,12 @@ import (
 	"github.com/facebookincubator/ent/schema/field"
 )
 
-// Year holds the schema definition for the Year entity.
+// Term holds the schema definition for the Term entity.
 type Term struct {
 	ent.Schema
 }
 
-// Fields of the Year.
+// Fields of the Term.
 func (Term) Fields() []ent.Field {
 	return []ent.Field{
 

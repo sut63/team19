@@ -3,6 +3,7 @@ package schema
 import (
 	"github.com/facebookincubator/ent"
 	"github.com/facebookincubator/ent/schema/edge"
+	"github.com/facebookincubator/ent/schema/field"
 )
 
 // Courseclass holds the schema definition for the Courseclass entity.
@@ -12,7 +13,9 @@ type Courseclass struct {
 
 // Fields of the Courseclass.
 func (Courseclass) Fields() []ent.Field {
-	return []ent.Field{}
+	return []ent.Field{
+		field.String("tablecode").NotEmpty(),
+	}
 }
 
 // Edges of the Courseclass.

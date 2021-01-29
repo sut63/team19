@@ -1158,21 +1158,21 @@ func (m *ClasstimeMutation) ResetEdge(name string) error {
 // nodes in the graph.
 type CourseMutation struct {
 	config
-	op                        Op
-	typ                       string
-	id                        *int
-	_Course_name              *string
-	clearedFields             map[string]struct{}
-	_InstructorInfo_id        *int
-	cleared_InstructorInfo_id bool
-	_Department_id            *int
-	cleared_Department_id     bool
-	_Degree_id                *int
-	cleared_Degree_id         bool
-	_Subject_id               *int
-	cleared_Subject_id        bool
-	done                      bool
-	oldValue                  func(context.Context) (*Course, error)
+	op                    Op
+	typ                   string
+	id                    *int
+	_Course_year          *string
+	_Course_name          *string
+	_Teacher_id           *string
+	clearedFields         map[string]struct{}
+	_Department_id        *int
+	cleared_Department_id bool
+	_Degree_id            *int
+	cleared_Degree_id     bool
+	_Subject_id           *int
+	cleared_Subject_id    bool
+	done                  bool
+	oldValue              func(context.Context) (*Course, error)
 }
 
 var _ ent.Mutation = (*CourseMutation)(nil)
@@ -1254,6 +1254,43 @@ func (m *CourseMutation) ID() (id int, exists bool) {
 	return *m.id, true
 }
 
+// SetCourseYear sets the Course_year field.
+func (m *CourseMutation) SetCourseYear(s string) {
+	m._Course_year = &s
+}
+
+// CourseYear returns the Course_year value in the mutation.
+func (m *CourseMutation) CourseYear() (r string, exists bool) {
+	v := m._Course_year
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCourseYear returns the old Course_year value of the Course.
+// If the Course object wasn't provided to the builder, the object is fetched
+// from the database.
+// An error is returned if the mutation operation is not UpdateOne, or database query fails.
+func (m *CourseMutation) OldCourseYear(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldCourseYear is allowed only on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldCourseYear requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCourseYear: %w", err)
+	}
+	return oldValue.CourseYear, nil
+}
+
+// ResetCourseYear reset all changes of the "Course_year" field.
+func (m *CourseMutation) ResetCourseYear() {
+	m._Course_year = nil
+}
+
 // SetCourseName sets the Course_name field.
 func (m *CourseMutation) SetCourseName(s string) {
 	m._Course_name = &s
@@ -1291,43 +1328,41 @@ func (m *CourseMutation) ResetCourseName() {
 	m._Course_name = nil
 }
 
-// SetInstructorInfoIDID sets the InstructorInfo_id edge to InstructorInfo by id.
-func (m *CourseMutation) SetInstructorInfoIDID(id int) {
-	m._InstructorInfo_id = &id
+// SetTeacherID sets the Teacher_id field.
+func (m *CourseMutation) SetTeacherID(s string) {
+	m._Teacher_id = &s
 }
 
-// ClearInstructorInfoID clears the InstructorInfo_id edge to InstructorInfo.
-func (m *CourseMutation) ClearInstructorInfoID() {
-	m.cleared_InstructorInfo_id = true
-}
-
-// InstructorInfoIDCleared returns if the edge InstructorInfo_id was cleared.
-func (m *CourseMutation) InstructorInfoIDCleared() bool {
-	return m.cleared_InstructorInfo_id
-}
-
-// InstructorInfoIDID returns the InstructorInfo_id id in the mutation.
-func (m *CourseMutation) InstructorInfoIDID() (id int, exists bool) {
-	if m._InstructorInfo_id != nil {
-		return *m._InstructorInfo_id, true
+// TeacherID returns the Teacher_id value in the mutation.
+func (m *CourseMutation) TeacherID() (r string, exists bool) {
+	v := m._Teacher_id
+	if v == nil {
+		return
 	}
-	return
+	return *v, true
 }
 
-// InstructorInfoIDIDs returns the InstructorInfo_id ids in the mutation.
-// Note that ids always returns len(ids) <= 1 for unique edges, and you should use
-// InstructorInfoIDID instead. It exists only for internal usage by the builders.
-func (m *CourseMutation) InstructorInfoIDIDs() (ids []int) {
-	if id := m._InstructorInfo_id; id != nil {
-		ids = append(ids, *id)
+// OldTeacherID returns the old Teacher_id value of the Course.
+// If the Course object wasn't provided to the builder, the object is fetched
+// from the database.
+// An error is returned if the mutation operation is not UpdateOne, or database query fails.
+func (m *CourseMutation) OldTeacherID(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldTeacherID is allowed only on UpdateOne operations")
 	}
-	return
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldTeacherID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldTeacherID: %w", err)
+	}
+	return oldValue.TeacherID, nil
 }
 
-// ResetInstructorInfoID reset all changes of the "InstructorInfo_id" edge.
-func (m *CourseMutation) ResetInstructorInfoID() {
-	m._InstructorInfo_id = nil
-	m.cleared_InstructorInfo_id = false
+// ResetTeacherID reset all changes of the "Teacher_id" field.
+func (m *CourseMutation) ResetTeacherID() {
+	m._Teacher_id = nil
 }
 
 // SetDepartmentIDID sets the Department_id edge to Department by id.
@@ -1461,9 +1496,15 @@ func (m *CourseMutation) Type() string {
 // this mutation. Note that, in order to get all numeric
 // fields that were in/decremented, call AddedFields().
 func (m *CourseMutation) Fields() []string {
-	fields := make([]string, 0, 1)
+	fields := make([]string, 0, 3)
+	if m._Course_year != nil {
+		fields = append(fields, course.FieldCourseYear)
+	}
 	if m._Course_name != nil {
 		fields = append(fields, course.FieldCourseName)
+	}
+	if m._Teacher_id != nil {
+		fields = append(fields, course.FieldTeacherID)
 	}
 	return fields
 }
@@ -1473,8 +1514,12 @@ func (m *CourseMutation) Fields() []string {
 // not set, or was not define in the schema.
 func (m *CourseMutation) Field(name string) (ent.Value, bool) {
 	switch name {
+	case course.FieldCourseYear:
+		return m.CourseYear()
 	case course.FieldCourseName:
 		return m.CourseName()
+	case course.FieldTeacherID:
+		return m.TeacherID()
 	}
 	return nil, false
 }
@@ -1484,8 +1529,12 @@ func (m *CourseMutation) Field(name string) (ent.Value, bool) {
 // or the query to the database was failed.
 func (m *CourseMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
 	switch name {
+	case course.FieldCourseYear:
+		return m.OldCourseYear(ctx)
 	case course.FieldCourseName:
 		return m.OldCourseName(ctx)
+	case course.FieldTeacherID:
+		return m.OldTeacherID(ctx)
 	}
 	return nil, fmt.Errorf("unknown Course field %s", name)
 }
@@ -1495,12 +1544,26 @@ func (m *CourseMutation) OldField(ctx context.Context, name string) (ent.Value, 
 // type mismatch the field type.
 func (m *CourseMutation) SetField(name string, value ent.Value) error {
 	switch name {
+	case course.FieldCourseYear:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCourseYear(v)
+		return nil
 	case course.FieldCourseName:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetCourseName(v)
+		return nil
+	case course.FieldTeacherID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetTeacherID(v)
 		return nil
 	}
 	return fmt.Errorf("unknown Course field %s", name)
@@ -1552,8 +1615,14 @@ func (m *CourseMutation) ClearField(name string) error {
 // defined in the schema.
 func (m *CourseMutation) ResetField(name string) error {
 	switch name {
+	case course.FieldCourseYear:
+		m.ResetCourseYear()
+		return nil
 	case course.FieldCourseName:
 		m.ResetCourseName()
+		return nil
+	case course.FieldTeacherID:
+		m.ResetTeacherID()
 		return nil
 	}
 	return fmt.Errorf("unknown Course field %s", name)
@@ -1562,10 +1631,7 @@ func (m *CourseMutation) ResetField(name string) error {
 // AddedEdges returns all edge names that were set/added in this
 // mutation.
 func (m *CourseMutation) AddedEdges() []string {
-	edges := make([]string, 0, 4)
-	if m._InstructorInfo_id != nil {
-		edges = append(edges, course.EdgeInstructorInfoID)
-	}
+	edges := make([]string, 0, 3)
 	if m._Department_id != nil {
 		edges = append(edges, course.EdgeDepartmentID)
 	}
@@ -1582,10 +1648,6 @@ func (m *CourseMutation) AddedEdges() []string {
 // the given edge name.
 func (m *CourseMutation) AddedIDs(name string) []ent.Value {
 	switch name {
-	case course.EdgeInstructorInfoID:
-		if id := m._InstructorInfo_id; id != nil {
-			return []ent.Value{*id}
-		}
 	case course.EdgeDepartmentID:
 		if id := m._Department_id; id != nil {
 			return []ent.Value{*id}
@@ -1605,7 +1667,7 @@ func (m *CourseMutation) AddedIDs(name string) []ent.Value {
 // RemovedEdges returns all edge names that were removed in this
 // mutation.
 func (m *CourseMutation) RemovedEdges() []string {
-	edges := make([]string, 0, 4)
+	edges := make([]string, 0, 3)
 	return edges
 }
 
@@ -1620,10 +1682,7 @@ func (m *CourseMutation) RemovedIDs(name string) []ent.Value {
 // ClearedEdges returns all edge names that were cleared in this
 // mutation.
 func (m *CourseMutation) ClearedEdges() []string {
-	edges := make([]string, 0, 4)
-	if m.cleared_InstructorInfo_id {
-		edges = append(edges, course.EdgeInstructorInfoID)
-	}
+	edges := make([]string, 0, 3)
 	if m.cleared_Department_id {
 		edges = append(edges, course.EdgeDepartmentID)
 	}
@@ -1640,8 +1699,6 @@ func (m *CourseMutation) ClearedEdges() []string {
 // cleared in this mutation.
 func (m *CourseMutation) EdgeCleared(name string) bool {
 	switch name {
-	case course.EdgeInstructorInfoID:
-		return m.cleared_InstructorInfo_id
 	case course.EdgeDepartmentID:
 		return m.cleared_Department_id
 	case course.EdgeDegreeID:
@@ -1656,9 +1713,6 @@ func (m *CourseMutation) EdgeCleared(name string) bool {
 // error if the edge name is not defined in the schema.
 func (m *CourseMutation) ClearEdge(name string) error {
 	switch name {
-	case course.EdgeInstructorInfoID:
-		m.ClearInstructorInfoID()
-		return nil
 	case course.EdgeDepartmentID:
 		m.ClearDepartmentID()
 		return nil
@@ -1677,9 +1731,6 @@ func (m *CourseMutation) ClearEdge(name string) error {
 // defined in the schema.
 func (m *CourseMutation) ResetEdge(name string) error {
 	switch name {
-	case course.EdgeInstructorInfoID:
-		m.ResetInstructorInfoID()
-		return nil
 	case course.EdgeDepartmentID:
 		m.ResetDepartmentID()
 		return nil
@@ -1700,6 +1751,7 @@ type CourseclassMutation struct {
 	op                    Op
 	typ                   string
 	id                    *int
+	tablecode             *string
 	clearedFields         map[string]struct{}
 	classtime             *int
 	clearedclasstime      bool
@@ -1792,6 +1844,43 @@ func (m *CourseclassMutation) ID() (id int, exists bool) {
 		return
 	}
 	return *m.id, true
+}
+
+// SetTablecode sets the tablecode field.
+func (m *CourseclassMutation) SetTablecode(s string) {
+	m.tablecode = &s
+}
+
+// Tablecode returns the tablecode value in the mutation.
+func (m *CourseclassMutation) Tablecode() (r string, exists bool) {
+	v := m.tablecode
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldTablecode returns the old tablecode value of the Courseclass.
+// If the Courseclass object wasn't provided to the builder, the object is fetched
+// from the database.
+// An error is returned if the mutation operation is not UpdateOne, or database query fails.
+func (m *CourseclassMutation) OldTablecode(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldTablecode is allowed only on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldTablecode requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldTablecode: %w", err)
+	}
+	return oldValue.Tablecode, nil
+}
+
+// ResetTablecode reset all changes of the "tablecode" field.
+func (m *CourseclassMutation) ResetTablecode() {
+	m.tablecode = nil
 }
 
 // SetClasstimeID sets the classtime edge to Classtime by id.
@@ -2003,7 +2092,10 @@ func (m *CourseclassMutation) Type() string {
 // this mutation. Note that, in order to get all numeric
 // fields that were in/decremented, call AddedFields().
 func (m *CourseclassMutation) Fields() []string {
-	fields := make([]string, 0, 0)
+	fields := make([]string, 0, 1)
+	if m.tablecode != nil {
+		fields = append(fields, courseclass.FieldTablecode)
+	}
 	return fields
 }
 
@@ -2011,6 +2103,10 @@ func (m *CourseclassMutation) Fields() []string {
 // The second boolean value indicates that this field was
 // not set, or was not define in the schema.
 func (m *CourseclassMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case courseclass.FieldTablecode:
+		return m.Tablecode()
+	}
 	return nil, false
 }
 
@@ -2018,6 +2114,10 @@ func (m *CourseclassMutation) Field(name string) (ent.Value, bool) {
 // An error is returned if the mutation operation is not UpdateOne,
 // or the query to the database was failed.
 func (m *CourseclassMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case courseclass.FieldTablecode:
+		return m.OldTablecode(ctx)
+	}
 	return nil, fmt.Errorf("unknown Courseclass field %s", name)
 }
 
@@ -2026,6 +2126,13 @@ func (m *CourseclassMutation) OldField(ctx context.Context, name string) (ent.Va
 // type mismatch the field type.
 func (m *CourseclassMutation) SetField(name string, value ent.Value) error {
 	switch name {
+	case courseclass.FieldTablecode:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetTablecode(v)
+		return nil
 	}
 	return fmt.Errorf("unknown Courseclass field %s", name)
 }
@@ -2047,6 +2154,8 @@ func (m *CourseclassMutation) AddedField(name string) (ent.Value, bool) {
 // error if the field is not defined in the schema, or if the
 // type mismatch the field type.
 func (m *CourseclassMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	}
 	return fmt.Errorf("unknown Courseclass numeric field %s", name)
 }
 
@@ -2073,6 +2182,11 @@ func (m *CourseclassMutation) ClearField(name string) error {
 // given field name. It returns an error if the field is not
 // defined in the schema.
 func (m *CourseclassMutation) ResetField(name string) error {
+	switch name {
+	case courseclass.FieldTablecode:
+		m.ResetTablecode()
+		return nil
+	}
 	return fmt.Errorf("unknown Courseclass field %s", name)
 }
 
@@ -3167,8 +3281,6 @@ type InstructorInfoMutation struct {
 	clearedinstructorroom bool
 	department            *int
 	cleareddepartment     bool
-	instructor            map[int]struct{}
-	removedinstructor     map[int]struct{}
 	courseclasses         map[int]struct{}
 	removedcourseclasses  map[int]struct{}
 	done                  bool
@@ -3519,48 +3631,6 @@ func (m *InstructorInfoMutation) ResetDepartment() {
 	m.cleareddepartment = false
 }
 
-// AddInstructorIDs adds the instructor edge to Course by ids.
-func (m *InstructorInfoMutation) AddInstructorIDs(ids ...int) {
-	if m.instructor == nil {
-		m.instructor = make(map[int]struct{})
-	}
-	for i := range ids {
-		m.instructor[ids[i]] = struct{}{}
-	}
-}
-
-// RemoveInstructorIDs removes the instructor edge to Course by ids.
-func (m *InstructorInfoMutation) RemoveInstructorIDs(ids ...int) {
-	if m.removedinstructor == nil {
-		m.removedinstructor = make(map[int]struct{})
-	}
-	for i := range ids {
-		m.removedinstructor[ids[i]] = struct{}{}
-	}
-}
-
-// RemovedInstructor returns the removed ids of instructor.
-func (m *InstructorInfoMutation) RemovedInstructorIDs() (ids []int) {
-	for id := range m.removedinstructor {
-		ids = append(ids, id)
-	}
-	return
-}
-
-// InstructorIDs returns the instructor ids in the mutation.
-func (m *InstructorInfoMutation) InstructorIDs() (ids []int) {
-	for id := range m.instructor {
-		ids = append(ids, id)
-	}
-	return
-}
-
-// ResetInstructor reset all changes of the "instructor" edge.
-func (m *InstructorInfoMutation) ResetInstructor() {
-	m.instructor = nil
-	m.removedinstructor = nil
-}
-
 // AddCourseclassIDs adds the courseclasses edge to Courseclass by ids.
 func (m *InstructorInfoMutation) AddCourseclassIDs(ids ...int) {
 	if m.courseclasses == nil {
@@ -3769,7 +3839,7 @@ func (m *InstructorInfoMutation) ResetField(name string) error {
 // AddedEdges returns all edge names that were set/added in this
 // mutation.
 func (m *InstructorInfoMutation) AddedEdges() []string {
-	edges := make([]string, 0, 5)
+	edges := make([]string, 0, 4)
 	if m.title != nil {
 		edges = append(edges, instructorinfo.EdgeTitle)
 	}
@@ -3778,9 +3848,6 @@ func (m *InstructorInfoMutation) AddedEdges() []string {
 	}
 	if m.department != nil {
 		edges = append(edges, instructorinfo.EdgeDepartment)
-	}
-	if m.instructor != nil {
-		edges = append(edges, instructorinfo.EdgeInstructor)
 	}
 	if m.courseclasses != nil {
 		edges = append(edges, instructorinfo.EdgeCourseclasses)
@@ -3804,12 +3871,6 @@ func (m *InstructorInfoMutation) AddedIDs(name string) []ent.Value {
 		if id := m.department; id != nil {
 			return []ent.Value{*id}
 		}
-	case instructorinfo.EdgeInstructor:
-		ids := make([]ent.Value, 0, len(m.instructor))
-		for id := range m.instructor {
-			ids = append(ids, id)
-		}
-		return ids
 	case instructorinfo.EdgeCourseclasses:
 		ids := make([]ent.Value, 0, len(m.courseclasses))
 		for id := range m.courseclasses {
@@ -3823,10 +3884,7 @@ func (m *InstructorInfoMutation) AddedIDs(name string) []ent.Value {
 // RemovedEdges returns all edge names that were removed in this
 // mutation.
 func (m *InstructorInfoMutation) RemovedEdges() []string {
-	edges := make([]string, 0, 5)
-	if m.removedinstructor != nil {
-		edges = append(edges, instructorinfo.EdgeInstructor)
-	}
+	edges := make([]string, 0, 4)
 	if m.removedcourseclasses != nil {
 		edges = append(edges, instructorinfo.EdgeCourseclasses)
 	}
@@ -3837,12 +3895,6 @@ func (m *InstructorInfoMutation) RemovedEdges() []string {
 // the given edge name.
 func (m *InstructorInfoMutation) RemovedIDs(name string) []ent.Value {
 	switch name {
-	case instructorinfo.EdgeInstructor:
-		ids := make([]ent.Value, 0, len(m.removedinstructor))
-		for id := range m.removedinstructor {
-			ids = append(ids, id)
-		}
-		return ids
 	case instructorinfo.EdgeCourseclasses:
 		ids := make([]ent.Value, 0, len(m.removedcourseclasses))
 		for id := range m.removedcourseclasses {
@@ -3856,7 +3908,7 @@ func (m *InstructorInfoMutation) RemovedIDs(name string) []ent.Value {
 // ClearedEdges returns all edge names that were cleared in this
 // mutation.
 func (m *InstructorInfoMutation) ClearedEdges() []string {
-	edges := make([]string, 0, 5)
+	edges := make([]string, 0, 4)
 	if m.clearedtitle {
 		edges = append(edges, instructorinfo.EdgeTitle)
 	}
@@ -3913,9 +3965,6 @@ func (m *InstructorInfoMutation) ResetEdge(name string) error {
 		return nil
 	case instructorinfo.EdgeDepartment:
 		m.ResetDepartment()
-		return nil
-	case instructorinfo.EdgeInstructor:
-		m.ResetInstructor()
 		return nil
 	case instructorinfo.EdgeCourseclasses:
 		m.ResetCourseclasses()
@@ -4854,6 +4903,7 @@ type SubjectsOfferedMutation struct {
 	id              *int
 	_AMOUNT         *string
 	_STATUS         *string
+	_Remain         *string
 	clearedFields   map[string]struct{}
 	_Subject        *int
 	cleared_Subject bool
@@ -5018,6 +5068,43 @@ func (m *SubjectsOfferedMutation) OldSTATUS(ctx context.Context) (v string, err 
 // ResetSTATUS reset all changes of the "STATUS" field.
 func (m *SubjectsOfferedMutation) ResetSTATUS() {
 	m._STATUS = nil
+}
+
+// SetRemain sets the Remain field.
+func (m *SubjectsOfferedMutation) SetRemain(s string) {
+	m._Remain = &s
+}
+
+// Remain returns the Remain value in the mutation.
+func (m *SubjectsOfferedMutation) Remain() (r string, exists bool) {
+	v := m._Remain
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldRemain returns the old Remain value of the SubjectsOffered.
+// If the SubjectsOffered object wasn't provided to the builder, the object is fetched
+// from the database.
+// An error is returned if the mutation operation is not UpdateOne, or database query fails.
+func (m *SubjectsOfferedMutation) OldRemain(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldRemain is allowed only on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldRemain requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldRemain: %w", err)
+	}
+	return oldValue.Remain, nil
+}
+
+// ResetRemain reset all changes of the "Remain" field.
+func (m *SubjectsOfferedMutation) ResetRemain() {
+	m._Remain = nil
 }
 
 // SetSubjectID sets the Subject edge to Subject by id.
@@ -5190,12 +5277,15 @@ func (m *SubjectsOfferedMutation) Type() string {
 // this mutation. Note that, in order to get all numeric
 // fields that were in/decremented, call AddedFields().
 func (m *SubjectsOfferedMutation) Fields() []string {
-	fields := make([]string, 0, 2)
+	fields := make([]string, 0, 3)
 	if m._AMOUNT != nil {
 		fields = append(fields, subjectsoffered.FieldAMOUNT)
 	}
 	if m._STATUS != nil {
 		fields = append(fields, subjectsoffered.FieldSTATUS)
+	}
+	if m._Remain != nil {
+		fields = append(fields, subjectsoffered.FieldRemain)
 	}
 	return fields
 }
@@ -5209,6 +5299,8 @@ func (m *SubjectsOfferedMutation) Field(name string) (ent.Value, bool) {
 		return m.AMOUNT()
 	case subjectsoffered.FieldSTATUS:
 		return m.STATUS()
+	case subjectsoffered.FieldRemain:
+		return m.Remain()
 	}
 	return nil, false
 }
@@ -5222,6 +5314,8 @@ func (m *SubjectsOfferedMutation) OldField(ctx context.Context, name string) (en
 		return m.OldAMOUNT(ctx)
 	case subjectsoffered.FieldSTATUS:
 		return m.OldSTATUS(ctx)
+	case subjectsoffered.FieldRemain:
+		return m.OldRemain(ctx)
 	}
 	return nil, fmt.Errorf("unknown SubjectsOffered field %s", name)
 }
@@ -5244,6 +5338,13 @@ func (m *SubjectsOfferedMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetSTATUS(v)
+		return nil
+	case subjectsoffered.FieldRemain:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetRemain(v)
 		return nil
 	}
 	return fmt.Errorf("unknown SubjectsOffered field %s", name)
@@ -5300,6 +5401,9 @@ func (m *SubjectsOfferedMutation) ResetField(name string) error {
 		return nil
 	case subjectsoffered.FieldSTATUS:
 		m.ResetSTATUS()
+		return nil
+	case subjectsoffered.FieldRemain:
+		m.ResetRemain()
 		return nil
 	}
 	return fmt.Errorf("unknown SubjectsOffered field %s", name)

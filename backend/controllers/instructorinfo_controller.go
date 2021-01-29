@@ -99,7 +99,8 @@ func (ctl *InstructorInfoController) CreateInstructorInfo(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(400, gin.H{
-			"error": "saving failed",
+			"status": false,
+			"error":  err,
 		})
 		return
 	}
@@ -116,7 +117,7 @@ func (ctl *InstructorInfoController) CreateInstructorInfo(c *gin.Context) {
 // @ID get-instructorinfo
 // @Produce  json
 // @Param id path int true "InstructorInfo ID"
-// @Success 200 {object} ent.InstructorInfo
+// @Success 200 {array} ent.InstructorInfo
 // @Failure 400 {object} gin.H
 // @Failure 404 {object} gin.H
 // @Failure 500 {object} gin.H
@@ -131,8 +132,11 @@ func (ctl *InstructorInfoController) GetInstructorInfo(c *gin.Context) {
 	}
 	u, err := ctl.client.InstructorInfo.
 		Query().
+		WithDepartment().
+		WithInstructorroom().
+		WithTitle().
 		Where(instructorinfo.IDEQ(int(id))).
-		Only(context.Background())
+		All(context.Background())
 
 	if err != nil {
 		c.JSON(404, gin.H{

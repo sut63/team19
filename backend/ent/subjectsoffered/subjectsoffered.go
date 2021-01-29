@@ -11,6 +11,8 @@ const (
 	FieldAMOUNT = "amount"
 	// FieldSTATUS holds the string denoting the status field in the database.
 	FieldSTATUS = "status"
+	// FieldRemain holds the string denoting the remain field in the database.
+	FieldRemain = "remain"
 
 	// EdgeSubject holds the string denoting the subject edge name in mutations.
 	EdgeSubject = "Subject"
@@ -58,6 +60,7 @@ var Columns = []string{
 	FieldID,
 	FieldAMOUNT,
 	FieldSTATUS,
+	FieldRemain,
 }
 
 // ForeignKeys holds the SQL foreign-keys that are owned by the SubjectsOffered type.
@@ -73,4 +76,6 @@ var (
 	AMOUNTValidator func(string) error
 	// STATUSValidator is a validator for the "STATUS" field. It is called by the builders before save.
 	STATUSValidator func(string) error
+	// RemainValidator is a validator for the "Remain" field. It is called by the builders before save.
+	RemainValidator func(string) error
 )

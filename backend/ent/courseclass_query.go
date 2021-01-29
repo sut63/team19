@@ -390,6 +390,19 @@ func (cq *CourseclassQuery) WithSubject(opts ...func(*SubjectQuery)) *Courseclas
 
 // GroupBy used to group vertices by one or more fields/columns.
 // It is often used with aggregate functions, like: count, max, mean, min, sum.
+//
+// Example:
+//
+//	var v []struct {
+//		Tablecode string `json:"tablecode,omitempty"`
+//		Count int `json:"count,omitempty"`
+//	}
+//
+//	client.Courseclass.Query().
+//		GroupBy(courseclass.FieldTablecode).
+//		Aggregate(ent.Count()).
+//		Scan(ctx, &v)
+//
 func (cq *CourseclassQuery) GroupBy(field string, fields ...string) *CourseclassGroupBy {
 	group := &CourseclassGroupBy{config: cq.config}
 	group.fields = append([]string{field}, fields...)
@@ -403,6 +416,17 @@ func (cq *CourseclassQuery) GroupBy(field string, fields ...string) *Courseclass
 }
 
 // Select one or more fields from the given query.
+//
+// Example:
+//
+//	var v []struct {
+//		Tablecode string `json:"tablecode,omitempty"`
+//	}
+//
+//	client.Courseclass.Query().
+//		Select(courseclass.FieldTablecode).
+//		Scan(ctx, &v)
+//
 func (cq *CourseclassQuery) Select(field string, fields ...string) *CourseclassSelect {
 	selector := &CourseclassSelect{config: cq.config}
 	selector.fields = append([]string{field}, fields...)

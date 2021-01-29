@@ -25,6 +25,8 @@ type Course struct {
 	SubjectID    int
 	DegreeID     int
 	CourseName   string
+	CourseYear   string
+	TeacherID    string
 }
 
 // CreateCourse handles POST requests for adding course entities
@@ -89,11 +91,15 @@ func (ctl *CourseController) CreateCourse(c *gin.Context) {
 		SetSubjectID(sub).
 		SetDegreeID(deg).
 		SetCourseName(obj.CourseName).
+		SetTeacherID(obj.TeacherID).
+		SetCourseYear(obj.CourseYear).
 		Save(context.Background())
 
 	if err != nil {
+		fmt.Println(err)
 		c.JSON(400, gin.H{
-			"error": "saving failed",
+			"status": false,
+			"error":  err,
 		})
 		return
 	}
@@ -111,7 +117,7 @@ func (ctl *CourseController) CreateCourse(c *gin.Context) {
 // @ID get-course
 // @Produce  json
 // @Param id path int true "Course ID"
-// @Success 200 {object} ent.Course
+// @Success 200 {array} ent.Course
 // @Failure 400 {object} gin.H
 // @Failure 404 {object} gin.H
 // @Failure 500 {object} gin.H
@@ -126,9 +132,11 @@ func (ctl *CourseController) GetCourse(c *gin.Context) {
 	}
 	cou, err := ctl.client.Course.
 		Query().
+		WithDepartmentID().
+		WithSubjectID().
+		WithDegreeID().
 		Where(course.IDEQ(int(id))).
-		Only(context.Background())
-
+		All(context.Background())
 	if err != nil {
 		c.JSON(404, gin.H{
 			"error": err.Error(),

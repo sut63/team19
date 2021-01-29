@@ -7,6 +7,8 @@ const (
 	Label = "courseclass"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
+	// FieldTablecode holds the string denoting the tablecode field in the database.
+	FieldTablecode = "tablecode"
 
 	// EdgeClasstime holds the string denoting the classtime edge name in mutations.
 	EdgeClasstime = "classtime"
@@ -61,6 +63,7 @@ const (
 // Columns holds all SQL columns for courseclass fields.
 var Columns = []string{
 	FieldID,
+	FieldTablecode,
 }
 
 // ForeignKeys holds the SQL foreign-keys that are owned by the Courseclass type.
@@ -71,3 +74,8 @@ var ForeignKeys = []string{
 	"InstructorInfo_id",
 	"subject_id",
 }
+
+var (
+	// TablecodeValidator is a validator for the "tablecode" field. It is called by the builders before save.
+	TablecodeValidator func(string) error
+)

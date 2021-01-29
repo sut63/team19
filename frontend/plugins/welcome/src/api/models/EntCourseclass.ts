@@ -44,6 +44,12 @@ export interface EntCourseclass {
      * @memberof EntCourseclass
      */
     instructorInfoId?: number;
+    /**
+     * Tablecode holds the value of the "tablecode" field.
+     * @type {string}
+     * @memberof EntCourseclass
+     */
+    tablecode?: string;
 }
 
 export function EntCourseclassFromJSON(json: any): EntCourseclass {
@@ -59,6 +65,7 @@ export function EntCourseclassFromJSONTyped(json: any, ignoreDiscriminator: bool
         'edges': !exists(json, 'edges') ? undefined : EntCourseclassEdgesFromJSON(json['edges']),
         'id': !exists(json, 'id') ? undefined : json['id'],
         'instructorInfoId': !exists(json, 'instructorInfo_id') ? undefined : json['instructorInfo_id'],
+        'tablecode': !exists(json, 'tablecode') ? undefined : json['tablecode'],
     };
 }
 
@@ -74,6 +81,7 @@ export function EntCourseclassToJSON(value?: EntCourseclass | null): any {
         'edges': EntCourseclassEdgesToJSON(value.edges),
         'id': value.id,
         'instructorInfo_id': value.instructorInfoId,
+        'tablecode': value.tablecode,
     };
 }
 
