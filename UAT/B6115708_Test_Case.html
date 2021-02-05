@@ -3,39 +3,37 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
-	<title>B6115708_Test_Case</title>
+	<title>Create Course test suit</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Success Test</td></tr>
+<tr><td rowspan="1" colspan="3">Success case</td></tr>
 </thead>
 <tbody>
-<tr><td>open</td><td>http://localhost:3000/welcome<datalist><option>http://localhost:3000/welcome</option></datalist></td><td></td>
+<tr><td>open</td><td>http://localhost:3000/course<datalist><option>http://localhost:3000/course</option></datalist></td><td></td>
 </tr>
 <tr><td>click</td><td>id=email<datalist><option>id=email</option><option>name=email</option><option>//input[@id='email']</option><option>//div[@id='root']/div/main/div/form/div/div/input</option><option>//input</option><option>css=#email</option></datalist></td><td></td>
 </tr>
-<tr><td>type</td><td>id=email<datalist><option>id=email</option><option>name=email</option><option>//input[@id='email']</option><option>//div[@id='root']/div/main/div/form/div/div/input</option><option>//input</option><option>css=#email</option></datalist></td><td>kw-illslick@hotmail.com</td>
+<tr><td>type</td><td>id=email<datalist><option>id=email</option><option>name=email</option><option>//input[@id='email']</option><option>//div[@id='root']/div/main/div/form/div/div/input</option><option>//input</option><option>css=#email</option></datalist></td><td>kwan@email.com</td>
 </tr>
 <tr><td>click</td><td>id=password<datalist><option>id=password</option><option>name=password</option><option>//input[@id='password']</option><option>//div[@id='root']/div/main/div/form/div[2]/div/input</option><option>//div[2]/div/input</option><option>css=#password</option></datalist></td><td></td>
 </tr>
-<tr><td>type</td><td>id=password<datalist><option>id=password</option><option>name=password</option><option>//input[@id='password']</option><option>//div[@id='root']/div/main/div/form/div[2]/div/input</option><option>//div[2]/div/input</option><option>css=#password</option></datalist></td><td>0</td>
+<tr><td>type</td><td>id=password<datalist><option>id=password</option><option>name=password</option><option>//input[@id='password']</option><option>//div[@id='root']/div/main/div/form/div[2]/div/input</option><option>//div[2]/div/input</option><option>css=#password</option></datalist></td><td>kwan</td>
 </tr>
 <tr><td>click</td><td>//div[@id='root']/div/main/div/form/a/span<datalist><option>//div[@id='root']/div/main/div/form/a/span</option><option>//a/span</option><option>css=span.MuiButton-label</option></datalist></td><td></td>
 </tr>
-<tr><td>assertAlert</td><td>Success<datalist><option>Success</option></datalist></td><td></td>
-</tr>
 <tr><td>click</td><td>//div[@id='root']/div/header/header/div[2]/div<datalist><option>//div[@id='root']/div/header/header/div[2]/div</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>//div[@id='root']/div/header/header/div[2]/div/a[2]/div<datalist><option>//div[@id='root']/div/header/header/div[2]/div/a[2]/div</option><option>//a[2]/div</option></datalist></td><td></td>
+<tr><td>click</td><td>//div[@id='root']/div/header/header/div[2]/div/a[2]/h6<datalist><option>//div[@id='root']/div/header/header/div[2]/div/a[2]/h6</option><option>//a[2]/h6</option></datalist></td><td></td>
 </tr>
 <tr><td>click</td><td>id=mui-component-select-DepartmentID<datalist><option>//body</option><option>css=body.vsc-initialized</option><option>id=mui-component-select-DepartmentID</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>//div[@id='menu-DepartmentID']/div[3]/ul/li[3]<datalist><option>//div[@id='menu-DepartmentID']/div[3]/ul/li[3]</option><option>//li[3]</option></datalist></td><td></td>
+<tr><td>click</td><td>//div[@id='menu-DepartmentID']/div[3]/ul/li[7]<datalist><option>//div[@id='menu-DepartmentID']/div[3]/ul/li[7]</option><option>//li[7]</option></datalist></td><td></td>
 </tr>
 <tr><td>click</td><td>id=mui-component-select-SubjectID<datalist><option>//body</option><option>css=body.vsc-initialized</option><option>id=mui-component-select-SubjectID</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>//div[@id='menu-SubjectID']/div[3]/ul/li[6]<datalist><option>//div[@id='menu-SubjectID']/div[3]/ul/li[6]</option><option>//li[6]</option></datalist></td><td></td>
+<tr><td>click</td><td>//div[@id='menu-SubjectID']/div[3]/ul/li[2]<datalist><option>//div[@id='menu-SubjectID']/div[3]/ul/li[2]</option><option>//li[2]</option></datalist></td><td></td>
 </tr>
 <tr><td>click</td><td>id=mui-component-select-DegreeID<datalist><option>//body</option><option>css=body.vsc-initialized</option><option>id=mui-component-select-DegreeID</option></datalist></td><td></td>
 </tr>
@@ -43,43 +41,69 @@
 </tr>
 <tr><td>click</td><td>//div[@id='root']/div/header/header/div<datalist><option>//div[@id='root']/div/header/header/div</option><option>//header/div</option><option>css=div.makeStyles-root-18</option></datalist></td><td></td>
 </tr>
-<tr><td>type</td><td>id=outlined-basic<datalist><option>id=outlined-basic</option><option>name=CourseName</option><option>//input[@id='outlined-basic']</option><option>//div[@id='root']/div/header/header/div/article/div[4]/div[2]/div/div/input</option><option>//div[4]/div[2]/div/div/input</option><option>css=#outlined-basic</option></datalist></td><td>วิศวกรรมขนส่ง 2560</td>
+<tr><td>type</td><td>id=Course_name<datalist><option>id=Course_name</option><option>name=CourseName</option><option>//input[@id='Course_name']</option><option>//div[@id='root']/div/header/header/div/article/div[4]/div[2]/div/div/input</option><option>//div[4]/div[2]/div/div/input</option><option>css=#Course_name</option></datalist></td><td>วิศวกรรมเซรามิก 2560</td>
 </tr>
-<tr><td>click</td><td>//div[@id='root']/div/header/header/div/article/div[5]/button/span<datalist><option>//div[@id='root']/div/header/header/div/article/div[5]/button/span</option><option>//button/span</option><option>css=span.MuiButton-label</option></datalist></td><td></td>
+<tr><td>click</td><td>//div[@id='root']/div/header/header/div<datalist><option>//div[@id='root']/div/header/header/div</option><option>//header/div</option><option>css=div.makeStyles-root-18</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=Teacher_id<datalist><option>id=Teacher_id</option><option>name=TeacherID</option><option>//input[@id='Teacher_id']</option><option>//div[@id='root']/div/header/header/div/article/div[5]/div[2]/div/div/input</option><option>//div[5]/div[2]/div/div/input</option><option>css=#Teacher_id</option></datalist></td><td>T0354756</td>
+</tr>
+<tr><td>click</td><td>//div[@id='root']/div/header/header/div<datalist><option>//div[@id='root']/div/header/header/div</option><option>//header/div</option><option>css=div.makeStyles-root-18</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=Course_year<datalist><option>id=Course_year</option><option>name=CourseYear</option><option>//input[@id='Course_year']</option><option>//div[@id='root']/div/header/header/div/article/div[6]/div[2]/div/div/input</option><option>//div[6]/div[2]/div/div/input</option><option>css=#Course_year</option></datalist></td><td>2560</td>
+</tr>
+<tr><td>click</td><td>//div[@id='root']/div/header/header/div/article/div[7]/button/span<datalist><option>//div[@id='root']/div/header/header/div/article/div[7]/button/span</option><option>//button/span</option><option>css=span.MuiButton-label</option></datalist></td><td></td>
 </tr>
 <tr><td>assertText</td><td>id=swal2-title<datalist><option>id=swal2-title</option><option>//h2[@id='swal2-title']</option><option>//h2</option><option>css=#swal2-title</option></datalist></td><td>บันทึกข้อมูลสำเร็จ</td>
 </tr>
 </tbody></table>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Failure Test</td></tr>
+<tr><td rowspan="1" colspan="3">Failure case</td></tr>
 </thead>
 <tbody>
-<tr><td>open</td><td>http://localhost:3000/welcome<datalist><option>http://localhost:3000/sign_out</option><option>http://localhost:3000/welcome</option></datalist></td><td></td>
+<tr><td>open</td><td>http://localhost:3000/course<datalist><option>http://localhost:3000/course</option></datalist></td><td></td>
 </tr>
 <tr><td>click</td><td>id=email<datalist><option>id=email</option><option>name=email</option><option>//input[@id='email']</option><option>//div[@id='root']/div/main/div/form/div/div/input</option><option>//input</option><option>css=#email</option></datalist></td><td></td>
 </tr>
-<tr><td>type</td><td>id=email<datalist><option>id=email</option><option>name=email</option><option>//input[@id='email']</option><option>//div[@id='root']/div/main/div/form/div/div/input</option><option>//input</option><option>css=#email</option></datalist></td><td>kw-illslick@hotmail.com</td>
+<tr><td>type</td><td>id=email<datalist><option>id=email</option><option>name=email</option><option>//input[@id='email']</option><option>//div[@id='root']/div/main/div/form/div/div/input</option><option>//input</option><option>css=#email</option></datalist></td><td>kwan@email.com</td>
 </tr>
 <tr><td>click</td><td>id=password<datalist><option>id=password</option><option>name=password</option><option>//input[@id='password']</option><option>//div[@id='root']/div/main/div/form/div[2]/div/input</option><option>//div[2]/div/input</option><option>css=#password</option></datalist></td><td></td>
 </tr>
-<tr><td>type</td><td>id=password<datalist><option>id=password</option><option>name=password</option><option>//input[@id='password']</option><option>//div[@id='root']/div/main/div/form/div[2]/div/input</option><option>//div[2]/div/input</option><option>css=#password</option></datalist></td><td>0</td>
+<tr><td>type</td><td>id=password<datalist><option>id=password</option><option>name=password</option><option>//input[@id='password']</option><option>//div[@id='root']/div/main/div/form/div[2]/div/input</option><option>//div[2]/div/input</option><option>css=#password</option></datalist></td><td>kwan</td>
 </tr>
 <tr><td>click</td><td>//div[@id='root']/div/main/div/form/a/span<datalist><option>//div[@id='root']/div/main/div/form/a/span</option><option>//a/span</option><option>css=span.MuiButton-label</option></datalist></td><td></td>
 </tr>
-<tr><td>assertAlert</td><td>Success<datalist><option>Success</option></datalist></td><td></td>
+<tr><td>click</td><td>//div[@id='root']/div/header/header/div[2]/div<datalist><option>//div[@id='root']/div/header/header/div[2]/div</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>//div[@id='root']/div/header/header/div[2]/div<datalist><option>//div[@id='root']/div/header/header/div[2]/div/a[2]/h6</option><option>//a[2]/h6</option><option>//div[@id='root']/div/header/header/div[2]/div</option></datalist></td><td></td>
-</tr>
-<tr><td>click</td><td>//div[@id='root']/div/header/header/div[2]/div/a[2]/div<datalist><option>//div[@id='root']/div/header/header/div[2]/div/a[2]/div</option></datalist></td><td></td>
+<tr><td>click</td><td>//div[@id='root']/div/header/header/div[2]/div/a[2]/h6<datalist><option>//div[@id='root']/div/header/header/div[2]/div/a[2]/h6</option><option>//a[2]/h6</option></datalist></td><td></td>
 </tr>
 <tr><td>click</td><td>id=mui-component-select-DepartmentID<datalist><option>//body</option><option>css=body.vsc-initialized</option><option>id=mui-component-select-DepartmentID</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>//div[@id='menu-DepartmentID']/div[3]/ul/li[4]<datalist><option>//div[@id='menu-DepartmentID']/div[3]/ul/li[4]</option><option>//li[4]</option></datalist></td><td></td>
+<tr><td>click</td><td>//div[@id='menu-DepartmentID']/div[3]/ul/li[5]<datalist><option>//div[@id='menu-DepartmentID']/div[3]/ul/li[5]</option><option>//li[5]</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>//div[@id='root']/div/header/header/div/article/div[5]/button/span<datalist><option>//div[@id='root']/div/header/header/div/article/div[5]/button/span</option><option>//button/span</option><option>css=span.MuiButton-label</option></datalist></td><td></td>
+<tr><td>click</td><td>id=mui-component-select-SubjectID<datalist><option>//body</option><option>css=body.vsc-initialized</option><option>id=mui-component-select-SubjectID</option></datalist></td><td></td>
 </tr>
-<tr><td>assertText</td><td>id=swal2-title<datalist><option>id=swal2-title</option><option>//h2[@id='swal2-title']</option><option>//h2</option><option>css=#swal2-title</option></datalist></td><td>บันทึกข้อมูลไม่สำเร็จ</td>
+<tr><td>click</td><td>//div[@id='menu-SubjectID']/div[3]/ul/li<datalist><option>//div[@id='menu-SubjectID']/div[3]/ul/li</option><option>//li</option><option>css=li.MuiButtonBase-root.MuiListItem-root.MuiMenuItem-root.MuiMenuItem-gutters.MuiListItem-gutters.MuiListItem-button</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=mui-component-select-DegreeID<datalist><option>//body</option><option>css=body.vsc-initialized</option><option>id=mui-component-select-SubjectID</option><option>id=mui-component-select-DegreeID</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//div[@id='menu-DegreeID']/div[3]/ul/li<datalist><option>//div[@id='menu-DegreeID']/div[3]/ul/li</option><option>//li</option><option>css=li.MuiButtonBase-root.MuiListItem-root.MuiMenuItem-root.MuiMenuItem-gutters.MuiListItem-gutters.MuiListItem-button</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//div[@id='root']/div/header/header/div/article/div[4]<datalist><option>//div[@id='root']/div/header/header/div/article/div[4]</option><option>//div[4]</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=Course_name<datalist><option>id=Course_name</option><option>name=CourseName</option><option>//input[@id='Course_name']</option><option>//div[@id='root']/div/header/header/div/article/div[4]/div[2]/div/div/input</option><option>//div[4]/div[2]/div/div/input</option><option>css=#Course_name</option></datalist></td><td>วิศวกรรมเตมี 2560</td>
+</tr>
+<tr><td>click</td><td>//div[@id='root']/div/header/header/div<datalist><option>//div[@id='root']/div/header/header/div</option><option>//header/div</option><option>css=div.makeStyles-root-18</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=Teacher_id<datalist><option>id=Teacher_id</option><option>name=TeacherID</option><option>//input[@id='Teacher_id']</option><option>//div[@id='root']/div/header/header/div/article/div[5]/div[2]/div/div/input</option><option>//div[5]/div[2]/div/div/input</option><option>css=#Teacher_id</option></datalist></td><td>T65</td>
+</tr>
+<tr><td>click</td><td>//div[@id='root']/div/header/header/div<datalist><option>//div[@id='root']/div/header/header/div</option><option>//header/div</option><option>css=div.makeStyles-root-18</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=Course_year<datalist><option>id=Course_year</option><option>name=CourseYear</option><option>//input[@id='Course_year']</option><option>//div[@id='root']/div/header/header/div/article/div[6]/div[2]/div/div/input</option><option>//div[6]/div[2]/div/div/input</option><option>css=#Course_year</option></datalist></td><td>2560</td>
+</tr>
+<tr><td>click</td><td>//div[@id='root']/div/header/header/div/article/div[7]/button/span<datalist><option>//div[@id='root']/div/header/header/div/article/div[7]/button/span</option><option>//button/span</option><option>css=span.MuiButton-label</option></datalist></td><td></td>
+</tr>
+<tr><td>assertText</td><td>id=swal2-title<datalist><option>id=swal2-title</option><option>//h2[@id='swal2-title']</option><option>//h2</option><option>css=#swal2-title</option></datalist></td><td>รหัสอาจารย์ขึ้นต้นด้วย T ตามด้วยตัวเลข 7 หลัก</td>
 </tr>
 </tbody></table>
 </body>
