@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+	<title>Sprint 2</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Search Success</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:3000/Login<datalist><option>http://localhost:3000/Login</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//div[@id='root']/div/main/div<datalist><option>//div[@id='root']/div/main/div</option><option>//main/div</option><option>css=div.makeStyles-paper-62</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=email<datalist><option>id=email</option><option>name=email</option><option>//input[@id='email']</option><option>//div[@id='root']/div/main/div/form/div/div/input</option><option>//input</option><option>css=#email</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=email<datalist><option>id=email</option><option>name=email</option><option>//input[@id='email']</option><option>//div[@id='root']/div/main/div/form/div/div/input</option><option>//input</option><option>css=#email</option></datalist></td><td>example@email.com</td>
+</tr>
+<tr><td>click</td><td>id=password<datalist><option>id=password</option><option>name=password</option><option>//input[@id='password']</option><option>//div[@id='root']/div/main/div/form/div[2]/div/input</option><option>//div[2]/div/input</option><option>css=#password</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=password<datalist><option>id=password</option><option>name=password</option><option>//input[@id='password']</option><option>//div[@id='root']/div/main/div/form/div[2]/div/input</option><option>//div[2]/div/input</option><option>css=#password</option></datalist></td><td>1234</td>
+</tr>
+<tr><td>click</td><td>link=Login<datalist><option>link=Login</option><option>//div[@id='root']/div/main/div/form/a</option><option>//a[contains(@href, '/')]</option><option>//a</option><option>css=a.MuiButtonBase-root.MuiButton-root.MuiButton-contained.makeStyles-submit-6.MuiButton-containedPrimary.MuiButton-fullWidth</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//div[@id='root']/div/header/header/div[2]/div<datalist><option>//div[@id='root']/div/header/header/div[2]/div</option><option>//header/div[2]/div</option><option>css=div.makeStyles-drawer-42.makeStyles-drawerOpen-43</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>link=Search Instructor<datalist><option>link=Search Instructor</option><option>//div[@id='root']/div/header/header/div/div/a[5]</option><option>//a[contains(@href, '/SearchInstructor')]</option><option>//a[5]</option><option>css=a.makeStyles-root-46.makeStyles-open-48.makeStyles-selected-56</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>name=name<datalist><option>name=name</option><option>//input[@name='name']</option><option>//div[@id='root']/div/header/header/article/div/div[2]/form/div/div/input</option><option>//input</option><option>css=input[name="name"]</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>name=name<datalist><option>name=name</option><option>//input[@name='name']</option><option>//div[@id='root']/div/header/header/article/div/div[2]/form/div/div/input</option><option>//input</option><option>css=input[name="name"]</option></datalist></td><td>Example</td>
+</tr>
+<tr><td>click</td><td>//div[@id='root']/div/header/header/article/div/div[3]/button/span<datalist><option>//div[@id='root']/div/header/header/article/div/div[3]/button/span</option><option>//span</option><option>css=span.MuiButton-label</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//div[@id='root']/div/header/header/article/div/div[4]/button/span<datalist><option>//div[@id='root']/div/header/header/article/div/div[4]/button/span</option><option>//div[4]/button/span</option><option>css=button.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedSecondary.MuiButton-containedSizeLarge.MuiButton-sizeLarge &gt; span.MuiButton-label</option></datalist></td><td></td>
+</tr>
+<tr><td>assertText</td><td>id=swal2-title<datalist><option>id=swal2-title</option><option>//h2[@id='swal2-title']</option><option>//h2</option><option>css=#swal2-title</option></datalist></td><td>Search Success</td>
+</tr>
+</tbody></table>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Search Error</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:3000/Login<datalist><option>http://localhost:3000/Login</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//div[@id='root']/div/main/div<datalist><option>//div[@id='root']/div/main/div</option><option>//main/div</option><option>css=div.makeStyles-paper-62</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=email<datalist><option>id=email</option><option>name=email</option><option>//input[@id='email']</option><option>//div[@id='root']/div/main/div/form/div/div/input</option><option>//input</option><option>css=#email</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=email<datalist><option>id=email</option><option>name=email</option><option>//input[@id='email']</option><option>//div[@id='root']/div/main/div/form/div/div/input</option><option>//input</option><option>css=#email</option></datalist></td><td>example@email.com</td>
+</tr>
+<tr><td>click</td><td>id=password<datalist><option>id=password</option><option>name=password</option><option>//input[@id='password']</option><option>//div[@id='root']/div/main/div/form/div[2]/div/input</option><option>//div[2]/div/input</option><option>css=#password</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=password<datalist><option>id=password</option><option>name=password</option><option>//input[@id='password']</option><option>//div[@id='root']/div/main/div/form/div[2]/div/input</option><option>//div[2]/div/input</option><option>css=#password</option></datalist></td><td>1234</td>
+</tr>
+<tr><td>click</td><td>link=Login<datalist><option>link=Login</option><option>//div[@id='root']/div/main/div/form/a</option><option>//a[contains(@href, '/')]</option><option>//a</option><option>css=a.MuiButtonBase-root.MuiButton-root.MuiButton-contained.makeStyles-submit-6.MuiButton-containedPrimary.MuiButton-fullWidth</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//div[@id='root']/div/header/header/div[2]/div<datalist><option>//div[@id='root']/div/header/header/div[2]/div</option><option>//header/div[2]/div</option><option>css=div.makeStyles-drawer-42.makeStyles-drawerOpen-43</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>link=Search Instructor<datalist><option>link=Search Instructor</option><option>//div[@id='root']/div/header/header/div/div/a[5]</option><option>//a[contains(@href, '/SearchInstructor')]</option><option>//a[5]</option><option>css=a.makeStyles-root-46.makeStyles-open-48.makeStyles-selected-56</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>name=name<datalist><option>name=name</option><option>//input[@name='name']</option><option>//div[@id='root']/div/header/header/article/div/div[2]/form/div/div/input</option><option>//input</option><option>css=input[name="name"]</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>name=name<datalist><option>name=name</option><option>//input[@name='name']</option><option>//div[@id='root']/div/header/header/article/div/div[2]/form/div/div/input</option><option>//input</option><option>css=input[name="name"]</option></datalist></td><td>Error</td>
+</tr>
+<tr><td>click</td><td>//div[@id='root']/div/header/header/article/div/div[3]/button/span<datalist><option>//div[@id='root']/div/header/header/article/div/div[3]/button/span</option><option>//span</option><option>css=span.MuiButton-label</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//div[@id='root']/div/header/header/article/div/div[4]/button/span<datalist><option>//div[@id='root']/div/header/header/article/div/div[4]/button/span</option><option>//div[4]/button/span</option><option>css=button.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedSecondary.MuiButton-containedSizeLarge.MuiButton-sizeLarge &gt; span.MuiButton-label</option></datalist></td><td></td>
+</tr>
+<tr><td>assertText</td><td>id=swal2-title<datalist><option>id=swal2-title</option><option>//h2[@id='swal2-title']</option><option>//h2</option><option>css=#swal2-title</option></datalist></td><td>Search Error</td>
+</tr>
+</tbody></table>
+</body>
+</html>
