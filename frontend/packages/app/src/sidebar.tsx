@@ -5,6 +5,9 @@ import SignOut from '@material-ui/icons/Settings';
 import BallotIcon from '@material-ui/icons/Ballot';
 import SubjectIcon from '@material-ui/icons/Subject';
 import FindInPageIcon from '@material-ui/icons/FindInPage';
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
+import NotesIcon from '@material-ui/icons/Notes';
+import TocIcon from '@material-ui/icons/Toc';
 //import AccountCircleSharpIcon from '@material-ui/icons/AccountCircleSharp';
 
 import {
@@ -59,15 +62,21 @@ export const AppSidebar = ({setSession}) => {
     />
 
     <SidebarItem
-      icon={FindInPageIcon}
+      icon={LibraryBooksIcon}
       to="FindCourse"
       text="Search Course"
     />
 
     <SidebarItem
-      icon={FindInPageIcon}
+      icon={NotesIcon}
       to="searchsubjectsoffered"
       text="Search Subjects Offered"
+    />
+
+    <SidebarItem
+      icon={TocIcon}
+      to=""
+      text="Search Class"
     />
 
     {/* End global nav */}
