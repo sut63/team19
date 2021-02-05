@@ -68,7 +68,7 @@ const Login : FC = ({ setSession })  => {
 
 
   const getInstructor = async () => {
-    const res = await api.listInstructorinfo({offset: 0 });
+    const res = await api.listInstructorinfo({limit : 1000, offset: 0 });
     setInstructor(res);
    };
 
