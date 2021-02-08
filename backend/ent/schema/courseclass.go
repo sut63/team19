@@ -17,7 +17,7 @@ type Courseclass struct {
 // Fields of the Courseclass.
 func (Courseclass) Fields() []ent.Field {
 	return []ent.Field{
-		field.String("tablecode").NotEmpty().
+		field.String("tablecode").
 		Validate(func(s string) error {
 			match, _ := regexp.MatchString("[T]\\d{2}", s)
 			if !match {
