@@ -121,12 +121,13 @@ func (ctl *CourseclassController) CreateCourseclass(c *gin.Context) {
 		SetClassroom(cr).
 		Save(context.Background())
 
-	if err != nil {
-		c.JSON(400, gin.H{
-			"error": "saving failed",
-		})
-		return
-	}
+		if err != nil {
+			c.JSON(400, gin.H{
+				"status": false,
+				"error":  err,
+			})
+			return
+		}
 
 	c.JSON(200, gin.H{
 		"status": true,
