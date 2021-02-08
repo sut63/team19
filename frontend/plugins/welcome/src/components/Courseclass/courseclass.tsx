@@ -93,7 +93,7 @@ const Courseclass: FC<{}> = () => {
   };
 
   const getInstructor = async () => {
-    const res = await http.listInstructorinfo({ limit: 10, offset: 0 });
+    const res = await http.listInstructorinfo({ limit: 100, offset: 0 });
     setInstructor(res);
   };
 
@@ -182,12 +182,13 @@ const Courseclass: FC<{}> = () => {
           onChange={handleChange}
         >
           {instructor.map(item => {
+            if (item.nAME == JSON.parse(String(localStorage.getItem("Name"))) ) {
                     return (
                       <MenuItem key={item.id} value={item.id}>
                         {item.nAME}
                       </MenuItem>
                     );
-                  })}
+                  }})}
         </Select>
       </FormControl>
       </Grid>

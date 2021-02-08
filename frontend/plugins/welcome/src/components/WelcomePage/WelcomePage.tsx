@@ -57,9 +57,9 @@ const WelcomePage: FC<{}> = () => {
       <CardHeader color="info" stats icon>
       <CardIcon color="info">
         <ContentHeader title = "Welcome : Register System">
-            <div style={{ marginLeft: 1, width: '800px'}}></div>
-            <div style={{ marginRight: 1, color: 'white' }}><AccountCircleIcon/></div>
-            <div style={{ marginRight: 1, color: 'white' }}>{title}{" "}{name}</div>
+            <div style={{ marginLeft: 'auto',color: '#13b9ce', width: 'auto'}}>{"----------------------------------------------------------------------------------------------------------------------------------------------------------------------------"}</div>
+            <div style={{ marginRight: 'auto', color: 'white' }}><AccountCircleIcon/></div>
+            <div style={{ marginRight: 'auto', color: 'white' }}>{title}{" "}{name}</div>
         </ContentHeader>
         </CardIcon>
         </CardHeader>
