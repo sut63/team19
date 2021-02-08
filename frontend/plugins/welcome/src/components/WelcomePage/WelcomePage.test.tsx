@@ -2,12 +2,12 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import WelcomePage from './WelcomePage';
 import { ThemeProvider } from '@material-ui/core';
-import { lightTheme } from '@backstage/theme';
+import { darkTheme } from '@backstage/theme';
 
 describe('WelcomePage', () => {
   it('should render', () => {
     const rendered = render(
-      <ThemeProvider theme={lightTheme}>
+      <ThemeProvider theme={darkTheme}>
         <WelcomePage />
       </ThemeProvider>,
     );

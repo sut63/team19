@@ -27,6 +27,9 @@ export const AppSidebar = ({setSession}) => {
       isLoggedIn : false,
       isSignIn : false
     });
+    localStorage.setItem("ID", JSON.stringify(null));
+    localStorage.setItem("Title", JSON.stringify(null));
+    localStorage.setItem("Name", JSON.stringify(null));
   }
 
   return (
@@ -75,7 +78,7 @@ export const AppSidebar = ({setSession}) => {
 
     <SidebarItem
       icon={TocIcon}
-      to=""
+      //to=""
       text="Search Class"
     />
 
