@@ -7,6 +7,7 @@ import EntSubjectsOffered from './components/SubjectsOffered'
 import SearchInstructor from './components/SearchInstructor';
 import searchsubjectsoffered from './components/SearchSubjectsOffered';
 import FindCourse from './components/FindCourse';
+import searchCourseclass from './components/searchCourseclass';
 //import Sign from './components/Sign-in';
 
 export const plugin = createPlugin({
@@ -20,6 +21,7 @@ export const plugin = createPlugin({
     router.registerRoute('/SearchInstructor', SearchInstructor);
     router.registerRoute('/FindCourse', FindCourse);
     router.registerRoute('/searchsubjectsoffered', searchsubjectsoffered);
+    router.registerRoute('/searchCourseclass', searchCourseclass);
     router.registerRoute('/Login', Login);
     //router.registerRoute('/Sign-in', Sign);
   },

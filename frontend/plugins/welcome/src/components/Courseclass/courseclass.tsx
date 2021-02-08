@@ -55,7 +55,7 @@ const useStyles = makeStyles(theme => ({
   
 
 interface  Courseclass  {
-  
+  tablecode : string;
   day :    number;
 	time    :      number;
 	instructor  :  number;
@@ -93,7 +93,7 @@ const Courseclass: FC<{}> = () => {
   };
 
   const getInstructor = async () => {
-    const res = await http.listInstructorinfo({ limit: 100, offset: 0 });
+    const res = await http.listInstructorinfo({ limit: 10, offset: 0 });
     setInstructor(res);
   };
 
@@ -109,6 +109,13 @@ const Courseclass: FC<{}> = () => {
     const res = await http.listClassroom({ limit: 10, offset: 0 });
     setClassroom(res);
   };
+
+  const alertMessage = (icon: any, title: any) => {
+    Toast.fire({
+      icon: icon,
+      title: title,
+    });
+  }
 
   // Lifecycle Hooks
   useEffect(() => {
@@ -128,6 +135,18 @@ const Courseclass: FC<{}> = () => {
     setCourseclass({ ...courseclass, [name]: value });
     console.log(courseclass);
   };
+
+  const checkCaseSaveError = (field: string) => {
+    switch(field){
+      case "tablecode":
+        alertMessage("error","รูปแบบรหัสตารางไม่ถูกต้อง ต้องขึ้นต้นด้วย T และตามด้วยเลขสองหลัก");
+        return;
+       default:
+         alertMessage("error","บันทึกข้อมูลไม่สำเร็จ");
+         return;
+    }
+  }
+
   // function save data
   function save() {
     const apiUrl = 'http://localhost:8080/api/v1/courseclasss';
@@ -148,11 +167,9 @@ const Courseclass: FC<{}> = () => {
             icon: 'success',
             title: 'บันทึกข้อมูลสำเร็จ',
           });
-        } else {
-          Toast.fire({
-            icon: 'error',
-            title: 'บันทึกข้อมูลไม่สำเร็จ',
-          });
+        }else {
+          checkCaseSaveError(data.error.Name)
+
         }
       });
   }
@@ -168,6 +185,17 @@ const Courseclass: FC<{}> = () => {
        <Container maxWidth="sm">
           <Grid container spacing={3}>
             <Grid item xs={12}></Grid>
+
+            <Grid item xs={3}>
+              <div className={classes.paper}>รหัสตาราง</div>
+            </Grid>
+            <Grid item xs={9}>
+            <form className={classes.root} noValidate autoComplete="off">
+      <TextField  label="กรอกรหัสตาราง" name ="tablecode" type="string" 
+      value={courseclass.tablecode } onChange={handleChange} className={classes.textField}/>
+    </form>      
+      </Grid>
+
             <Grid item xs={3}>
               <div className={classes.paper}>รายชื่อ</div>
             </Grid>
@@ -182,13 +210,13 @@ const Courseclass: FC<{}> = () => {
           onChange={handleChange}
         >
           {instructor.map(item => {
-            if (item.nAME == JSON.parse(String(localStorage.getItem("Name"))) ) {
-                    return (
-                      <MenuItem key={item.id} value={item.id}>
-                        {item.nAME}
-                      </MenuItem>
-                    );
-                  }})}
+                    if (item.nAME == JSON.parse(String(localStorage.getItem("Name"))) ) {
+                      return (
+                        <MenuItem key={item.id} value={item.id}>
+                          {item.nAME}
+                        </MenuItem>
+                      );
+                    }})}
         </Select>
       </FormControl>
       </Grid>
