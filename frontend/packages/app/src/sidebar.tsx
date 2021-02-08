@@ -34,11 +34,12 @@ export const AppSidebar = ({setSession}) => {
 
   return (
   <Sidebar>
-    <SidebarDivider />
     {/* Global nav, not org-specific */}
     <SidebarItem icon={HomeIcon} to="welcome" text="Home" />
     {/* <SidebarItem icon={CreateComponentIcon} to="create" text="Create..." />
     <SidebarItem icon={CreateComponentIcon} to="welcome" text="Welcome" /> */}
+
+    <SidebarDivider />
     
     <SidebarItem
       icon={BallotIcon}
@@ -57,6 +58,8 @@ export const AppSidebar = ({setSession}) => {
       to="subjectsoffered"
       text="Create Subjects Offered"
     />
+
+    <SidebarDivider />
 
     <SidebarItem
       icon={FindInPageIcon}

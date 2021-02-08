@@ -18,13 +18,13 @@ type Courseclass struct {
 func (Courseclass) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("tablecode").
-		Validate(func(s string) error {
-			match, _ := regexp.MatchString("[T]\\d{2}", s)
-			if !match {
-				return errors.New("Tablecode must begin with T and limit 2 digits")
-			}
-			return nil
-		}).NotEmpty(),
+			Validate(func(s string) error {
+				match, _ := regexp.MatchString("[T]\\d{2}$", s)
+				if !match {
+					return errors.New("Tablecode must begin with T and limit 2 digits")
+				}
+				return nil
+			}).NotEmpty(),
 	}
 }
 
