@@ -84,11 +84,11 @@ export function EntCourseclassEdgesFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
-        'classdate': !exists(json, 'classdate') ? undefined : EntClassdateFromJSON(json['classdate']),
-        'classroom': !exists(json, 'classroom') ? undefined : EntClassroomFromJSON(json['classroom']),
-        'classtime': !exists(json, 'classtime') ? undefined : EntClasstimeFromJSON(json['classtime']),
-        'instructorInfo': !exists(json, 'instructorInfo') ? undefined : EntInstructorInfoFromJSON(json['instructorInfo']),
-        'subject': !exists(json, 'subject') ? undefined : EntSubjectFromJSON(json['subject']),
+        'classdate': !exists(json, 'Classdate') ? undefined : EntClassdateFromJSON(json['Classdate']),
+        'classroom': !exists(json, 'Classroom') ? undefined : EntClassroomFromJSON(json['Classroom']),
+        'classtime': !exists(json, 'Classtime') ? undefined : EntClasstimeFromJSON(json['Classtime']),
+        'instructorInfo': !exists(json, 'InstructorInfo') ? undefined : EntInstructorInfoFromJSON(json['InstructorInfo']),
+        'subject': !exists(json, 'Subject') ? undefined : EntSubjectFromJSON(json['Subject']),
     };
 }
 

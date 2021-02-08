@@ -33,7 +33,22 @@ func init() {
 	// courseclassDescTablecode is the schema descriptor for tablecode field.
 	courseclassDescTablecode := courseclassFields[0].Descriptor()
 	// courseclass.TablecodeValidator is a validator for the "tablecode" field. It is called by the builders before save.
-	courseclass.TablecodeValidator = courseclassDescTablecode.Validators[0].(func(string) error)
+	courseclass.TablecodeValidator = func() func(string) error {
+		validators := courseclassDescTablecode.Validators
+		fns := [...]func(string) error{
+			validators[0].(func(string) error),
+			validators[1].(func(string) error),
+			validators[2].(func(string) error),
+		}
+		return func(tablecode string) error {
+			for _, fn := range fns {
+				if err := fn(tablecode); err != nil {
+					return err
+				}
+			}
+			return nil
+		}
+	}()
 	instructorinfoFields := schema.InstructorInfo{}.Fields()
 	_ = instructorinfoFields
 	// instructorinfoDescNAME is the schema descriptor for NAME field.
