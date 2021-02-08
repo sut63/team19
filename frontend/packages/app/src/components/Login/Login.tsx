@@ -61,7 +61,7 @@ interface login {
 const Login : FC = ({ setSession })  => {
   const classes = useStyles();
   const api = new DefaultApi();
-  const [to, setTo] = React.useState("");
+  const [to, setTo] = React.useState('');
 
   const [login, setLogin] = React.useState<Partial<login>>({});
   const [instructors, setInstructor] = React.useState<EntInstructorInfo[]>([]);
@@ -75,7 +75,16 @@ const Login : FC = ({ setSession })  => {
   // Lifecycle Hooks
   useEffect(() => {
     getInstructor();
+    CheckReset();
   }, []);
+
+  function CheckReset(){
+    const namereset = JSON.parse(String(localStorage.getItem("Name")));
+    if(namereset != null){
+      setTo("/welcome")
+      Linklogin();
+    }
+  }
 
   const handleChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>,) =>{
     const name = event.target.name as keyof typeof Login;
@@ -87,12 +96,15 @@ const Login : FC = ({ setSession })  => {
   const Login = async () => {
     instructors.map((item: any) => {
       if (item.eMAIL == login.email && item.pASSWORD == login.password) {
-        Linklogin();
+        localStorage.setItem("ID", JSON.stringify(item.id));
+        localStorage.setItem("Title", JSON.stringify(item.edges.title.tITLE));
+        localStorage.setItem("Name", JSON.stringify(item.nAME));
         setTo("/welcome")
+        Linklogin();
       }
       else{
         clear();
-        setTo("/")
+        setTo("")
       }
     });
   };
@@ -150,9 +162,6 @@ const Login : FC = ({ setSession })  => {
             value = {login.password || ''}
             onChange = {handleChange}
           autoComplete="current-password" /> }
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me" />
           <Button
             type="submit"
             fullWidth
@@ -166,26 +175,22 @@ const Login : FC = ({ setSession })  => {
             Login
           </Button>
           <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
             <Grid item>
-              <Link
+              <Link 
+               align="center"
                href="#" 
                variant="body2"
                component={RouterLink}
                to="/Sign-in"
                onClick = {LinkSignIn}
                >
-                {"Don't have an account? Sign Up"} 
+              {"Don't have an account? Sign-In"}
               </Link>
             </Grid>
           </Grid>
         </form>
       </div>
-      <Box mt={8}>
+      <Box mt={7}>
         <Copyright />
       </Box>
     </Container>
