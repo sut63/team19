@@ -81,7 +81,7 @@ export const AppSidebar = ({setSession}) => {
 
     <SidebarItem
       icon={TocIcon}
-      //to=""
+      to="searchCourseclass"
       text="Search Class"
     />
 
