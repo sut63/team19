@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
-	<title>ระบบสร้างแผนการสอนอาาจารย์</title>
+	<title>ระบบสร้างแผนการสอนอาจารย์</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
@@ -11,51 +11,37 @@
 <tr><td rowspan="1" colspan="3">Success Test Case</td></tr>
 </thead>
 <tbody>
-<tr><td>open</td><td>http://localhost:3000/courseclass<datalist><option>http://localhost:3000/courseclass</option></datalist></td><td></td>
+<tr><td>open</td><td>http://localhost:3000/welcome<datalist><option>http://localhost:3000/welcome</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>id=email<datalist><option>id=email</option><option>name=email</option><option>//input[@id='email']</option><option>//div[@id='root']/div/main/div/form/div/div/input</option><option>//input</option><option>css=#email</option></datalist></td><td></td>
+<tr><td>click</td><td>//div[@id='root']/div/header/header/div/article/div[2]/div[2]/div/div/h3/a/span<datalist><option>//div[@id='root']/div/header/header/div/article/div[2]/div[2]/div/div/h3/a/span</option><option>//div[2]/div/div/h3/a/span</option><option>css=div.makeStyles-cardHeader-194.makeStyles-primaryCardHeader-202.makeStyles-cardHeaderStats-196.makeStyles-cardHeaderIcon-197 &gt; h3.makeStyles-cardTitle-192 &gt; a.MuiButtonBase-root.MuiButton-root.MuiButton-text &gt; span.MuiButton-label</option></datalist></td><td></td>
 </tr>
-<tr><td>type</td><td>id=email<datalist><option>id=email</option><option>name=email</option><option>//input[@id='email']</option><option>//div[@id='root']/div/main/div/form/div/div/input</option><option>//input</option><option>css=#email</option></datalist></td><td>skytekking.art@gmail.com</td>
+<tr><td>click</td><td>name=tablecode<datalist><option>name=tablecode</option><option>//input[@name='tablecode']</option><option>//div[@id='root']/div/header/header/div/article/div[2]/div/div[3]/form/div/div/input</option><option>//input</option><option>css=input[name="tablecode"]</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>id=password<datalist><option>id=password</option><option>name=password</option><option>//input[@id='password']</option><option>//div[@id='root']/div/main/div/form/div[2]/div/input</option><option>//div[2]/div/input</option><option>css=#password</option></datalist></td><td></td>
+<tr><td>type</td><td>name=tablecode<datalist><option>name=tablecode</option><option>//input[@name='tablecode']</option><option>//div[@id='root']/div/header/header/div/article/div[2]/div/div[3]/form/div/div/input</option><option>//input</option><option>css=input[name="tablecode"]</option></datalist></td><td>T07</td>
 </tr>
-<tr><td>type</td><td>id=password<datalist><option>id=password</option><option>name=password</option><option>//input[@id='password']</option><option>//div[@id='root']/div/main/div/form/div[2]/div/input</option><option>//div[2]/div/input</option><option>css=#password</option></datalist></td><td>a</td>
-</tr>
-<tr><td>click</td><td>//div[@id='root']/div/main/div/form/a/span<datalist><option>//div[@id='root']/div/main/div/form/a/span</option><option>//a/span</option><option>css=span.MuiButton-label</option></datalist></td><td></td>
-</tr>
-<tr><td>assertAlert</td><td>Success<datalist><option>Success</option></datalist></td><td></td>
-</tr>
-<tr><td>click</td><td>//div[@id='root']/div/header/header/div[2]/div<datalist><option>//div[@id='root']/div/header/header/div[2]/div</option><option>//header/div[2]/div</option><option>css=div.makeStyles-drawer-36.makeStyles-drawerOpen-37</option></datalist></td><td></td>
-</tr>
-<tr><td>click</td><td>//div[@id='root']/div/header/header/div[2]/div/a[3]/h6<datalist><option>//div[@id='root']/div/header/header/div[2]/div/a[3]/h6</option><option>//a[3]/h6</option></datalist></td><td></td>
-</tr>
-<tr><td>click</td><td>id=mui-component-select-instructor<datalist><option>//div[@id='menu-instructor']/div[3]/ul/li</option><option>//li</option><option>css=li.MuiButtonBase-root.MuiListItem-root.MuiMenuItem-root.MuiMenuItem-gutters.MuiListItem-gutters.MuiListItem-button.Mui-focusVisible.Mui-focusVisible</option><option>id=mui-component-select-instructor</option></datalist></td><td></td>
+<tr><td>click</td><td>id=mui-component-select-instructor<datalist><option>id=mui-component-select-instructor</option><option>//div[@id='mui-component-select-instructor']</option><option>//div[@id='root']/div/header/header/div/article/div[2]/div/div[5]/div/div/div</option><option>//div[5]/div/div/div</option><option>css=#mui-component-select-instructor</option></datalist></td><td></td>
 </tr>
 <tr><td>click</td><td>//div[@id='menu-instructor']/div[3]/ul/li<datalist><option>//div[@id='menu-instructor']/div[3]/ul/li</option><option>//li</option><option>css=li.MuiButtonBase-root.MuiListItem-root.MuiMenuItem-root.MuiMenuItem-gutters.MuiListItem-gutters.MuiListItem-button.Mui-focusVisible.Mui-focusVisible</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>id=mui-component-select-subject<datalist><option>//div[@id='menu-instructor']/div[3]/ul/li[2]</option><option>//li[2]</option><option>id=mui-component-select-subject</option></datalist></td><td></td>
-</tr>
-<tr><td>click</td><td>//div[@id='menu-subject']/div[3]/ul<datalist><option>//div[@id='menu-subject']/div[3]/ul</option><option>//ul</option><option>css=ul.MuiList-root.MuiMenu-list.MuiList-padding</option></datalist></td><td></td>
+<tr><td>click</td><td>id=mui-component-select-subject<datalist><option>id=mui-component-select-subject</option><option>//div[@id='mui-component-select-subject']</option><option>//div[@id='root']/div/header/header/div/article/div[2]/div/div[7]/div/div/div</option><option>//div[7]/div/div/div</option><option>css=#mui-component-select-subject</option></datalist></td><td></td>
 </tr>
 <tr><td>click</td><td>//div[@id='menu-subject']/div[3]/ul/li[2]<datalist><option>//div[@id='menu-subject']/div[3]/ul/li[2]</option><option>//li[2]</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>//div[@id='root']/div/header/header/div/article/div[2]/div/div[7]<datalist><option>//div[@id='root']/div/header/header/div/article/div[2]/div/div[7]</option><option>//div[7]</option></datalist></td><td></td>
+<tr><td>click</td><td>id=mui-component-select-room<datalist><option>id=mui-component-select-room</option><option>//div[@id='mui-component-select-room']</option><option>//div[@id='root']/div/header/header/div/article/div[2]/div/div[9]/div/div/div</option><option>//div[9]/div/div/div</option><option>css=#mui-component-select-room</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>id=mui-component-select-room<datalist><option>//div[@id='menu-room']/div[3]/ul/li[2]</option><option>//li[2]</option><option>id=mui-component-select-room</option></datalist></td><td></td>
+<tr><td>click</td><td>//div[@id='menu-room']/div[3]/ul/li[7]<datalist><option>//div[@id='menu-room']/div[3]/ul/li[7]</option><option>//li[7]</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>//div[@id='menu-room']/div[3]/ul/li[4]<datalist><option>//div[@id='menu-room']/div[3]/ul/li[4]</option><option>//li[4]</option></datalist></td><td></td>
-</tr>
-<tr><td>click</td><td>id=mui-component-select-day<datalist><option>//div[@id='menu-day']/div[3]/ul/li[2]</option><option>//li[2]</option><option>id=mui-component-select-day</option></datalist></td><td></td>
+<tr><td>click</td><td>id=mui-component-select-day<datalist><option>id=mui-component-select-day</option><option>//div[@id='mui-component-select-day']</option><option>//div[@id='root']/div/header/header/div/article/div[2]/div/div[11]/div/div/div/div</option><option>//div[11]/div/div/div/div</option><option>css=#mui-component-select-day</option></datalist></td><td></td>
 </tr>
 <tr><td>click</td><td>//div[@id='menu-day']/div[3]/ul/li[3]<datalist><option>//div[@id='menu-day']/div[3]/ul/li[3]</option><option>//li[3]</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>id=mui-component-select-time<datalist><option>//div[@id='menu-time']/div[3]/ul/li[7]</option><option>//li[7]</option><option>id=mui-component-select-time</option></datalist></td><td></td>
+<tr><td>click</td><td>id=mui-component-select-time<datalist><option>id=mui-component-select-time</option><option>//div[@id='mui-component-select-time']</option><option>//div[@id='root']/div/header/header/div/article/div[2]/div/div[13]/div/div/div/div</option><option>//div[13]/div/div/div/div</option><option>css=#mui-component-select-time</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>//div[@id='menu-time']/div[3]/ul/li[6]<datalist><option>//div[@id='menu-time']/div[3]/ul/li[6]</option><option>//li[6]</option></datalist></td><td></td>
+<tr><td>click</td><td>//div[@id='menu-time']/div[3]/ul/li[3]<datalist><option>//div[@id='menu-time']/div[3]/ul/li[3]</option><option>//li[3]</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>//div[@id='root']/div/header/header/div/article/div[2]/div/div[13]/button/span<datalist><option>//div[@id='root']/div/header/header/div/article/div[2]/div/div[13]/button/span</option><option>//button/span</option><option>css=button.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary &gt; span.MuiButton-label</option></datalist></td><td></td>
+<tr><td>click</td><td>//div[@id='root']/div/header/header/div/article/div[2]/div/div[15]/button/span<datalist><option>//div[@id='root']/div/header/header/div/article/div[2]/div/div[15]/button/span</option><option>//button/span</option><option>css=span.MuiButton-label</option></datalist></td><td></td>
 </tr>
-<tr><td>assertText</td><td>id=swal2-title<datalist><option>id=swal2-title</option><option>//h2[@id='swal2-title']</option><option>//h2</option><option>css=#swal2-title</option></datalist></td><td>บันทึกข้อมูลสำเร็จ</td>
+<tr><td>assertText</td><td>//div[2]/div/div<datalist><option>//div[2]/div/div</option><option>css=div.swal2-header</option></datalist></td><td>บันทึกข้อมูลสำเร็จ×</td>
 </tr>
 </tbody></table>
 <table cellpadding="1" cellspacing="1" border="1">
@@ -63,35 +49,37 @@
 <tr><td rowspan="1" colspan="3">Fail Test Case</td></tr>
 </thead>
 <tbody>
-<tr><td>open</td><td>http://localhost:3000/courseclass<datalist><option>http://localhost:3000/courseclass</option></datalist></td><td></td>
+<tr><td>open</td><td>http://localhost:3000/welcome<datalist><option>http://localhost:3000/welcome</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>id=email<datalist><option>id=email</option><option>name=email</option><option>//input[@id='email']</option><option>//div[@id='root']/div/main/div/form/div/div/input</option><option>//input</option><option>css=#email</option></datalist></td><td></td>
+<tr><td>click</td><td>//div[@id='root']/div/header/header/div/article/div[2]/div[2]/div/div/h3/a/span<datalist><option>//div[@id='root']/div/header/header/div/article/div[2]/div[2]/div/div/h3/a/span</option><option>//div[2]/div/div/h3/a/span</option><option>css=div.makeStyles-cardHeader-93.makeStyles-primaryCardHeader-101.makeStyles-cardHeaderStats-95.makeStyles-cardHeaderIcon-96 &gt; h3.makeStyles-cardTitle-91 &gt; a.MuiButtonBase-root.MuiButton-root.MuiButton-text &gt; span.MuiButton-label</option></datalist></td><td></td>
 </tr>
-<tr><td>type</td><td>id=email<datalist><option>id=email</option><option>name=email</option><option>//input[@id='email']</option><option>//div[@id='root']/div/main/div/form/div/div/input</option><option>//input</option><option>css=#email</option></datalist></td><td>skytekking.art@gmail.com</td>
+<tr><td>click</td><td>name=tablecode<datalist><option>name=tablecode</option><option>//input[@name='tablecode']</option><option>//div[@id='root']/div/header/header/div/article/div[2]/div/div[3]/form/div/div/input</option><option>//input</option><option>css=input[name="tablecode"]</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>id=password<datalist><option>id=password</option><option>name=password</option><option>//input[@id='password']</option><option>//div[@id='root']/div/main/div/form/div[2]/div/input</option><option>//div[2]/div/input</option><option>css=#password</option></datalist></td><td></td>
+<tr><td>type</td><td>name=tablecode<datalist><option>name=tablecode</option><option>//input[@name='tablecode']</option><option>//div[@id='root']/div/header/header/div/article/div[2]/div/div[3]/form/div/div/input</option><option>//input</option><option>css=input[name="tablecode"]</option></datalist></td><td>t026</td>
 </tr>
-<tr><td>type</td><td>id=password<datalist><option>id=password</option><option>name=password</option><option>//input[@id='password']</option><option>//div[@id='root']/div/main/div/form/div[2]/div/input</option><option>//div[2]/div/input</option><option>css=#password</option></datalist></td><td>a</td>
+<tr><td>click</td><td>id=mui-component-select-instructor<datalist><option>id=mui-component-select-instructor</option><option>//div[@id='mui-component-select-instructor']</option><option>//div[@id='root']/div/header/header/div/article/div[2]/div/div[5]/div/div/div</option><option>//div[5]/div/div/div</option><option>css=#mui-component-select-instructor</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>//div[@id='root']/div/main/div/form/a/span<datalist><option>//div[@id='root']/div/main/div/form/a/span</option><option>//a/span</option><option>css=span.MuiButton-label</option></datalist></td><td></td>
+<tr><td>click</td><td>//div[@id='menu-instructor']/div[3]/ul/li<datalist><option>//div[@id='menu-instructor']/div[3]/ul/li</option><option>//li</option><option>css=li.MuiButtonBase-root.MuiListItem-root.MuiMenuItem-root.MuiMenuItem-gutters.MuiListItem-gutters.MuiListItem-button.Mui-focusVisible.Mui-focusVisible</option></datalist></td><td></td>
 </tr>
-<tr><td>assertAlert</td><td>Success<datalist><option>Success</option></datalist></td><td></td>
+<tr><td>click</td><td>id=mui-component-select-subject<datalist><option>id=mui-component-select-subject</option><option>//div[@id='mui-component-select-subject']</option><option>//div[@id='root']/div/header/header/div/article/div[2]/div/div[7]/div/div/div</option><option>//div[7]/div/div/div</option><option>css=#mui-component-select-subject</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>//div[@id='root']/div/header/header/div[2]/div<datalist><option>//div[@id='root']/div/header/header/div[2]/div</option><option>//header/div[2]/div</option><option>css=div.makeStyles-drawer-36.makeStyles-drawerOpen-37</option></datalist></td><td></td>
+<tr><td>click</td><td>//div[@id='menu-subject']/div[3]/ul/li[4]<datalist><option>//div[@id='menu-subject']/div[3]/ul/li[4]</option><option>//li[4]</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>//div[@id='root']/div/header/header/div[2]/div/a[3]/h6<datalist><option>//div[@id='root']/div/header/header/div[2]/div/a[3]/h6</option><option>//a[3]/h6</option></datalist></td><td></td>
+<tr><td>click</td><td>id=mui-component-select-room<datalist><option>id=mui-component-select-room</option><option>//div[@id='mui-component-select-room']</option><option>//div[@id='root']/div/header/header/div/article/div[2]/div/div[9]/div/div/div</option><option>//div[9]/div/div/div</option><option>css=#mui-component-select-room</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>id=mui-component-select-instructor<datalist><option>//body</option><option>css=body</option><option>id=mui-component-select-instructor</option></datalist></td><td></td>
+<tr><td>click</td><td>//div[@id='menu-room']/div[3]/ul/li[6]<datalist><option>//div[@id='menu-room']/div[3]/ul/li[6]</option><option>//li[6]</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>//div[@id='menu-instructor']/div[3]/ul/li[2]<datalist><option>//div[@id='menu-instructor']/div[3]/ul/li[2]</option><option>//li[2]</option></datalist></td><td></td>
+<tr><td>click</td><td>id=mui-component-select-day<datalist><option>id=mui-component-select-day</option><option>//div[@id='mui-component-select-day']</option><option>//div[@id='root']/div/header/header/div/article/div[2]/div/div[11]/div/div/div/div</option><option>//div[11]/div/div/div/div</option><option>css=#mui-component-select-day</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>id=mui-component-select-subject<datalist><option>//body</option><option>css=body</option><option>id=mui-component-select-subject</option></datalist></td><td></td>
+<tr><td>click</td><td>//div[@id='menu-day']/div[3]/ul/li<datalist><option>//div[@id='menu-day']/div[3]/ul/li</option><option>//li</option><option>css=li.MuiButtonBase-root.MuiListItem-root.MuiMenuItem-root.MuiMenuItem-gutters.MuiListItem-gutters.MuiListItem-button</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>//div[@id='menu-subject']/div[3]/ul/li<datalist><option>//div[@id='menu-subject']/div[3]/ul/li</option><option>//li</option><option>css=li.MuiButtonBase-root.MuiListItem-root.MuiMenuItem-root.MuiMenuItem-gutters.MuiListItem-gutters.MuiListItem-button</option></datalist></td><td></td>
+<tr><td>click</td><td>id=mui-component-select-time<datalist><option>id=mui-component-select-time</option><option>//div[@id='mui-component-select-time']</option><option>//div[@id='root']/div/header/header/div/article/div[2]/div/div[13]/div/div/div/div</option><option>//div[13]/div/div/div/div</option><option>css=#mui-component-select-time</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>//div[@id='root']/div/header/header/div/article/div[2]/div/div[13]/button/span<datalist><option>//div[@id='root']/div/header/header/div/article/div[2]/div/div[13]/button/span</option><option>//button/span</option><option>css=button.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary &gt; span.MuiButton-label</option></datalist></td><td></td>
+<tr><td>click</td><td>//div[@id='menu-time']/div[3]/ul/li[6]<datalist><option>//div[@id='menu-time']/div[3]/ul/li[6]</option><option>//li[6]</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>//div[@id='root']/div/header/header/div/article/div[2]/div/div[9]<datalist><option>//div[@id='root']/div/header/header/div/article/div[2]/div/div[9]</option><option>//div[9]</option></datalist></td><td></td>
+<tr><td>click</td><td>//div[@id='root']/div/header/header/div/article/div[2]/div/div[15]/button/span<datalist><option>//div[@id='root']/div/header/header/div/article/div[2]/div/div[15]/button/span</option><option>//button/span</option><option>css=span.MuiButton-label</option></datalist></td><td></td>
+</tr>
+<tr><td>assertText</td><td>id=swal2-title<datalist><option>id=swal2-title</option><option>//h2[@id='swal2-title']</option><option>//h2</option><option>css=#swal2-title</option></datalist></td><td>รูปแบบรหัสตารางไม่ถูกต้อง ต้องขึ้นต้นด้วย T และตามด้วยเลขสองหลัก</td>
 </tr>
 </tbody></table>
 </body>
