@@ -238,7 +238,7 @@ const WelcomePage: FC<{}> = () => {
               <Button
                  style={{outline: 'none', border: 'none', background: 'none'}}
                  component={RouterLink}
-                 to=""
+                 to="/searchCourseclass"
                >
                 Search Class
               </Button>
