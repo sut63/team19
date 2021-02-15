@@ -3,35 +3,75 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
-	<title>Program</title>
+	<title>Lab 9 - Testing</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Success</td></tr>
+<tr><td rowspan="1" colspan="3">Success Case</td></tr>
 </thead>
 <tbody>
 <tr><td>open</td><td>http://localhost:3000/Login<datalist><option>http://localhost:3000/Login</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>link=exact:Don't have an account? Sign Up<datalist><option>link=exact:Don't have an account? Sign Up</option><option>//div[@id='root']/div/main/div/form/div[3]/div[2]/a</option><option>//a[contains(@href, '/Sign-in')]</option><option>//div[2]/a</option></datalist></td><td></td>
-</tr>
-<tr><td>click</td><td>//div[@id='root']/div/header/div/article/div/div<datalist><option>//div[@id='root']/div/header/div/article/div/div</option><option>//article/div/div</option><option>css=div.makeStyles-leftItemsBox-81</option></datalist></td><td></td>
+<tr><td>click</td><td>link=exact:Don't have an account? Sign-In<datalist><option>link=exact:Don't have an account? Sign-In</option><option>//div[@id='root']/div/main/div/form/div[3]/div/a</option><option>//a[contains(@href, '/Sign-in')]</option><option>//div/a</option><option>css=a.MuiTypography-root.MuiLink-root.MuiLink-underlineHover.MuiTypography-body2.MuiTypography-colorPrimary.MuiTypography-alignCenter</option></datalist></td><td></td>
 </tr>
 <tr><td>click</td><td>id=mui-component-select-title<datalist><option>id=mui-component-select-title</option><option>//div[@id='mui-component-select-title']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[3]/div/div/div</option><option>//div[3]/div/div/div</option><option>css=#mui-component-select-title</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>//div[@id='menu-title']/div[3]/ul/li[7]<datalist><option>//div[@id='menu-title']/div[3]/ul/li[7]</option><option>//li[7]</option><option>css=li.MuiButtonBase-root.MuiListItem-root.MuiMenuItem-root.Mui-selected.MuiMenuItem-gutters.MuiListItem-gutters.MuiListItem-button.Mui-selected</option></datalist></td><td></td>
+<tr><td>click</td><td>//div[@id='menu-title']/div[3]/ul/li[7]<datalist><option>//div[@id='menu-title']/div[3]/ul/li[7]</option><option>//li[7]</option></datalist></td><td></td>
 </tr>
 <tr><td>click</td><td>name=name<datalist><option>name=name</option><option>//input[@name='name']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[5]/form/div/div/input</option><option>//form/div/div/input</option><option>css=input[name="name"]</option></datalist></td><td></td>
 </tr>
-<tr><td>type</td><td>name=name<datalist><option>name=name</option><option>//input[@name='name']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[5]/form/div/div/input</option><option>//form/div/div/input</option><option>css=input[name="name"]</option></datalist></td><td>Mana Manin</td>
+<tr><td>type</td><td>name=name<datalist><option>name=name</option><option>//input[@name='name']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[5]/form/div/div/input</option><option>//form/div/div/input</option><option>css=input[name="name"]</option></datalist></td><td>New</td>
 </tr>
 <tr><td>click</td><td>name=phonenumber<datalist><option>name=phonenumber</option><option>//input[@name='phonenumber']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[7]/form/div/div/input</option><option>//div[7]/form/div/div/input</option><option>css=input[name="phonenumber"]</option></datalist></td><td></td>
 </tr>
-<tr><td>type</td><td>name=phonenumber<datalist><option>name=phonenumber</option><option>//input[@name='phonenumber']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[7]/form/div/div/input</option><option>//div[7]/form/div/div/input</option><option>css=input[name="phonenumber"]</option></datalist></td><td>0999999999</td>
+<tr><td>type</td><td>name=phonenumber<datalist><option>name=phonenumber</option><option>//input[@name='phonenumber']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[7]/form/div/div/input</option><option>//div[7]/form/div/div/input</option><option>css=input[name="phonenumber"]</option></datalist></td><td>0900000001</td>
 </tr>
 <tr><td>click</td><td>name=email<datalist><option>name=email</option><option>//input[@name='email']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[9]/form/div/div/input</option><option>//div[9]/form/div/div/input</option><option>css=input[name="email"]</option></datalist></td><td></td>
 </tr>
-<tr><td>type</td><td>name=email<datalist><option>name=email</option><option>//input[@name='email']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[9]/form/div/div/input</option><option>//div[9]/form/div/div/input</option><option>css=input[name="email"]</option></datalist></td><td>example@email.com</td>
+<tr><td>type</td><td>name=email<datalist><option>name=email</option><option>//input[@name='email']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[9]/form/div/div/input</option><option>//div[9]/form/div/div/input</option><option>css=input[name="email"]</option></datalist></td><td>new@email.com</td>
+</tr>
+<tr><td>click</td><td>name=password<datalist><option>name=password</option><option>//input[@name='password']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[11]/form/div/div/input</option><option>//div[11]/form/div/div/input</option><option>css=input[name="password"]</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>name=password<datalist><option>name=password</option><option>//input[@name='password']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[11]/form/div/div/input</option><option>//div[11]/form/div/div/input</option><option>css=input[name="password"]</option></datalist></td><td>1234</td>
+</tr>
+<tr><td>click</td><td>id=mui-component-select-department<datalist><option>id=mui-component-select-department</option><option>//div[@id='mui-component-select-department']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[14]/div/div/div</option><option>//div[14]/div/div/div</option><option>css=#mui-component-select-department</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//div[@id='menu-department']/div[3]/ul/li[4]<datalist><option>//div[@id='menu-department']/div[3]/ul/li[4]</option><option>//li[4]</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=mui-component-select-instructorroom<datalist><option>id=mui-component-select-instructorroom</option><option>//div[@id='mui-component-select-instructorroom']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[17]/div/div/div</option><option>//div[17]/div/div/div</option><option>css=#mui-component-select-instructorroom</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//div[@id='menu-instructorroom']/div[3]/ul/li<datalist><option>//div[@id='menu-instructorroom']/div[3]/ul/li</option><option>//li</option><option>css=li.MuiButtonBase-root.MuiListItem-root.MuiMenuItem-root.MuiMenuItem-gutters.MuiListItem-gutters.MuiListItem-button</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>link=Sign-in<datalist><option>link=Sign-in</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[19]/a[2]</option><option>xpath=(//a[contains(@href, '/')])[2]</option><option>//a[2]</option><option>css=a.MuiButtonBase-root.MuiButton-root.MuiButton-contained.makeStyles-margin-19.MuiButton-containedPrimary.MuiButton-containedSizeLarge.MuiButton-sizeLarge</option></datalist></td><td></td>
+</tr>
+<tr><td>assertText</td><td>id=swal2-title<datalist><option>id=swal2-title</option><option>//h2[@id='swal2-title']</option><option>//h2</option><option>css=#swal2-title</option></datalist></td><td>Save Success</td>
+</tr>
+</tbody></table>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Fail Case 1</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:3000/Login<datalist><option>http://localhost:3000/Login</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>link=exact:Don't have an account? Sign-In<datalist><option>link=exact:Don't have an account? Sign-In</option><option>//div[@id='root']/div/main/div/form/div[3]/div/a</option><option>//a[contains(@href, '/Sign-in')]</option><option>//div/a</option><option>css=a.MuiTypography-root.MuiLink-root.MuiLink-underlineHover.MuiTypography-body2.MuiTypography-colorPrimary.MuiTypography-alignCenter</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=mui-component-select-title<datalist><option>//body</option><option>css=body</option><option>id=mui-component-select-title</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//div[@id='menu-title']/div[3]/ul/li[4]<datalist><option>//div[@id='menu-title']/div[3]/ul/li[4]</option><option>//li[4]</option><option>css=li.MuiButtonBase-root.MuiListItem-root.MuiMenuItem-root.Mui-selected.MuiMenuItem-gutters.MuiListItem-gutters.MuiListItem-button.Mui-selected.Mui-focusVisible.Mui-focusVisible</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>name=name<datalist><option>name=name</option><option>//input[@name='name']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[5]/form/div/div/input</option><option>//form/div/div/input</option><option>css=input[name="name"]</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>name=name<datalist><option>name=name</option><option>//input[@name='name']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[5]/form/div/div/input</option><option>//form/div/div/input</option><option>css=input[name="name"]</option></datalist></td><td>diana</td>
+</tr>
+<tr><td>click</td><td>name=phonenumber<datalist><option>name=phonenumber</option><option>//input[@name='phonenumber']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[7]/form/div/div/input</option><option>//div[7]/form/div/div/input</option><option>css=input[name="phonenumber"]</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>name=phonenumber<datalist><option>name=phonenumber</option><option>//input[@name='phonenumber']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[7]/form/div/div/input</option><option>//div[7]/form/div/div/input</option><option>css=input[name="phonenumber"]</option></datalist></td><td>0800000000</td>
+</tr>
+<tr><td>click</td><td>name=email<datalist><option>name=email</option><option>//input[@name='email']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[9]/form/div/div/input</option><option>//div[9]/form/div/div/input</option><option>css=input[name="email"]</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>name=email<datalist><option>name=email</option><option>//input[@name='email']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[9]/form/div/div/input</option><option>//div[9]/form/div/div/input</option><option>css=input[name="email"]</option></datalist></td><td>example1@email.com</td>
 </tr>
 <tr><td>click</td><td>name=password<datalist><option>name=password</option><option>//input[@name='password']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[11]/form/div/div/input</option><option>//div[11]/form/div/div/input</option><option>css=input[name="password"]</option></datalist></td><td></td>
 </tr>
@@ -43,29 +83,71 @@
 </tr>
 <tr><td>click</td><td>id=mui-component-select-instructorroom<datalist><option>//body</option><option>css=body</option><option>id=mui-component-select-instructorroom</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>//div[@id='menu-instructorroom']/div[3]/ul/li<datalist><option>//div[@id='menu-instructorroom']/div[3]/ul/li</option><option>//li</option><option>css=li.MuiButtonBase-root.MuiListItem-root.MuiMenuItem-root.MuiMenuItem-gutters.MuiListItem-gutters.MuiListItem-button</option></datalist></td><td></td>
+<tr><td>click</td><td>//div[@id='menu-instructorroom']/div[3]/ul/li[2]<datalist><option>//div[@id='menu-instructorroom']/div[3]/ul/li[2]</option><option>//li[2]</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>link=Sign-in<datalist><option>link=Sign-in</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[19]/a[2]</option><option>xpath=(//a[contains(@href, '/Login')])[2]</option><option>//a[2]</option><option>css=a.MuiButtonBase-root.MuiButton-root.MuiButton-contained.makeStyles-margin-19.MuiButton-containedPrimary.MuiButton-containedSizeLarge.MuiButton-sizeLarge</option></datalist></td><td></td>
+<tr><td>click</td><td>link=Sign-in<datalist><option>link=Sign-in</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[19]/a[2]</option><option>xpath=(//a[contains(@href, '/')])[2]</option><option>//a[2]</option><option>css=a.MuiButtonBase-root.MuiButton-root.MuiButton-contained.makeStyles-margin-19.MuiButton-containedPrimary.MuiButton-containedSizeLarge.MuiButton-sizeLarge</option></datalist></td><td></td>
 </tr>
-<tr><td>assertText</td><td>id=swal2-title<datalist><option>id=swal2-title</option><option>//h2[@id='swal2-title']</option><option>//h2</option><option>css=#swal2-title</option></datalist></td><td>บันทึกข้อมูลสำเร็จ</td>
+<tr><td>assertText</td><td>id=swal2-title<datalist><option>id=swal2-title</option><option>//h2[@id='swal2-title']</option><option>//h2</option><option>css=#swal2-title</option></datalist></td><td>Your name must begin with Uppercase</td>
 </tr>
 </tbody></table>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Fail</td></tr>
+<tr><td rowspan="1" colspan="3">Fail Case 2</td></tr>
 </thead>
 <tbody>
 <tr><td>open</td><td>http://localhost:3000/Login<datalist><option>http://localhost:3000/Login</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>link=exact:Don't have an account? Sign Up<datalist><option>link=exact:Don't have an account? Sign Up</option><option>//div[@id='root']/div/main/div/form/div[3]/div[2]/a</option><option>//a[contains(@href, '/Sign-in')]</option><option>//div[2]/a</option></datalist></td><td></td>
+<tr><td>click</td><td>link=exact:Don't have an account? Sign-In<datalist><option>link=exact:Don't have an account? Sign-In</option><option>//div[@id='root']/div/main/div/form/div[3]/div/a</option><option>//a[contains(@href, '/Sign-in')]</option><option>//div/a</option><option>css=a.MuiTypography-root.MuiLink-root.MuiLink-underlineHover.MuiTypography-body2.MuiTypography-colorPrimary.MuiTypography-alignCenter</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>id=mui-component-select-title<datalist><option>//body</option><option>css=body</option><option>id=mui-component-select-title</option></datalist></td><td></td>
+<tr><td>click</td><td>id=mui-component-select-title<datalist><option>id=mui-component-select-title</option><option>//body</option><option>css=body</option></datalist></td><td></td>
 </tr>
 <tr><td>click</td><td>//div[@id='menu-title']/div[3]/ul/li[4]<datalist><option>//div[@id='menu-title']/div[3]/ul/li[4]</option><option>//li[4]</option></datalist></td><td></td>
 </tr>
 <tr><td>click</td><td>name=name<datalist><option>name=name</option><option>//input[@name='name']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[5]/form/div/div/input</option><option>//form/div/div/input</option><option>css=input[name="name"]</option></datalist></td><td></td>
 </tr>
-<tr><td>type</td><td>name=name<datalist><option>name=name</option><option>//input[@name='name']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[5]/form/div/div/input</option><option>//form/div/div/input</option><option>css=input[name="name"]</option></datalist></td><td>Smart Smith</td>
+<tr><td>type</td><td>name=name<datalist><option>name=name</option><option>//input[@name='name']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[5]/form/div/div/input</option><option>//form/div/div/input</option><option>css=input[name="name"]</option></datalist></td><td>Diana</td>
+</tr>
+<tr><td>click</td><td>name=phonenumber<datalist><option>name=phonenumber</option><option>//input[@name='phonenumber']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[7]/form/div/div/input</option><option>//div[7]/form/div/div/input</option><option>css=input[name="phonenumber"]</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>name=phonenumber<datalist><option>name=phonenumber</option><option>//input[@name='phonenumber']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[7]/form/div/div/input</option><option>//div[7]/form/div/div/input</option><option>css=input[name="phonenumber"]</option></datalist></td><td>050000000</td>
+</tr>
+<tr><td>click</td><td>name=email<datalist><option>name=email</option><option>//input[@name='email']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[9]/form/div/div/input</option><option>//div[9]/form/div/div/input</option><option>css=input[name="email"]</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>name=email<datalist><option>name=email</option><option>//input[@name='email']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[9]/form/div/div/input</option><option>//div[9]/form/div/div/input</option><option>css=input[name="email"]</option></datalist></td><td>example2@email.com</td>
+</tr>
+<tr><td>click</td><td>name=password<datalist><option>name=password</option><option>//input[@name='password']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[11]/form/div/div/input</option><option>//div[11]/form/div/div/input</option><option>css=input[name="password"]</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>name=password<datalist><option>name=password</option><option>//input[@name='password']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[11]/form/div/div/input</option><option>//div[11]/form/div/div/input</option><option>css=input[name="password"]</option></datalist></td><td>1234</td>
+</tr>
+<tr><td>click</td><td>id=mui-component-select-department<datalist><option>id=mui-component-select-department</option><option>//body</option><option>css=body</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//div[@id='menu-department']/div[3]/ul/li[4]<datalist><option>//div[@id='menu-department']/div[3]/ul/li[4]</option><option>//li[4]</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=mui-component-select-instructorroom<datalist><option>id=mui-component-select-instructorroom</option><option>//body</option><option>css=body</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//div[@id='menu-instructorroom']/div[3]/ul/li[2]<datalist><option>//div[@id='menu-instructorroom']/div[3]/ul/li[2]</option><option>//li[2]</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>link=Sign-in<datalist><option>link=Sign-in</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[19]/a[2]</option><option>xpath=(//a[contains(@href, '/')])[2]</option><option>//a[2]</option><option>css=a.MuiButtonBase-root.MuiButton-root.MuiButton-contained.makeStyles-margin-19.MuiButton-containedPrimary.MuiButton-containedSizeLarge.MuiButton-sizeLarge</option></datalist></td><td></td>
+</tr>
+<tr><td>assertText</td><td>id=swal2-title<datalist><option>id=swal2-title</option><option>//h2[@id='swal2-title']</option><option>//h2</option><option>css=#swal2-title</option></datalist></td><td>Your Phone-Number must begin with 09 08 or 06 and limit 10 digits</td>
+</tr>
+</tbody></table>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Fail Case 3</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:3000/Login<datalist><option>http://localhost:3000/Login</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>link=exact:Don't have an account? Sign-In<datalist><option>link=exact:Don't have an account? Sign-In</option><option>//div[@id='root']/div/main/div/form/div[3]/div/a</option><option>//a[contains(@href, '/Sign-in')]</option><option>//div/a</option><option>css=a.MuiTypography-root.MuiLink-root.MuiLink-underlineHover.MuiTypography-body2.MuiTypography-colorPrimary.MuiTypography-alignCenter</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=mui-component-select-title<datalist><option>id=mui-component-select-title</option><option>//body</option><option>css=body</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//div[@id='menu-title']/div[3]/ul/li[4]<datalist><option>//div[@id='menu-title']/div[3]/ul/li[4]</option><option>//li[4]</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>name=name<datalist><option>name=name</option><option>//input[@name='name']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[5]/form/div/div/input</option><option>//form/div/div/input</option><option>css=input[name="name"]</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>name=name<datalist><option>name=name</option><option>//input[@name='name']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[5]/form/div/div/input</option><option>//form/div/div/input</option><option>css=input[name="name"]</option></datalist></td><td>Diana</td>
 </tr>
 <tr><td>click</td><td>name=phonenumber<datalist><option>name=phonenumber</option><option>//input[@name='phonenumber']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[7]/form/div/div/input</option><option>//div[7]/form/div/div/input</option><option>css=input[name="phonenumber"]</option></datalist></td><td></td>
 </tr>
@@ -73,19 +155,25 @@
 </tr>
 <tr><td>click</td><td>name=email<datalist><option>name=email</option><option>//input[@name='email']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[9]/form/div/div/input</option><option>//div[9]/form/div/div/input</option><option>css=input[name="email"]</option></datalist></td><td></td>
 </tr>
-<tr><td>type</td><td>name=email<datalist><option>name=email</option><option>//input[@name='email']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[9]/form/div/div/input</option><option>//div[9]/form/div/div/input</option><option>css=input[name="email"]</option></datalist></td><td>Smart@email.com</td>
+<tr><td>type</td><td>name=email<datalist><option>name=email</option><option>//input[@name='email']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[9]/form/div/div/input</option><option>//div[9]/form/div/div/input</option><option>css=input[name="email"]</option></datalist></td><td>example3@email.com</td>
 </tr>
 <tr><td>click</td><td>name=password<datalist><option>name=password</option><option>//input[@name='password']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[11]/form/div/div/input</option><option>//div[11]/form/div/div/input</option><option>css=input[name="password"]</option></datalist></td><td></td>
 </tr>
-<tr><td>type</td><td>name=password<datalist><option>name=password</option><option>//input[@name='password']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[11]/form/div/div/input</option><option>//div[11]/form/div/div/input</option><option>css=input[name="password"]</option></datalist></td><td>123456</td>
+<tr><td>type</td><td>name=password<datalist><option>name=password</option><option>//input[@name='password']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[11]/form/div/div/input</option><option>//div[11]/form/div/div/input</option><option>css=input[name="password"]</option></datalist></td><td>1234</td>
 </tr>
-<tr><td>click</td><td>id=mui-component-select-instructorroom<datalist><option>//body</option><option>css=body</option><option>id=mui-component-select-instructorroom</option></datalist></td><td></td>
+<tr><td>type</td><td>name=password<datalist><option>name=password</option><option>//input[@name='password']</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[11]/form/div/div/input</option><option>//div[11]/form/div/div/input</option><option>css=input[name="password"]</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=mui-component-select-department<datalist><option>id=mui-component-select-department</option><option>//body</option><option>css=body</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//div[@id='menu-department']/div[3]/ul/li[4]<datalist><option>//div[@id='menu-department']/div[3]/ul/li[4]</option><option>//li[4]</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=mui-component-select-instructorroom<datalist><option>id=mui-component-select-instructorroom</option><option>//body</option><option>css=body</option></datalist></td><td></td>
 </tr>
 <tr><td>click</td><td>//div[@id='menu-instructorroom']/div[3]/ul/li[2]<datalist><option>//div[@id='menu-instructorroom']/div[3]/ul/li[2]</option><option>//li[2]</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>link=Sign-in<datalist><option>link=Sign-in</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[19]/a[2]</option><option>xpath=(//a[contains(@href, '/Login')])[2]</option><option>//a[2]</option><option>css=a.MuiButtonBase-root.MuiButton-root.MuiButton-contained.makeStyles-margin-19.MuiButton-containedPrimary.MuiButton-containedSizeLarge.MuiButton-sizeLarge</option></datalist></td><td></td>
+<tr><td>click</td><td>link=Sign-in<datalist><option>link=Sign-in</option><option>//div[@id='root']/div/header/div/article/div[2]/div/div[19]/a[2]</option><option>xpath=(//a[contains(@href, '/')])[2]</option><option>//a[2]</option><option>css=a.MuiButtonBase-root.MuiButton-root.MuiButton-contained.makeStyles-margin-19.MuiButton-containedPrimary.MuiButton-containedSizeLarge.MuiButton-sizeLarge</option></datalist></td><td></td>
 </tr>
-<tr><td>assertText</td><td>id=swal2-title<datalist><option>id=swal2-title</option><option>//h2[@id='swal2-title']</option><option>//h2</option><option>css=#swal2-title</option></datalist></td><td>บันทึกข้อมูลไม่สำเร็จ</td>
+<tr><td>assertText</td><td>id=swal2-title<datalist><option>id=swal2-title</option><option>//h2[@id='swal2-title']</option><option>//h2</option><option>css=#swal2-title</option></datalist></td><td>Your Password is Empty</td>
 </tr>
 </tbody></table>
 </body>
