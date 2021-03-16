@@ -73,8 +73,6 @@ const SearchInstructor: FC<{}> = ()  => {
     setInstructorshow([])
   }
 
-  //var alerts : number
-
   const Searchs = async () => {
     if (searchstext != "") {
       const apiUrl = `http://localhost:8080/api/v1/searchinstructorinfos?name=${searchstext}`;
@@ -84,13 +82,15 @@ const SearchInstructor: FC<{}> = ()  => {
       fetch(apiUrl, requestOptions)
       .then(response => response.json())
       .then(data => {
-        if (data.data != "") {
+        data.data.map((item : any ) => {        
+        if (data.data != "" && item.NAME == searchstext) {
           setInstructorsearch(data.data);
           Toast.fire({
             icon: 'success',
             title: 'Search Success',
           })
-        } else {
+        }})
+        if (data.data == ""){
           setInstructorsearch([]);
           Toast.fire({
             icon: 'error',
@@ -107,9 +107,8 @@ const SearchInstructor: FC<{}> = ()  => {
     } 
   }
 
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>,) =>{
+  const handleChange = (event: React.ChangeEvent<{ value: any }>,) =>{
     setSearchstext(event.target.value as string);
-    console.log(searchstext);
   }
 
   return (
