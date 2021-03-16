@@ -89,6 +89,12 @@ const SearchInstructor: FC<{}> = ()  => {
             icon: 'success',
             title: 'Search Success',
           })
+        }else if(data.data != "" && item.NAME != searchstext){
+          setInstructorsearch([]);
+          Toast.fire({
+            icon: 'error',
+            title: 'Search Error',
+          })
         }})
         if (data.data == ""){
           setInstructorsearch([]);
