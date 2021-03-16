@@ -27,6 +27,18 @@ import {
  */
 export interface EntCourseclass {
     /**
+     * Annotation holds the value of the "Annotation" field.
+     * @type {string}
+     * @memberof EntCourseclass
+     */
+    annotation?: string;
+    /**
+     * GroupClass holds the value of the "GroupClass" field.
+     * @type {string}
+     * @memberof EntCourseclass
+     */
+    groupClass?: string;
+    /**
      * 
      * @type {EntCourseclassEdges}
      * @memberof EntCourseclass
@@ -62,6 +74,8 @@ export function EntCourseclassFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
+        'annotation': !exists(json, 'Annotation') ? undefined : json['Annotation'],
+        'groupClass': !exists(json, 'GroupClass') ? undefined : json['GroupClass'],
         'edges': !exists(json, 'edges') ? undefined : EntCourseclassEdgesFromJSON(json['edges']),
         'id': !exists(json, 'id') ? undefined : json['id'],
         'instructorInfoId': !exists(json, 'instructorInfo_id') ? undefined : json['instructorInfo_id'],
@@ -78,6 +92,8 @@ export function EntCourseclassToJSON(value?: EntCourseclass | null): any {
     }
     return {
         
+        'Annotation': value.annotation,
+        'GroupClass': value.groupClass,
         'edges': EntCourseclassEdgesToJSON(value.edges),
         'id': value.id,
         'instructorInfo_id': value.instructorInfoId,

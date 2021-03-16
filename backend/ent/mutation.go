@@ -1752,6 +1752,8 @@ type CourseclassMutation struct {
 	typ                   string
 	id                    *int
 	tablecode             *string
+	_GroupClass           *string
+	_Annotation           *string
 	clearedFields         map[string]struct{}
 	classtime             *int
 	clearedclasstime      bool
@@ -1881,6 +1883,80 @@ func (m *CourseclassMutation) OldTablecode(ctx context.Context) (v string, err e
 // ResetTablecode reset all changes of the "tablecode" field.
 func (m *CourseclassMutation) ResetTablecode() {
 	m.tablecode = nil
+}
+
+// SetGroupClass sets the GroupClass field.
+func (m *CourseclassMutation) SetGroupClass(s string) {
+	m._GroupClass = &s
+}
+
+// GroupClass returns the GroupClass value in the mutation.
+func (m *CourseclassMutation) GroupClass() (r string, exists bool) {
+	v := m._GroupClass
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldGroupClass returns the old GroupClass value of the Courseclass.
+// If the Courseclass object wasn't provided to the builder, the object is fetched
+// from the database.
+// An error is returned if the mutation operation is not UpdateOne, or database query fails.
+func (m *CourseclassMutation) OldGroupClass(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldGroupClass is allowed only on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldGroupClass requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldGroupClass: %w", err)
+	}
+	return oldValue.GroupClass, nil
+}
+
+// ResetGroupClass reset all changes of the "GroupClass" field.
+func (m *CourseclassMutation) ResetGroupClass() {
+	m._GroupClass = nil
+}
+
+// SetAnnotation sets the Annotation field.
+func (m *CourseclassMutation) SetAnnotation(s string) {
+	m._Annotation = &s
+}
+
+// Annotation returns the Annotation value in the mutation.
+func (m *CourseclassMutation) Annotation() (r string, exists bool) {
+	v := m._Annotation
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldAnnotation returns the old Annotation value of the Courseclass.
+// If the Courseclass object wasn't provided to the builder, the object is fetched
+// from the database.
+// An error is returned if the mutation operation is not UpdateOne, or database query fails.
+func (m *CourseclassMutation) OldAnnotation(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldAnnotation is allowed only on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldAnnotation requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldAnnotation: %w", err)
+	}
+	return oldValue.Annotation, nil
+}
+
+// ResetAnnotation reset all changes of the "Annotation" field.
+func (m *CourseclassMutation) ResetAnnotation() {
+	m._Annotation = nil
 }
 
 // SetClasstimeID sets the classtime edge to Classtime by id.
@@ -2092,9 +2168,15 @@ func (m *CourseclassMutation) Type() string {
 // this mutation. Note that, in order to get all numeric
 // fields that were in/decremented, call AddedFields().
 func (m *CourseclassMutation) Fields() []string {
-	fields := make([]string, 0, 1)
+	fields := make([]string, 0, 3)
 	if m.tablecode != nil {
 		fields = append(fields, courseclass.FieldTablecode)
+	}
+	if m._GroupClass != nil {
+		fields = append(fields, courseclass.FieldGroupClass)
+	}
+	if m._Annotation != nil {
+		fields = append(fields, courseclass.FieldAnnotation)
 	}
 	return fields
 }
@@ -2106,6 +2188,10 @@ func (m *CourseclassMutation) Field(name string) (ent.Value, bool) {
 	switch name {
 	case courseclass.FieldTablecode:
 		return m.Tablecode()
+	case courseclass.FieldGroupClass:
+		return m.GroupClass()
+	case courseclass.FieldAnnotation:
+		return m.Annotation()
 	}
 	return nil, false
 }
@@ -2117,6 +2203,10 @@ func (m *CourseclassMutation) OldField(ctx context.Context, name string) (ent.Va
 	switch name {
 	case courseclass.FieldTablecode:
 		return m.OldTablecode(ctx)
+	case courseclass.FieldGroupClass:
+		return m.OldGroupClass(ctx)
+	case courseclass.FieldAnnotation:
+		return m.OldAnnotation(ctx)
 	}
 	return nil, fmt.Errorf("unknown Courseclass field %s", name)
 }
@@ -2132,6 +2222,20 @@ func (m *CourseclassMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetTablecode(v)
+		return nil
+	case courseclass.FieldGroupClass:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetGroupClass(v)
+		return nil
+	case courseclass.FieldAnnotation:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetAnnotation(v)
 		return nil
 	}
 	return fmt.Errorf("unknown Courseclass field %s", name)
@@ -2185,6 +2289,12 @@ func (m *CourseclassMutation) ResetField(name string) error {
 	switch name {
 	case courseclass.FieldTablecode:
 		m.ResetTablecode()
+		return nil
+	case courseclass.FieldGroupClass:
+		m.ResetGroupClass()
+		return nil
+	case courseclass.FieldAnnotation:
+		m.ResetAnnotation()
 		return nil
 	}
 	return fmt.Errorf("unknown Courseclass field %s", name)

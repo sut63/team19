@@ -98,6 +98,20 @@ func Tablecode(v string) predicate.Courseclass {
 	})
 }
 
+// GroupClass applies equality check predicate on the "GroupClass" field. It's identical to GroupClassEQ.
+func GroupClass(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldGroupClass), v))
+	})
+}
+
+// Annotation applies equality check predicate on the "Annotation" field. It's identical to AnnotationEQ.
+func Annotation(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldAnnotation), v))
+	})
+}
+
 // TablecodeEQ applies the EQ predicate on the "tablecode" field.
 func TablecodeEQ(v string) predicate.Courseclass {
 	return predicate.Courseclass(func(s *sql.Selector) {
@@ -206,6 +220,228 @@ func TablecodeEqualFold(v string) predicate.Courseclass {
 func TablecodeContainsFold(v string) predicate.Courseclass {
 	return predicate.Courseclass(func(s *sql.Selector) {
 		s.Where(sql.ContainsFold(s.C(FieldTablecode), v))
+	})
+}
+
+// GroupClassEQ applies the EQ predicate on the "GroupClass" field.
+func GroupClassEQ(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldGroupClass), v))
+	})
+}
+
+// GroupClassNEQ applies the NEQ predicate on the "GroupClass" field.
+func GroupClassNEQ(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldGroupClass), v))
+	})
+}
+
+// GroupClassIn applies the In predicate on the "GroupClass" field.
+func GroupClassIn(vs ...string) predicate.Courseclass {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Courseclass(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldGroupClass), v...))
+	})
+}
+
+// GroupClassNotIn applies the NotIn predicate on the "GroupClass" field.
+func GroupClassNotIn(vs ...string) predicate.Courseclass {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Courseclass(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldGroupClass), v...))
+	})
+}
+
+// GroupClassGT applies the GT predicate on the "GroupClass" field.
+func GroupClassGT(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldGroupClass), v))
+	})
+}
+
+// GroupClassGTE applies the GTE predicate on the "GroupClass" field.
+func GroupClassGTE(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldGroupClass), v))
+	})
+}
+
+// GroupClassLT applies the LT predicate on the "GroupClass" field.
+func GroupClassLT(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldGroupClass), v))
+	})
+}
+
+// GroupClassLTE applies the LTE predicate on the "GroupClass" field.
+func GroupClassLTE(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldGroupClass), v))
+	})
+}
+
+// GroupClassContains applies the Contains predicate on the "GroupClass" field.
+func GroupClassContains(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldGroupClass), v))
+	})
+}
+
+// GroupClassHasPrefix applies the HasPrefix predicate on the "GroupClass" field.
+func GroupClassHasPrefix(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldGroupClass), v))
+	})
+}
+
+// GroupClassHasSuffix applies the HasSuffix predicate on the "GroupClass" field.
+func GroupClassHasSuffix(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldGroupClass), v))
+	})
+}
+
+// GroupClassEqualFold applies the EqualFold predicate on the "GroupClass" field.
+func GroupClassEqualFold(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldGroupClass), v))
+	})
+}
+
+// GroupClassContainsFold applies the ContainsFold predicate on the "GroupClass" field.
+func GroupClassContainsFold(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldGroupClass), v))
+	})
+}
+
+// AnnotationEQ applies the EQ predicate on the "Annotation" field.
+func AnnotationEQ(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldAnnotation), v))
+	})
+}
+
+// AnnotationNEQ applies the NEQ predicate on the "Annotation" field.
+func AnnotationNEQ(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldAnnotation), v))
+	})
+}
+
+// AnnotationIn applies the In predicate on the "Annotation" field.
+func AnnotationIn(vs ...string) predicate.Courseclass {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Courseclass(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldAnnotation), v...))
+	})
+}
+
+// AnnotationNotIn applies the NotIn predicate on the "Annotation" field.
+func AnnotationNotIn(vs ...string) predicate.Courseclass {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Courseclass(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldAnnotation), v...))
+	})
+}
+
+// AnnotationGT applies the GT predicate on the "Annotation" field.
+func AnnotationGT(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldAnnotation), v))
+	})
+}
+
+// AnnotationGTE applies the GTE predicate on the "Annotation" field.
+func AnnotationGTE(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldAnnotation), v))
+	})
+}
+
+// AnnotationLT applies the LT predicate on the "Annotation" field.
+func AnnotationLT(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldAnnotation), v))
+	})
+}
+
+// AnnotationLTE applies the LTE predicate on the "Annotation" field.
+func AnnotationLTE(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldAnnotation), v))
+	})
+}
+
+// AnnotationContains applies the Contains predicate on the "Annotation" field.
+func AnnotationContains(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldAnnotation), v))
+	})
+}
+
+// AnnotationHasPrefix applies the HasPrefix predicate on the "Annotation" field.
+func AnnotationHasPrefix(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldAnnotation), v))
+	})
+}
+
+// AnnotationHasSuffix applies the HasSuffix predicate on the "Annotation" field.
+func AnnotationHasSuffix(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldAnnotation), v))
+	})
+}
+
+// AnnotationEqualFold applies the EqualFold predicate on the "Annotation" field.
+func AnnotationEqualFold(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldAnnotation), v))
+	})
+}
+
+// AnnotationContainsFold applies the ContainsFold predicate on the "Annotation" field.
+func AnnotationContainsFold(v string) predicate.Courseclass {
+	return predicate.Courseclass(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldAnnotation), v))
 	})
 }
 

@@ -30,6 +30,18 @@ func (cc *CourseclassCreate) SetTablecode(s string) *CourseclassCreate {
 	return cc
 }
 
+// SetGroupClass sets the GroupClass field.
+func (cc *CourseclassCreate) SetGroupClass(s string) *CourseclassCreate {
+	cc.mutation.SetGroupClass(s)
+	return cc
+}
+
+// SetAnnotation sets the Annotation field.
+func (cc *CourseclassCreate) SetAnnotation(s string) *CourseclassCreate {
+	cc.mutation.SetAnnotation(s)
+	return cc
+}
+
 // SetClasstimeID sets the classtime edge to Classtime by id.
 func (cc *CourseclassCreate) SetClasstimeID(id int) *CourseclassCreate {
 	cc.mutation.SetClasstimeID(id)
@@ -140,6 +152,22 @@ func (cc *CourseclassCreate) Save(ctx context.Context) (*Courseclass, error) {
 			return nil, &ValidationError{Name: "tablecode", err: fmt.Errorf("ent: validator failed for field \"tablecode\": %w", err)}
 		}
 	}
+	if _, ok := cc.mutation.GroupClass(); !ok {
+		return nil, &ValidationError{Name: "GroupClass", err: errors.New("ent: missing required field \"GroupClass\"")}
+	}
+	if v, ok := cc.mutation.GroupClass(); ok {
+		if err := courseclass.GroupClassValidator(v); err != nil {
+			return nil, &ValidationError{Name: "GroupClass", err: fmt.Errorf("ent: validator failed for field \"GroupClass\": %w", err)}
+		}
+	}
+	if _, ok := cc.mutation.Annotation(); !ok {
+		return nil, &ValidationError{Name: "Annotation", err: errors.New("ent: missing required field \"Annotation\"")}
+	}
+	if v, ok := cc.mutation.Annotation(); ok {
+		if err := courseclass.AnnotationValidator(v); err != nil {
+			return nil, &ValidationError{Name: "Annotation", err: fmt.Errorf("ent: validator failed for field \"Annotation\": %w", err)}
+		}
+	}
 	var (
 		err  error
 		node *Courseclass
@@ -207,6 +235,22 @@ func (cc *CourseclassCreate) createSpec() (*Courseclass, *sqlgraph.CreateSpec) {
 			Column: courseclass.FieldTablecode,
 		})
 		c.Tablecode = value
+	}
+	if value, ok := cc.mutation.GroupClass(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: courseclass.FieldGroupClass,
+		})
+		c.GroupClass = value
+	}
+	if value, ok := cc.mutation.Annotation(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: courseclass.FieldAnnotation,
+		})
+		c.Annotation = value
 	}
 	if nodes := cc.mutation.ClasstimeIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{

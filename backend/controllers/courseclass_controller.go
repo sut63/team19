@@ -29,6 +29,8 @@ type Courseclass struct {
 	Instructor int
 	Subject    int
 	Room       int
+	GroupClass string
+	Annotation string
 }
 
 // CreateCourseclass handles POST requests for adding courseclass entities
@@ -119,6 +121,8 @@ func (ctl *CourseclassController) CreateCourseclass(c *gin.Context) {
 		SetInstructorInfo(t).
 		SetSubject(a).
 		SetClassroom(cr).
+		SetGroupClass(obj.GroupClass).
+		SetAnnotation(obj.Annotation).
 		Save(context.Background())
 
 		if err != nil {
@@ -136,24 +140,19 @@ func (ctl *CourseclassController) CreateCourseclass(c *gin.Context) {
 }
 
 // GetCourseclass handles GET requests to retrieve a courseclass entity
-// @Summary Get a courseclass entity by ID
-// @Description get courseclass by ID
+// @Summary Get a courseclass entity by Tablecode
+// @Description get courseclass by Tablecode
 // @ID get-courseclass
 // @Produce  json
-// @Param id path int true "Courseclass ID"
-// @Success 200 {array} ent.Courseclass
+// @Param tablecode query string false "Courseclass Tablecode"
+// @Success 200 {object} ent.Courseclass
 // @Failure 400 {object} gin.H
 // @Failure 404 {object} gin.H
 // @Failure 500 {object} gin.H
-// @Router /courseclasss/{id} [get]
+// @Router /searchcourseclasss [get]
 func (ctl *CourseclassController) GetCourseclass(c *gin.Context) {
-	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
-	if err != nil {
-		c.JSON(400, gin.H{
-			"error": err.Error(),
-		})
-		return
-	}
+	tablecode := c.Query("tablecode")
+
 	u, err := ctl.client.Courseclass.
 		Query().
 		WithClassdate().
@@ -161,17 +160,21 @@ func (ctl *CourseclassController) GetCourseclass(c *gin.Context) {
 		WithInstructorInfo().
 		WithSubject().
 		WithClassroom().
-		Where(courseclass.IDEQ(int(id))).
+		Where(courseclass.TablecodeContains(tablecode)).
 		All(context.Background())
 
 	if err != nil {
 		c.JSON(404, gin.H{
-			"error": err.Error(),
+			"status": false,
+			"error": "Table not found",
 		})
 		return
 	}
 
-	c.JSON(200, u)
+	c.JSON(200, gin.H{
+		"status": true,
+		"data":   u,
+	})
 }
 
 // ListCourseclass handles request to get a list of courseclass entities
@@ -316,12 +319,13 @@ func NewCourseclassController(router gin.IRouter, client *ent.Client) *Coursecla
 
 func (ctl *CourseclassController) register() {
 	courseclasss := ctl.router.Group("/courseclasss")
+	searchcourseclasss := ctl.router.Group("/searchcourseclasss")
 
 	courseclasss.GET("", ctl.ListCourseclass)
+	searchcourseclasss.GET("", ctl.GetCourseclass)
 
 	// CRUD
 	courseclasss.POST("", ctl.CreateCourseclass)
-	courseclasss.GET(":id", ctl.GetCourseclass)
 	courseclasss.PUT(":id", ctl.UpdateCourseclass)
 	courseclasss.DELETE(":id", ctl.DeleteCourseclass)
 }

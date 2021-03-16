@@ -48,6 +48,28 @@ func init() {
 			return nil
 		}
 	}()
+	// courseclassDescGroupClass is the schema descriptor for GroupClass field.
+	courseclassDescGroupClass := courseclassFields[1].Descriptor()
+	// courseclass.GroupClassValidator is a validator for the "GroupClass" field. It is called by the builders before save.
+	courseclass.GroupClassValidator = func() func(string) error {
+		validators := courseclassDescGroupClass.Validators
+		fns := [...]func(string) error{
+			validators[0].(func(string) error),
+			validators[1].(func(string) error),
+		}
+		return func(_GroupClass string) error {
+			for _, fn := range fns {
+				if err := fn(_GroupClass); err != nil {
+					return err
+				}
+			}
+			return nil
+		}
+	}()
+	// courseclassDescAnnotation is the schema descriptor for Annotation field.
+	courseclassDescAnnotation := courseclassFields[2].Descriptor()
+	// courseclass.AnnotationValidator is a validator for the "Annotation" field. It is called by the builders before save.
+	courseclass.AnnotationValidator = courseclassDescAnnotation.Validators[0].(func(string) error)
 	instructorinfoFields := schema.InstructorInfo{}.Fields()
 	_ = instructorinfoFields
 	// instructorinfoDescNAME is the schema descriptor for NAME field.

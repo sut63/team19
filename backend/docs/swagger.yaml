@@ -111,6 +111,12 @@ definitions:
     type: object
   ent.Courseclass:
     properties:
+      Annotation:
+        description: Annotation holds the value of the "Annotation" field.
+        type: string
+      GroupClass:
+        description: GroupClass holds the value of the "GroupClass" field.
+        type: string
       edges:
         $ref: '#/definitions/ent.CourseclassEdges'
         description: |-
@@ -950,37 +956,6 @@ paths:
           schema:
             $ref: '#/definitions/gin.H'
       summary: Delete a courseclass entity by ID
-    get:
-      description: get courseclass by ID
-      operationId: get-courseclass
-      parameters:
-      - description: Courseclass ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/ent.Courseclass'
-            type: array
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/gin.H'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/gin.H'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/gin.H'
-      summary: Get a courseclass entity by ID
     put:
       consumes:
       - application/json
@@ -1593,6 +1568,35 @@ paths:
           schema:
             $ref: '#/definitions/gin.H'
       summary: Get a instructorinfo entity by Email and Password
+  /searchcourseclasss:
+    get:
+      description: get courseclass by Tablecode
+      operationId: get-courseclass
+      parameters:
+      - description: Courseclass Tablecode
+        in: query
+        name: tablecode
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Courseclass'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a courseclass entity by Tablecode
   /searchinstructorinfos:
     get:
       description: get name by Name

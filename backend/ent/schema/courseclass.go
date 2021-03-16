@@ -25,6 +25,15 @@ func (Courseclass) Fields() []ent.Field {
 				}
 				return nil
 			}).NotEmpty(),
+		field.String("GroupClass").
+			Validate(func(s string) error {
+				match, _ := regexp.MatchString("[G]\\d{1}$", s)
+				if !match {
+					return errors.New("GroupClass must begin with G follow with 1 digit")
+				}
+				return nil
+			}).NotEmpty(),	
+		field.String("Annotation").NotEmpty(),
 	}
 }
 

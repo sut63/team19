@@ -161,7 +161,7 @@ export interface GetCourseRequest {
 }
 
 export interface GetCourseclassRequest {
-    id: number;
+    tablecode?: string;
 }
 
 export interface GetDegreeRequest {
@@ -1152,33 +1152,33 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * get courseclass by ID
-     * Get a courseclass entity by ID
+     * get courseclass by Tablecode
+     * Get a courseclass entity by Tablecode
      */
-    async getCourseclassRaw(requestParameters: GetCourseclassRequest): Promise<runtime.ApiResponse<Array<EntCourseclass>>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getCourseclass.');
-        }
-
+    async getCourseclassRaw(requestParameters: GetCourseclassRequest): Promise<runtime.ApiResponse<EntCourseclass>> {
         const queryParameters: runtime.HTTPQuery = {};
+
+        if (requestParameters.tablecode !== undefined) {
+            queryParameters['tablecode'] = requestParameters.tablecode;
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/courseclasss/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/searchcourseclasss`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(EntCourseclassFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => EntCourseclassFromJSON(jsonValue));
     }
 
     /**
-     * get courseclass by ID
-     * Get a courseclass entity by ID
+     * get courseclass by Tablecode
+     * Get a courseclass entity by Tablecode
      */
-    async getCourseclass(requestParameters: GetCourseclassRequest): Promise<Array<EntCourseclass>> {
+    async getCourseclass(requestParameters: GetCourseclassRequest): Promise<EntCourseclass> {
         const response = await this.getCourseclassRaw(requestParameters);
         return await response.value();
     }
