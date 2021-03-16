@@ -22,6 +22,10 @@ type Courseclass struct {
 	ID int `json:"id,omitempty"`
 	// Tablecode holds the value of the "tablecode" field.
 	Tablecode string `json:"tablecode,omitempty"`
+	// GroupClass holds the value of the "GroupClass" field.
+	GroupClass string `json:"GroupClass,omitempty"`
+	// Annotation holds the value of the "Annotation" field.
+	Annotation string `json:"Annotation,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the CourseclassQuery when eager-loading is set.
 	Edges             CourseclassEdges `json:"edges"`
@@ -124,6 +128,8 @@ func (*Courseclass) scanValues() []interface{} {
 	return []interface{}{
 		&sql.NullInt64{},  // id
 		&sql.NullString{}, // tablecode
+		&sql.NullString{}, // GroupClass
+		&sql.NullString{}, // Annotation
 	}
 }
 
@@ -155,7 +161,17 @@ func (c *Courseclass) assignValues(values ...interface{}) error {
 	} else if value.Valid {
 		c.Tablecode = value.String
 	}
-	values = values[1:]
+	if value, ok := values[1].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field GroupClass", values[1])
+	} else if value.Valid {
+		c.GroupClass = value.String
+	}
+	if value, ok := values[2].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field Annotation", values[2])
+	} else if value.Valid {
+		c.Annotation = value.String
+	}
+	values = values[3:]
 	if len(values) == len(courseclass.ForeignKeys) {
 		if value, ok := values[0].(*sql.NullInt64); !ok {
 			return fmt.Errorf("unexpected type %T for edge-field classdate_id", value)
@@ -241,6 +257,10 @@ func (c *Courseclass) String() string {
 	builder.WriteString(fmt.Sprintf("id=%v", c.ID))
 	builder.WriteString(", tablecode=")
 	builder.WriteString(c.Tablecode)
+	builder.WriteString(", GroupClass=")
+	builder.WriteString(c.GroupClass)
+	builder.WriteString(", Annotation=")
+	builder.WriteString(c.Annotation)
 	builder.WriteByte(')')
 	return builder.String()
 }

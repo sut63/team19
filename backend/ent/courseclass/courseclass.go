@@ -9,6 +9,10 @@ const (
 	FieldID = "id"
 	// FieldTablecode holds the string denoting the tablecode field in the database.
 	FieldTablecode = "tablecode"
+	// FieldGroupClass holds the string denoting the groupclass field in the database.
+	FieldGroupClass = "group_class"
+	// FieldAnnotation holds the string denoting the annotation field in the database.
+	FieldAnnotation = "annotation"
 
 	// EdgeClasstime holds the string denoting the classtime edge name in mutations.
 	EdgeClasstime = "classtime"
@@ -64,6 +68,8 @@ const (
 var Columns = []string{
 	FieldID,
 	FieldTablecode,
+	FieldGroupClass,
+	FieldAnnotation,
 }
 
 // ForeignKeys holds the SQL foreign-keys that are owned by the Courseclass type.
@@ -78,4 +84,8 @@ var ForeignKeys = []string{
 var (
 	// TablecodeValidator is a validator for the "tablecode" field. It is called by the builders before save.
 	TablecodeValidator func(string) error
+	// GroupClassValidator is a validator for the "GroupClass" field. It is called by the builders before save.
+	GroupClassValidator func(string) error
+	// AnnotationValidator is a validator for the "Annotation" field. It is called by the builders before save.
+	AnnotationValidator func(string) error
 )

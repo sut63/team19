@@ -77,36 +77,46 @@ const SearchCourseClass: FC<{}> = () => {
     console.log(searchstext);
   }
 
-  function search(){
-    courseclass.map((item: any) => {  
-      if (item.tablecode == searchstext ) {
-    const getCourseClasssearch = async () => {
-      const res = await api.getCourseclass({id: item.id})
-      setCourseClasssearch(res);
-      alerts = res.length
-      if (alerts > 0) {
-        Toast.fire({
-          icon: 'success',
-          title: 'Search Success',
-        })
-      } else {
-        Toast.fire({
-          icon: 'error',
-          title: 'Search Error',
-        })
-      }
-     };
-     getCourseClasssearch();
-    }
-    else {
+  const Searchs = async () => {
+    if (searchstext != "") {
+      const apiUrl = `http://localhost:8080/api/v1/searchcourseclasss?tablecode=${searchstext}`;
+      const requestOptions = {
+        method: 'GET',
+      };
+      fetch(apiUrl, requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        data.data.map((item : any ) => {        
+        if (data.data != "" && item.tablecode == searchstext) {
+          setCourseClasssearch(data.data);
+          Toast.fire({
+            icon: 'success',
+            title: 'Search Success',
+          })
+        }else if(data.data != "" && item.tablecode != searchstext){
+          setCourseClasssearch([]);
+          Toast.fire({
+            icon: 'error',
+            title: 'Search Error',
+          })
+        }})
+        if (data.data == ""){
+          setCourseClasssearch([]);
+          Toast.fire({
+            icon: 'error',
+            title: 'Search Error',
+          })
+        }
+      });
+    }else {
       setCourseClasssearch([]);
       Toast.fire({
         icon: 'error',
         title: 'Search Error',
       })
-    }
-  });
+    } 
   }
+
   return (
     <Page theme={pageTheme.home}>
 
@@ -135,7 +145,7 @@ const SearchCourseClass: FC<{}> = () => {
                             size="large"
                             startIcon={<SearchIcon/>}
                             onClick={() =>{
-                                  search();
+                                  Searchs();
                                 }}
                         >    Search
                         </Button>
@@ -154,16 +164,15 @@ const SearchCourseClass: FC<{}> = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {courseclasssearch === undefined
-            ? null
-            : courseclasssearch.map((item) => (
+          {courseclasssearch.map((item : any) => (
             <TableRow key={item.id}>
               <TableCell align="center">{item.tablecode}</TableCell>
-              <TableCell align="center">{item.edges?.instructorInfo?.nAME}</TableCell>
-              <TableCell align="center">{item.edges?.subject?.subjectName}</TableCell>
-              <TableCell align="center">{item.edges?.classroom?.rOOM}</TableCell>
-              <TableCell align="center">{item.edges?.classdate?.dAY}</TableCell>
-              <TableCell align="center">{item.edges?.classtime?.tIME}</TableCell>
+              <TableCell align="center">{item.edges?.InstructorInfo?.NAME}</TableCell>
+              <TableCell align="center">{item.edges?.Subject?.Subject_name}</TableCell>
+              <TableCell align="center">{item.GroupClass}</TableCell>
+              <TableCell align="center">{item.edges?.Classroom?.ROOM}</TableCell>
+              <TableCell align="center">{item.edges?.Classdate?.DAY}</TableCell>
+              <TableCell align="center">{item.edges?.Classtime?.TIME}</TableCell>
             </TableRow>
           ))}
         </TableBody>

@@ -61,12 +61,17 @@ interface  Courseclass  {
 	instructor  :  number;
 	subject :  number;
 	room    :  number;
+  groupclass : string;
+  annotation : string;
 }
 
 const Courseclass: FC<{}> = () => {
   const classes = useStyles();
   const http = new DefaultApi();
 
+  const [tablecodeError, setTablecodeError] = React.useState('');
+  const [groupclassError, setGroupclassError] = React.useState('');
+  const [annotationError, setAnnotationError] = React.useState('');
   const [courseclass, setCourseclass] = React.useState<Partial<Courseclass>>({});
   const [subject, setSubject] = React.useState<EntSubject[]>([]);
   const [instructor, setInstructor] = React.useState<EntInstructorInfo[]>([]);
@@ -128,18 +133,57 @@ const Courseclass: FC<{}> = () => {
 
   // set data to object so
   const handleChange = (
-    event: React.ChangeEvent<{ name?: string; value: unknown }>,
+    event: React.ChangeEvent<{ name?: string; value: any }>,
   ) => {
     const name = event.target.name as keyof typeof Courseclass;
     const { value } = event.target;
+    const validateValue = value.toString()
+    checkPattern(name, validateValue)
     setCourseclass({ ...courseclass, [name]: value });
     console.log(courseclass);
   };
+
+   // Function for validate Tablecode
+   const validateTablecode = (val: string) => {
+    return val.match("[T]\\d{2}$");
+  }
+
+  // Function for validate Groupclass
+  const validateGroupclass = (val: string) => {
+    return val.match("[G]\\d{1}$"); 
+  }
+
+  // Function for validate Annotation
+  const validateAnnotation = (val: string) => {
+    return val.match("[^\s]");
+  }
+
+  const checkPattern  = (name: string, value: string) => {
+    switch(name) {
+      case 'tablecode':
+        validateTablecode(value) ? setTablecodeError('') : setTablecodeError('Tablecode must begin with T and limit 2 digits');
+        return;
+      case 'groupclass':
+        validateGroupclass(value) ? setGroupclassError('') : setGroupclassError('GroupClass must begin with G follow with 1 digit');
+        return;
+      case 'annotation':
+        validateAnnotation(value) ? setAnnotationError('') : setAnnotationError('Your Annotation field is Empty')
+        return;
+      default:
+        return;
+    }
+  }
 
   const checkCaseSaveError = (field: string) => {
     switch(field){
       case "tablecode":
         alertMessage("error","รูปแบบรหัสตารางไม่ถูกต้อง ต้องขึ้นต้นด้วย T และตามด้วยเลขสองหลัก");
+        return;
+      case "GroupClass":
+        alertMessage("error","รูปแบบกลุ่มไม่ถูกต้อง ต้องขึ้นต้นด้วย G และตามด้วยเลขหนึ่งหลัก");
+        return;
+      case "Annotation":
+        alertMessage("error","คำอธิบายห้ามมีการว่างไว้");
         return;
        default:
          alertMessage("error","บันทึกข้อมูลไม่สำเร็จ");
@@ -191,7 +235,7 @@ const Courseclass: FC<{}> = () => {
             </Grid>
             <Grid item xs={9}>
             <form className={classes.root} noValidate autoComplete="off">
-      <TextField  label="กรอกรหัสตาราง" name ="tablecode" type="string" 
+      <TextField  label="กรอกรหัสตาราง" name ="tablecode" type="string" error = {tablecodeError ? true : false} helperText = {tablecodeError}
       value={courseclass.tablecode } onChange={handleChange} className={classes.textField}/>
     </form>      
       </Grid>
@@ -322,6 +366,26 @@ const Courseclass: FC<{}> = () => {
         </Select>
       </FormControl>
       </div>
+      </Grid>
+
+      <Grid item xs={3}>
+              <div className={classes.paper}>กลุ่มเรียน</div>
+            </Grid>
+            <Grid item xs={9}>
+            <form className={classes.root} noValidate autoComplete="off">
+      <TextField  label="กลุ่ม" name ="groupclass" type="string" error = {groupclassError ? true : false} helperText = {groupclassError}
+      value={courseclass.groupclass } onChange={handleChange} className={classes.textField}/>
+    </form>      
+      </Grid>
+
+      <Grid item xs={3}>
+              <div className={classes.paper}>ใส่คำอธิบายเพิ่มเติม</div>
+            </Grid>
+            <Grid item xs={9}>
+            <form className={classes.root} noValidate autoComplete="off">
+      <TextField  label="คำอธิบาย" name ="annotation" type="string" error = {annotationError ? true : false} helperText = {annotationError}
+      value={courseclass.annotation } onChange={handleChange} className={classes.textField}/>
+    </form>      
       </Grid>
       
           <Grid item xs={3}></Grid>

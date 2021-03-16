@@ -754,52 +754,6 @@ var doc = `{
             }
         },
         "/courseclasss/{id}": {
-            "get": {
-                "description": "get courseclass by ID",
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "Get a courseclass entity by ID",
-                "operationId": "get-courseclass",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Courseclass ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/ent.Courseclass"
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/gin.H"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/gin.H"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/gin.H"
-                        }
-                    }
-                }
-            },
             "put": {
                 "description": "update courseclass by ID",
                 "consumes": [
@@ -1760,6 +1714,50 @@ var doc = `{
                 }
             }
         },
+        "/searchcourseclasss": {
+            "get": {
+                "description": "get courseclass by Tablecode",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a courseclass entity by Tablecode",
+                "operationId": "get-courseclass",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Courseclass Tablecode",
+                        "name": "tablecode",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.Courseclass"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
         "/searchinstructorinfos": {
             "get": {
                 "description": "get name by Name",
@@ -2671,6 +2669,14 @@ var doc = `{
         "ent.Courseclass": {
             "type": "object",
             "properties": {
+                "Annotation": {
+                    "description": "Annotation holds the value of the \"Annotation\" field.",
+                    "type": "string"
+                },
+                "GroupClass": {
+                    "description": "GroupClass holds the value of the \"GroupClass\" field.",
+                    "type": "string"
+                },
                 "edges": {
                     "description": "Edges holds the relations/edges for other nodes in the graph.\nThe values are being populated by the CourseclassQuery when eager-loading is set.",
                     "type": "object",

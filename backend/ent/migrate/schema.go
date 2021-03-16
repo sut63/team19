@@ -87,6 +87,8 @@ var (
 	CourseclassesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
 		{Name: "tablecode", Type: field.TypeString},
+		{Name: "group_class", Type: field.TypeString},
+		{Name: "annotation", Type: field.TypeString},
 		{Name: "classdate_id", Type: field.TypeInt, Nullable: true},
 		{Name: "classroom_id", Type: field.TypeInt, Nullable: true},
 		{Name: "classtime_id", Type: field.TypeInt, Nullable: true},
@@ -101,35 +103,35 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:  "courseclasses_classdates_courseclasses",
-				Columns: []*schema.Column{CourseclassesColumns[2]},
+				Columns: []*schema.Column{CourseclassesColumns[4]},
 
 				RefColumns: []*schema.Column{ClassdatesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:  "courseclasses_classrooms_courseclasses",
-				Columns: []*schema.Column{CourseclassesColumns[3]},
+				Columns: []*schema.Column{CourseclassesColumns[5]},
 
 				RefColumns: []*schema.Column{ClassroomsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:  "courseclasses_classtimes_courseclasses",
-				Columns: []*schema.Column{CourseclassesColumns[4]},
+				Columns: []*schema.Column{CourseclassesColumns[6]},
 
 				RefColumns: []*schema.Column{ClasstimesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:  "courseclasses_instructor_infos_courseclasses",
-				Columns: []*schema.Column{CourseclassesColumns[5]},
+				Columns: []*schema.Column{CourseclassesColumns[7]},
 
 				RefColumns: []*schema.Column{InstructorInfosColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:  "courseclasses_subjects_courseclasses",
-				Columns: []*schema.Column{CourseclassesColumns[6]},
+				Columns: []*schema.Column{CourseclassesColumns[8]},
 
 				RefColumns: []*schema.Column{SubjectsColumns[0]},
 				OnDelete:   schema.SetNull,

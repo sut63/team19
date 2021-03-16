@@ -38,6 +38,18 @@ func (cu *CourseclassUpdate) SetTablecode(s string) *CourseclassUpdate {
 	return cu
 }
 
+// SetGroupClass sets the GroupClass field.
+func (cu *CourseclassUpdate) SetGroupClass(s string) *CourseclassUpdate {
+	cu.mutation.SetGroupClass(s)
+	return cu
+}
+
+// SetAnnotation sets the Annotation field.
+func (cu *CourseclassUpdate) SetAnnotation(s string) *CourseclassUpdate {
+	cu.mutation.SetAnnotation(s)
+	return cu
+}
+
 // SetClasstimeID sets the classtime edge to Classtime by id.
 func (cu *CourseclassUpdate) SetClasstimeID(id int) *CourseclassUpdate {
 	cu.mutation.SetClasstimeID(id)
@@ -175,6 +187,16 @@ func (cu *CourseclassUpdate) Save(ctx context.Context) (int, error) {
 			return 0, &ValidationError{Name: "tablecode", err: fmt.Errorf("ent: validator failed for field \"tablecode\": %w", err)}
 		}
 	}
+	if v, ok := cu.mutation.GroupClass(); ok {
+		if err := courseclass.GroupClassValidator(v); err != nil {
+			return 0, &ValidationError{Name: "GroupClass", err: fmt.Errorf("ent: validator failed for field \"GroupClass\": %w", err)}
+		}
+	}
+	if v, ok := cu.mutation.Annotation(); ok {
+		if err := courseclass.AnnotationValidator(v); err != nil {
+			return 0, &ValidationError{Name: "Annotation", err: fmt.Errorf("ent: validator failed for field \"Annotation\": %w", err)}
+		}
+	}
 
 	var (
 		err      error
@@ -248,6 +270,20 @@ func (cu *CourseclassUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Type:   field.TypeString,
 			Value:  value,
 			Column: courseclass.FieldTablecode,
+		})
+	}
+	if value, ok := cu.mutation.GroupClass(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: courseclass.FieldGroupClass,
+		})
+	}
+	if value, ok := cu.mutation.Annotation(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: courseclass.FieldAnnotation,
 		})
 	}
 	if cu.mutation.ClasstimeCleared() {
@@ -449,6 +485,18 @@ func (cuo *CourseclassUpdateOne) SetTablecode(s string) *CourseclassUpdateOne {
 	return cuo
 }
 
+// SetGroupClass sets the GroupClass field.
+func (cuo *CourseclassUpdateOne) SetGroupClass(s string) *CourseclassUpdateOne {
+	cuo.mutation.SetGroupClass(s)
+	return cuo
+}
+
+// SetAnnotation sets the Annotation field.
+func (cuo *CourseclassUpdateOne) SetAnnotation(s string) *CourseclassUpdateOne {
+	cuo.mutation.SetAnnotation(s)
+	return cuo
+}
+
 // SetClasstimeID sets the classtime edge to Classtime by id.
 func (cuo *CourseclassUpdateOne) SetClasstimeID(id int) *CourseclassUpdateOne {
 	cuo.mutation.SetClasstimeID(id)
@@ -586,6 +634,16 @@ func (cuo *CourseclassUpdateOne) Save(ctx context.Context) (*Courseclass, error)
 			return nil, &ValidationError{Name: "tablecode", err: fmt.Errorf("ent: validator failed for field \"tablecode\": %w", err)}
 		}
 	}
+	if v, ok := cuo.mutation.GroupClass(); ok {
+		if err := courseclass.GroupClassValidator(v); err != nil {
+			return nil, &ValidationError{Name: "GroupClass", err: fmt.Errorf("ent: validator failed for field \"GroupClass\": %w", err)}
+		}
+	}
+	if v, ok := cuo.mutation.Annotation(); ok {
+		if err := courseclass.AnnotationValidator(v); err != nil {
+			return nil, &ValidationError{Name: "Annotation", err: fmt.Errorf("ent: validator failed for field \"Annotation\": %w", err)}
+		}
+	}
 
 	var (
 		err  error
@@ -657,6 +715,20 @@ func (cuo *CourseclassUpdateOne) sqlSave(ctx context.Context) (c *Courseclass, e
 			Type:   field.TypeString,
 			Value:  value,
 			Column: courseclass.FieldTablecode,
+		})
+	}
+	if value, ok := cuo.mutation.GroupClass(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: courseclass.FieldGroupClass,
+		})
+	}
+	if value, ok := cuo.mutation.Annotation(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: courseclass.FieldAnnotation,
 		})
 	}
 	if cuo.mutation.ClasstimeCleared() {
