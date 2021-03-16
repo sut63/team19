@@ -55,21 +55,14 @@ interface login {
 
 const Login : FC = ({ setSession })  => {
   const classes = useStyles();
-  //const api = new DefaultApi();
   const [to, setTo] = React.useState('');
 
   const [login, setLogin] = React.useState<Partial<login>>({});
-  const [instructors, setInstructor] = React.useState<EntInstructorInfo[]>([]);
-
-  /* 
-  const getInstructor = async () => {
-    const res = await api.listInstructorinfo({limit : 1000, offset: 0 });
-    setInstructor(res);
-   }; */
+  const [alertse, setAlertse] = useState(0)
+  const [alertsp, setAlertsp] = useState(0)
 
   // Lifecycle Hooks
   useEffect(() => {
-    //getInstructor();
     CheckReset();
   }, []);
 
@@ -94,32 +87,43 @@ const Login : FC = ({ setSession })  => {
       },
     });
 
-  const handleChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>,) =>{
+  const handleChange = (event: React.ChangeEvent<{ name?: string; value: any }>,) =>{
     const name = event.target.name as keyof typeof Login;
     const { value } = event.target;
     setLogin({ ...login, [name]: value });
-    console.log(login);
+    if(event.target.name == 'email'){
+      setAlertse(event.target.value.length)
+    }else{
+      setAlertsp(event.target.value.length)
+    }
   }
-  
+
   const Login = async () => {
-    if (login.email != undefined && login.password != undefined) {
+    if (alertse != 0 && alertsp != 0) {
       const apiUrl = `http://localhost:8080/api/v1/logins?email=${login.email}&password=${login.password}`;
       const requestOptions = {
         method: 'GET',
       };
       fetch(apiUrl, requestOptions)
       .then(response => response.json())
-      .then(data => {
+      .then(data => { 
         if (data.data != "") {
           data.data.map((item : any ) => {
+          if(item.EMAIL == login.email){
             localStorage.setItem("Name", JSON.stringify(item.NAME))
             localStorage.setItem("Title", JSON.stringify(item.edges?.Title?.TITLE))
-          })
-
-          //setInstructor(data.data)
-          //localStorage.setItem("Name", JSON.stringify(data.data["NAME"]));
-          setTo("/welcome")
-          Linklogin();
+            setTo("/welcome")
+            Linklogin();
+            setAlertse(0)
+            setAlertsp(0)
+          }else {
+            clear();
+            setTo("")
+            Toast.fire({
+              icon: 'error',
+              title: 'Incorrect Email or Password.',
+            })
+          }})
         } else {
           clear();
           setTo("")
@@ -134,7 +138,17 @@ const Login : FC = ({ setSession })  => {
         icon: 'error',
         title: 'Please fill in Email.',
       })
+    }else if(alertse == 0 && alertsp > 0) {
+      Toast.fire({
+        icon: 'error',
+        title: 'Please fill in Email.',
+      })
     }else if(login.password == undefined && login.email != undefined){
+      Toast.fire({
+        icon: 'error',
+        title: 'Please fill in Password.',
+      }) 
+    }else if(alertsp == 0 && alertse > 0){
       Toast.fire({
         icon: 'error',
         title: 'Please fill in Password.',
@@ -149,17 +163,9 @@ const Login : FC = ({ setSession })  => {
 
   function clear() {
     setLogin({});
+    setAlertse(0)
+    setAlertsp(0)
     }
-
-  /* function filldata() {
-    console.log(instructors)
-    instructors.map((item : any) => {
-        //localStorage.setItem("Title", JSON.stringify(item.edges.title.tITLE));
-        localStorage.setItem("Name", JSON.stringify(item.NAME));   
-    })
-    setTo("/welcome")
-    Linklogin();
-  } */
 
   function Linklogin(){
     setSession ({
