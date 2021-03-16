@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 const SearchInstructor: FC<{}> = ()  => {
   const classes = useStyles();
   const api = new DefaultApi();
-  const [searchstext, setSearchstext] = React.useState(String)
+  const [searchstext, setSearchstext] = useState(String)
   const [instructorsearch, setInstructorsearch] = React.useState<EntInstructorInfo[]>([])
 
   // alert setting
@@ -57,13 +57,6 @@ const SearchInstructor: FC<{}> = ()  => {
       },
     });
 
-  //instructors
-  const [instructors, setInstructor] = React.useState<EntInstructorInfo[]>([])
-  const getInstructor = async () => {
-   const res = await api.listInstructorinfo({limit: 100, offset: 0 });
-   setInstructor(res);
-  };
-
   //instructorsshow
   const [instructorsshow, setInstructorshow] = React.useState<EntInstructorInfo[]>([])
   const getInstructorshow = async () => {
@@ -73,7 +66,6 @@ const SearchInstructor: FC<{}> = ()  => {
     
   // Lifecycle Hooks
   useEffect(() => {
-    getInstructor();
     getInstructorshow();
   }, []);
 
@@ -81,37 +73,38 @@ const SearchInstructor: FC<{}> = ()  => {
     setInstructorshow([])
   }
 
-  var alerts : number
+  //var alerts : number
 
-  function Searchs() {
-    instructors.map((item: any) => {  
-      if (item.nAME == searchstext ) {
-    const getInstructorsearch = async () => {
-      const res = await api.getInstructorinfo({id: item.id})
-      setInstructorsearch(res);
-      alerts = res.length
-      if (alerts > 0) {
-        Toast.fire({
-          icon: 'success',
-          title: 'Search Success',
-        })
-      } else {
-        Toast.fire({
-          icon: 'error',
-          title: 'Search Error',
-        })
-      }
-     };
-    getInstructorsearch();
-    }
-    else {
+  const Searchs = async () => {
+    if (searchstext != "") {
+      const apiUrl = `http://localhost:8080/api/v1/searchinstructorinfos?name=${searchstext}`;
+      const requestOptions = {
+        method: 'GET',
+      };
+      fetch(apiUrl, requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        if (data.data != "") {
+          setInstructorsearch(data.data);
+          Toast.fire({
+            icon: 'success',
+            title: 'Search Success',
+          })
+        } else {
+          setInstructorsearch([]);
+          Toast.fire({
+            icon: 'error',
+            title: 'Search Error',
+          })
+        }
+      });
+    }else {
       setInstructorsearch([]);
       Toast.fire({
         icon: 'error',
         title: 'Search Error',
       })
-    }
-  });
+    } 
   }
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>,) =>{
@@ -175,13 +168,13 @@ const SearchInstructor: FC<{}> = ()  => {
           ))}
         </TableBody>
         <TableBody>
-          {instructorsearch.map((item : EntInstructorInfo) => (
+          {instructorsearch.map((item : any) => (
             <TableRow key={item.id}>
-              <TableCell align="center">{item.edges?.title?.tITLE}</TableCell>
-              <TableCell align="center">{item.nAME}</TableCell>
-              <TableCell align="center">{item.eMAIL}</TableCell>
-              <TableCell align="center">{item.edges?.instructorroom?.rOOM}</TableCell>
-              <TableCell align="center">{item.edges?.department?.dEPARTMENT}</TableCell>
+              <TableCell align="center">{item.edges?.Title?.TITLE}</TableCell>
+              <TableCell align="center">{item.NAME}</TableCell>
+              <TableCell align="center">{item.EMAIL}</TableCell>
+              <TableCell align="center">{item.edges?.Instructorroom?.ROOM}</TableCell>
+              <TableCell align="center">{item.edges?.Department?.DEPARTMENT}</TableCell>
             </TableRow>
           ))}
         </TableBody>

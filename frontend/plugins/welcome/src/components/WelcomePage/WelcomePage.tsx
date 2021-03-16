@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import {makeStyles} from '@material-ui/core/styles';
-import Warning from "@material-ui/icons/Warning";
+//import Warning from "@material-ui/icons/Warning";
 import TableChartIcon from '@material-ui/icons/TableChart';
 import BallotIcon from '@material-ui/icons/Ballot';
 import SubjectIcon from '@material-ui/icons/Subject';
@@ -11,12 +11,12 @@ import NotesIcon from '@material-ui/icons/Notes';
 import TocIcon from '@material-ui/icons/Toc';
 import HelpIcon from '@material-ui/icons/Help';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import GridContainer from "plugin-welcome/src/support/Grid/GridContainer.js";
+//import GridContainer from "plugin-welcome/src/support/Grid/GridContainer.js";
 import GridItem from "plugin-welcome/src/support/Grid/GridItem";
 import Card from "plugin-welcome/src/support/Card/Card";
 import CardHeader from "plugin-welcome/src/support/Card/CardHeader";
 import CardIcon from "plugin-welcome/src/support/Card/CardIcon";
-import Danger from "plugin-welcome/src/support/Typography/Danger.js";
+//import Danger from "plugin-welcome/src/support/Typography/Danger.js";
 import Info from "plugin-welcome/src/support/Typography/Info";
 import CardFooter from "plugin-welcome/src/support/Card/CardFooter.js";
 import CardBody from "plugin-welcome/src/support/Card/CardBody";
@@ -259,7 +259,7 @@ const WelcomePage: FC<{}> = () => {
             <CardHeader color="primary">
               <h4 className={classes.cardTitleWhite}>Survival Member Now 😅 </h4>
               <p className={classes.cardCategoryWhite}>
-                Update on 5th February, 2021 
+                Update on 16th March 2021 
               </p>
             </CardHeader>
             <CardBody>

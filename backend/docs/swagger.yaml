@@ -1434,37 +1434,6 @@ paths:
           schema:
             $ref: '#/definitions/gin.H'
       summary: Delete a instructorinfo entity by ID
-    get:
-      description: get instructorinfo by ID
-      operationId: get-instructorinfo
-      parameters:
-      - description: InstructorInfo ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/ent.InstructorInfo'
-            type: array
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/gin.H'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/gin.H'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/gin.H'
-      summary: Get a instructorinfo entity by ID
     put:
       consumes:
       - application/json
@@ -1587,6 +1556,72 @@ paths:
           schema:
             $ref: '#/definitions/gin.H'
       summary: Get a instructorroom entity by ID
+  /logins:
+    get:
+      description: |-
+        get email by Email
+        get password by Password
+      operationId: check-login
+      parameters:
+      - description: InstructorInfo Email
+        in: query
+        name: email
+        type: string
+      - description: InstructorInfo Password
+        in: query
+        name: password
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.InstructorInfo'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a instructorinfo entity by Email and Password
+  /searchinstructorinfos:
+    get:
+      description: get name by Name
+      operationId: get-name-by-search
+      parameters:
+      - description: InstructorInfo Name
+        in: query
+        name: name
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.InstructorInfo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a instructorinfo entity by Name
   /subjects:
     get:
       description: list subject entities

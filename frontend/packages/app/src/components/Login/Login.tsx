@@ -4,10 +4,8 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import Swal from 'sweetalert2';
 import Link from '@material-ui/core/Link';
-//import { Link as RouterLink } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import VpnKeyOutlinedIcon from '@material-ui/icons/VpnKeyOutlined';
@@ -16,9 +14,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { DefaultApi } from 'plugin-welcome/src/api/apis';
 import { EntInstructorInfo } from 'plugin-welcome/src/api/models/EntInstructorInfo';
-//import { ItemCard } from '@backstage/core';
-//import { keys } from '@material-ui/core/styles/createBreakpoints';
-//import { type, userInfo } from 'os';
 
 function Copyright() {
   return (
@@ -60,21 +55,21 @@ interface login {
 
 const Login : FC = ({ setSession })  => {
   const classes = useStyles();
-  const api = new DefaultApi();
+  //const api = new DefaultApi();
   const [to, setTo] = React.useState('');
 
   const [login, setLogin] = React.useState<Partial<login>>({});
   const [instructors, setInstructor] = React.useState<EntInstructorInfo[]>([]);
 
-
+  /* 
   const getInstructor = async () => {
     const res = await api.listInstructorinfo({limit : 1000, offset: 0 });
     setInstructor(res);
-   };
+   }; */
 
   // Lifecycle Hooks
   useEffect(() => {
-    getInstructor();
+    //getInstructor();
     CheckReset();
   }, []);
 
@@ -86,6 +81,19 @@ const Login : FC = ({ setSession })  => {
     }
   }
 
+  // alert setting
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: toast => {
+      toast.addEventListener('mouseenter', Swal.stopTimer);
+      toast.addEventListener('mouseleave', Swal.resumeTimer);
+      },
+    });
+
   const handleChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>,) =>{
     const name = event.target.name as keyof typeof Login;
     const { value } = event.target;
@@ -94,24 +102,64 @@ const Login : FC = ({ setSession })  => {
   }
   
   const Login = async () => {
-    instructors.map((item: any) => {
-      if (item.eMAIL == login.email && item.pASSWORD == login.password) {
-        localStorage.setItem("ID", JSON.stringify(item.id));
-        localStorage.setItem("Title", JSON.stringify(item.edges.title.tITLE));
-        localStorage.setItem("Name", JSON.stringify(item.nAME));
-        setTo("/welcome")
-        Linklogin();
-      }
-      else{
-        clear();
-        setTo("")
-      }
-    });
-  };
+    if (login.email != undefined && login.password != undefined) {
+      const apiUrl = `http://localhost:8080/api/v1/logins?email=${login.email}&password=${login.password}`;
+      const requestOptions = {
+        method: 'GET',
+      };
+      fetch(apiUrl, requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        if (data.data != "") {
+          data.data.map((item : any ) => {
+            localStorage.setItem("Name", JSON.stringify(item.NAME))
+            localStorage.setItem("Title", JSON.stringify(item.edges?.Title?.TITLE))
+          })
+
+          //setInstructor(data.data)
+          //localStorage.setItem("Name", JSON.stringify(data.data["NAME"]));
+          setTo("/welcome")
+          Linklogin();
+        } else {
+          clear();
+          setTo("")
+          Toast.fire({
+            icon: 'error',
+            title: 'Incorrect Email or Password.',
+          })
+        }
+      });
+    }else if(login.email == undefined && login.password != undefined) {
+      Toast.fire({
+        icon: 'error',
+        title: 'Please fill in Email.',
+      })
+    }else if(login.password == undefined && login.email != undefined){
+      Toast.fire({
+        icon: 'error',
+        title: 'Please fill in Password.',
+      }) 
+    }else{
+      Toast.fire({
+        icon: 'error',
+        title: 'Please fill out this form.',
+      }) 
+    }
+  }
 
   function clear() {
     setLogin({});
     }
+
+  /* function filldata() {
+    console.log(instructors)
+    instructors.map((item : any) => {
+        //localStorage.setItem("Title", JSON.stringify(item.edges.title.tITLE));
+        localStorage.setItem("Name", JSON.stringify(item.NAME));   
+    })
+    setTo("/welcome")
+    Linklogin();
+  } */
 
   function Linklogin(){
     setSession ({
@@ -170,7 +218,7 @@ const Login : FC = ({ setSession })  => {
             className={classes.submit}
             component={RouterLink}
             to={to}
-            onClick = {Login}
+            onClick ={Login}
           >
             Login
           </Button>

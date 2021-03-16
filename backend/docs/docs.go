@@ -1480,52 +1480,6 @@ var doc = `{
             }
         },
         "/instructorinfos/{id}": {
-            "get": {
-                "description": "get instructorinfo by ID",
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "Get a instructorinfo entity by ID",
-                "operationId": "get-instructorinfo",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "InstructorInfo ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/ent.InstructorInfo"
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/gin.H"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/gin.H"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/gin.H"
-                        }
-                    }
-                }
-            },
             "put": {
                 "description": "update instructorinfo by ID",
                 "consumes": [
@@ -1730,6 +1684,103 @@ var doc = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/ent.InstructorRoom"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/logins": {
+            "get": {
+                "description": "get email by Email\nget password by Password",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a instructorinfo entity by Email and Password",
+                "operationId": "check-login",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "InstructorInfo Email",
+                        "name": "email",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "InstructorInfo Password",
+                        "name": "password",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ent.InstructorInfo"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/searchinstructorinfos": {
+            "get": {
+                "description": "get name by Name",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a instructorinfo entity by Name",
+                "operationId": "get-name-by-search",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "InstructorInfo Name",
+                        "name": "name",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ent.InstructorInfo"
                         }
                     },
                     "400": {
