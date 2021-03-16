@@ -158,6 +158,7 @@ const SearchCourseClass: FC<{}> = () => {
             <TableCell align="center">Table ID</TableCell>
             <TableCell align="center">Instructor</TableCell>
             <TableCell align="center">Subject</TableCell>
+            <TableCell align="center">Group</TableCell>
             <TableCell align="center">ClassRoom</TableCell>
             <TableCell align="center">Day</TableCell>
             <TableCell align="center">time</TableCell>
