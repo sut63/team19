@@ -112,40 +112,39 @@ func (ctl *InstructorInfoController) CreateInstructorInfo(c *gin.Context) {
 }
 
 // GetInstructorInfo handles GET requests to retrieve a instructorinfo entity
-// @Summary Get a instructorinfo entity by ID
-// @Description get instructorinfo by ID
-// @ID get-instructorinfo
+// @Summary Get a instructorinfo entity by Name
+// @Description get name by Name
+// @ID get-name-by-search
 // @Produce  json
-// @Param id path int true "InstructorInfo ID"
-// @Success 200 {array} ent.InstructorInfo
+// @Param name query string false "InstructorInfo Name"
+// @Success 200 {object} ent.InstructorInfo
 // @Failure 400 {object} gin.H
 // @Failure 404 {object} gin.H
 // @Failure 500 {object} gin.H
-// @Router /instructorinfos/{id} [get]
+// @Router /searchinstructorinfos [get]
 func (ctl *InstructorInfoController) GetInstructorInfo(c *gin.Context) {
-	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
-	if err != nil {
-		c.JSON(400, gin.H{
-			"error": err.Error(),
-		})
-		return
-	}
+	name := c.Query("name")
+
 	u, err := ctl.client.InstructorInfo.
 		Query().
 		WithDepartment().
 		WithInstructorroom().
 		WithTitle().
-		Where(instructorinfo.IDEQ(int(id))).
+		Where(instructorinfo.NAMEContains(name)).
 		All(context.Background())
 
 	if err != nil {
 		c.JSON(404, gin.H{
-			"error": err.Error(),
+			"status": false,
+			"error":  "Name not found",
 		})
 		return
 	}
 
-	c.JSON(200, u)
+	c.JSON(200, gin.H{
+		"status": true,
+		"data":   u,
+	})
 }
 
 // ListInstructorInfo handles request to get a list of instructorinfo entities
@@ -292,12 +291,13 @@ func NewInstructorInfoController(router gin.IRouter, client *ent.Client) *Instru
 
 func (ctl *InstructorInfoController) register() {
 	instructorinfos := ctl.router.Group("/instructorinfos")
+	searchinstructorinfos := ctl.router.Group("/searchinstructorinfos")
 
 	instructorinfos.GET("", ctl.ListInstructorInfo)
+	searchinstructorinfos.GET("", ctl.GetInstructorInfo)
 
 	// CRUD
 	instructorinfos.POST("", ctl.CreateInstructorInfo)
-	instructorinfos.GET(":id", ctl.GetInstructorInfo)
 	instructorinfos.PUT(":id", ctl.UpdateInstructorInfo)
 	instructorinfos.DELETE(":id", ctl.DeleteInstructorInfo)
 }

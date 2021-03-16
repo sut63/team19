@@ -124,6 +124,7 @@ func main() {
 	controllers.NewCourseclassController(v1, client)
 	controllers.NewClassroomController(v1, client)
 	controllers.NewCourseController(v1, client)
+	controllers.NewLoginController(v1, client)
 
 	// Set Departments Data
 	departments := Departments{

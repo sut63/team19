@@ -59,6 +59,11 @@ import {
     EntYearToJSON,
 } from '../models';
 
+export interface CheckLoginRequest {
+    email?: string;
+    password?: string;
+}
+
 export interface CreateClassdateRequest {
     classdate: EntClassdate;
 }
@@ -167,12 +172,12 @@ export interface GetDepartmentRequest {
     id: number;
 }
 
-export interface GetInstructorinfoRequest {
+export interface GetInstructorroomRequest {
     id: number;
 }
 
-export interface GetInstructorroomRequest {
-    id: number;
+export interface GetNameBySearchRequest {
+    name?: string;
 }
 
 export interface GetSubjectRequest {
@@ -299,6 +304,42 @@ export interface UpdateYearRequest {
  * 
  */
 export class DefaultApi extends runtime.BaseAPI {
+
+    /**
+     * get email by Email get password by Password
+     * Get a instructorinfo entity by Email and Password
+     */
+    async checkLoginRaw(requestParameters: CheckLoginRequest): Promise<runtime.ApiResponse<Array<EntInstructorInfo>>> {
+        const queryParameters: runtime.HTTPQuery = {};
+
+        if (requestParameters.email !== undefined) {
+            queryParameters['email'] = requestParameters.email;
+        }
+
+        if (requestParameters.password !== undefined) {
+            queryParameters['password'] = requestParameters.password;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/logins`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(EntInstructorInfoFromJSON));
+    }
+
+    /**
+     * get email by Email get password by Password
+     * Get a instructorinfo entity by Email and Password
+     */
+    async checkLogin(requestParameters: CheckLoginRequest): Promise<Array<EntInstructorInfo>> {
+        const response = await this.checkLoginRaw(requestParameters);
+        return await response.value();
+    }
 
     /**
      * Create classdate
@@ -1207,38 +1248,6 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * get instructorinfo by ID
-     * Get a instructorinfo entity by ID
-     */
-    async getInstructorinfoRaw(requestParameters: GetInstructorinfoRequest): Promise<runtime.ApiResponse<Array<EntInstructorInfo>>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getInstructorinfo.');
-        }
-
-        const queryParameters: runtime.HTTPQuery = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/instructorinfos/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(EntInstructorInfoFromJSON));
-    }
-
-    /**
-     * get instructorinfo by ID
-     * Get a instructorinfo entity by ID
-     */
-    async getInstructorinfo(requestParameters: GetInstructorinfoRequest): Promise<Array<EntInstructorInfo>> {
-        const response = await this.getInstructorinfoRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
      * get instructorroom by ID
      * Get a instructorroom entity by ID
      */
@@ -1267,6 +1276,38 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async getInstructorroom(requestParameters: GetInstructorroomRequest): Promise<EntInstructorRoom> {
         const response = await this.getInstructorroomRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * get name by Name
+     * Get a instructorinfo entity by Name
+     */
+    async getNameBySearchRaw(requestParameters: GetNameBySearchRequest): Promise<runtime.ApiResponse<EntInstructorInfo>> {
+        const queryParameters: runtime.HTTPQuery = {};
+
+        if (requestParameters.name !== undefined) {
+            queryParameters['name'] = requestParameters.name;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/searchinstructorinfos`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => EntInstructorInfoFromJSON(jsonValue));
+    }
+
+    /**
+     * get name by Name
+     * Get a instructorinfo entity by Name
+     */
+    async getNameBySearch(requestParameters: GetNameBySearchRequest): Promise<EntInstructorInfo> {
+        const response = await this.getNameBySearchRaw(requestParameters);
         return await response.value();
     }
 
