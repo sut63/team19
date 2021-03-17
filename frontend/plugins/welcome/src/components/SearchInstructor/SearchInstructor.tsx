@@ -82,9 +82,9 @@ const SearchInstructor: FC<{}> = ()  => {
       fetch(apiUrl, requestOptions)
       .then(response => response.json())
       .then(data => {
-        data.data.map((item : any ) => {        
+        data.data.map((item : any ) => {       
         if (data.data != "" && item.NAME == searchstext) {
-          setInstructorsearch(data.data);
+          setInstructorsearch(data.data);   
           Toast.fire({
             icon: 'success',
             title: 'Search Success',

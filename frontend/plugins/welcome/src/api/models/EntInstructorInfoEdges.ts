@@ -75,9 +75,9 @@ export function EntInstructorInfoEdgesFromJSONTyped(json: any, ignoreDiscriminat
     return {
         
         'courseclasses': !exists(json, 'courseclasses') ? undefined : ((json['courseclasses'] as Array<any>).map(EntCourseclassFromJSON)),
-        'department': !exists(json, 'department') ? undefined : EntDepartmentFromJSON(json['department']),
-        'instructorroom': !exists(json, 'instructorroom') ? undefined : EntInstructorRoomFromJSON(json['instructorroom']),
-        'title': !exists(json, 'title') ? undefined : EntTitleFromJSON(json['title']),
+        'department': !exists(json, 'Department') ? undefined : EntDepartmentFromJSON(json['Department']),
+        'instructorroom': !exists(json, 'Instructorroom') ? undefined : EntInstructorRoomFromJSON(json['Instructorroom']),
+        'title': !exists(json, 'Title') ? undefined : EntTitleFromJSON(json['Title']),
     };
 }
 
