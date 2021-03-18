@@ -2623,7 +2623,7 @@ var doc = `{
                 },
                 "Course_year": {
                     "description": "CourseYear holds the value of the \"Course_year\" field.",
-                    "type": "string"
+                    "type": "integer"
                 },
                 "Teacher_id": {
                     "description": "TeacherID holds the value of the \"Teacher_id\" field.",

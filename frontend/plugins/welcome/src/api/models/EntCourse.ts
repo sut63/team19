@@ -34,10 +34,10 @@ export interface EntCourse {
     courseName?: string;
     /**
      * CourseYear holds the value of the "Course_year" field.
-     * @type {string}
+     * @type {number}
      * @memberof EntCourse
      */
-    courseYear?: string;
+    courseYear?: number;
     /**
      * TeacherID holds the value of the "Teacher_id" field.
      * @type {string}

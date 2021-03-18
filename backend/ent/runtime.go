@@ -19,7 +19,21 @@ func init() {
 	// courseDescCourseYear is the schema descriptor for Course_year field.
 	courseDescCourseYear := courseFields[0].Descriptor()
 	// course.CourseYearValidator is a validator for the "Course_year" field. It is called by the builders before save.
-	course.CourseYearValidator = courseDescCourseYear.Validators[0].(func(string) error)
+	course.CourseYearValidator = func() func(int) error {
+		validators := courseDescCourseYear.Validators
+		fns := [...]func(int) error{
+			validators[0].(func(int) error),
+			validators[1].(func(int) error),
+		}
+		return func(_Course_year int) error {
+			for _, fn := range fns {
+				if err := fn(_Course_year); err != nil {
+					return err
+				}
+			}
+			return nil
+		}
+	}()
 	// courseDescCourseName is the schema descriptor for Course_name field.
 	courseDescCourseName := courseFields[1].Descriptor()
 	// course.CourseNameValidator is a validator for the "Course_name" field. It is called by the builders before save.

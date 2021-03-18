@@ -17,9 +17,9 @@ type Course struct {
 func (Course) Fields() []ent.Field {
 	return []ent.Field{
 
-		field.String("Course_year").Match(regexp.MustCompile("[0-9]")),
-		field.String("Course_name").Match(regexp.MustCompile("[a-zA-Z0-9]")),
-		field.String("Teacher_id").Match(regexp.MustCompile("[T]\\d{7}")),
+		field.Int("Course_year").Positive().Range(1000,9000),
+		field.String("Course_name").Match(regexp.MustCompile("^([A-Za-z0-9])+$")),
+		field.String("Teacher_id").Match(regexp.MustCompile("[T]\\d{7}$")),
 	}
 }
 

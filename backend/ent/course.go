@@ -19,7 +19,7 @@ type Course struct {
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
 	// CourseYear holds the value of the "Course_year" field.
-	CourseYear string `json:"Course_year,omitempty"`
+	CourseYear int `json:"Course_year,omitempty"`
 	// CourseName holds the value of the "Course_name" field.
 	CourseName string `json:"Course_name,omitempty"`
 	// TeacherID holds the value of the "Teacher_id" field.
@@ -91,7 +91,7 @@ func (e CourseEdges) SubjectIDOrErr() (*Subject, error) {
 func (*Course) scanValues() []interface{} {
 	return []interface{}{
 		&sql.NullInt64{},  // id
-		&sql.NullString{}, // Course_year
+		&sql.NullInt64{},  // Course_year
 		&sql.NullString{}, // Course_name
 		&sql.NullString{}, // Teacher_id
 	}
@@ -118,10 +118,10 @@ func (c *Course) assignValues(values ...interface{}) error {
 	}
 	c.ID = int(value.Int64)
 	values = values[1:]
-	if value, ok := values[0].(*sql.NullString); !ok {
+	if value, ok := values[0].(*sql.NullInt64); !ok {
 		return fmt.Errorf("unexpected type %T for field Course_year", values[0])
 	} else if value.Valid {
-		c.CourseYear = value.String
+		c.CourseYear = int(value.Int64)
 	}
 	if value, ok := values[1].(*sql.NullString); !ok {
 		return fmt.Errorf("unexpected type %T for field Course_name", values[1])
@@ -196,7 +196,7 @@ func (c *Course) String() string {
 	builder.WriteString("Course(")
 	builder.WriteString(fmt.Sprintf("id=%v", c.ID))
 	builder.WriteString(", Course_year=")
-	builder.WriteString(c.CourseYear)
+	builder.WriteString(fmt.Sprintf("%v", c.CourseYear))
 	builder.WriteString(", Course_name=")
 	builder.WriteString(c.CourseName)
 	builder.WriteString(", Teacher_id=")

@@ -63,7 +63,7 @@ var ForeignKeys = []string{
 
 var (
 	// CourseYearValidator is a validator for the "Course_year" field. It is called by the builders before save.
-	CourseYearValidator func(string) error
+	CourseYearValidator func(int) error
 	// CourseNameValidator is a validator for the "Course_name" field. It is called by the builders before save.
 	CourseNameValidator func(string) error
 	// TeacherIDValidator is a validator for the "Teacher_id" field. It is called by the builders before save.

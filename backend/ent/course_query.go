@@ -332,7 +332,7 @@ func (cq *CourseQuery) WithSubjectID(opts ...func(*SubjectQuery)) *CourseQuery {
 // Example:
 //
 //	var v []struct {
-//		CourseYear string `json:"Course_year,omitempty"`
+//		CourseYear int `json:"Course_year,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
@@ -358,7 +358,7 @@ func (cq *CourseQuery) GroupBy(field string, fields ...string) *CourseGroupBy {
 // Example:
 //
 //	var v []struct {
-//		CourseYear string `json:"Course_year,omitempty"`
+//		CourseYear int `json:"Course_year,omitempty"`
 //	}
 //
 //	client.Course.Query().

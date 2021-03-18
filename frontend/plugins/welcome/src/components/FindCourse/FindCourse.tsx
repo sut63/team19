@@ -41,8 +41,8 @@ const useStyles = makeStyles(theme => ({
 const FindCourse: FC<{}> = ()  => {
   const classes = useStyles();
   const api = new DefaultApi();
-  const [searchstext, setSearchstext] = React.useState(String)
-  const [coursesearch, setCoursesearch] = React.useState<EntCourse[]>([])
+  const [searchstext, setSearchstext] = React.useState(String );
+  const [coursesearch, setCoursesearch] = React.useState<EntCourse[]>([]);
 
   // alert setting
   const Toast = Swal.mixin({
@@ -57,15 +57,8 @@ const FindCourse: FC<{}> = ()  => {
       },
     });
 
-  //courses
-  const [courses, setCourse] = React.useState<EntCourse[]>([])
-  const getCourse = async () => {
-   const res = await api.listCourse({limit: 100, offset: 0 });
-   setCourse(res);
-  };
-
   //coursesshow
-  const [coursesshow, setCourseshow] = React.useState<EntCourse[]>([])
+  const [coursesshow, setCourseshow] = React.useState<EntCourse[]>([]);
   const getCourseshow = async () => {
    const res = await api.listCourse({limit: 100, offset: 0 });
    setCourseshow(res);
@@ -73,7 +66,6 @@ const FindCourse: FC<{}> = ()  => {
     
   // Lifecycle Hooks
   useEffect(() => {
-    getCourse();
     getCourseshow();
   }, []);
 
@@ -81,37 +73,47 @@ const FindCourse: FC<{}> = ()  => {
     setCourseshow([])
   }
 
-  var alerts : number
+ 
 
-  function Searchs() {
-    courses.map((item: any) => {  
-      if (item.courseName == searchstext ) {
-    const getCoursesearch = async () => {
-      const res = await api.getCourse({id: item.id})
-      setCoursesearch(res);
-      alerts = res.length
-      if (alerts > 0) {
-        Toast.fire({
-          icon: 'success',
-          title: 'พบหลักสูตรที่คุณค้นหา',
-        })
-      } else {
-        Toast.fire({
-          icon: 'error',
-          title: 'ไม่พบหลักสูตรที่คุณค้นหา',
-        })
-      }
-     };
-    getCoursesearch();
-    }
-    else {
+  const Searchs = async () => {
+    if (searchstext != "") {
+      const apiUrl = `http://localhost:8080/api/v1/searchcourses?coursename=${searchstext}`;
+      const requestOptions = {
+        method: 'GET',
+      };
+      fetch(apiUrl, requestOptions)
+      .then(response => response.json())
+      .then(data => {
+   
+        data.data.map((item : any ) => {       
+        if (data.data != "" && item.Course_name == searchstext) {
+          setCoursesearch(data.data);   
+          Toast.fire({
+            icon: 'success',
+            title: 'พบหลักสูตรที่คุณค้นหา',
+          })
+        }else if(data.data != "" && item.Course_name != searchstext){
+          setCoursesearch([]);
+          Toast.fire({
+            icon: 'error',
+            title: 'ไม่พบหลักสูตรที่คุณค้นหา',
+          })
+        }})
+        if (data.data == ""){
+          setCoursesearch([]);
+          Toast.fire({
+            icon: 'error',
+            title: 'ไม่พบหลักสูตรที่คุณค้นหา',
+          })
+        }
+      });
+    }else {
       setCoursesearch([]);
       Toast.fire({
         icon: 'error',
         title: 'ไม่พบหลักสูตรที่คุณค้นหา',
       })
-    }
-  });
+    } 
   }
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>,) =>{
@@ -180,16 +182,16 @@ const FindCourse: FC<{}> = ()  => {
           ))}
         </TableBody>
         <TableBody>
-          {coursesearch.map((item : EntCourse) => (
+          {coursesearch.map((item : any) => (
             <TableRow key={item.id}>
               <TableCell align="center">{item.id}</TableCell>  
-             <TableCell align="center">{item.courseYear}</TableCell>     
-             <TableCell align="center">{item.courseName}</TableCell>     
-             <TableCell align="center">{item.teacherId}</TableCell>     
-             <TableCell align="center">{item.edges?.degreeID?.degreeName}</TableCell>     
-             <TableCell align="center">{item.edges?.departmentID?.dEPARTMENT}</TableCell>     
-             <TableCell align="center">{item.edges?.subjectID?.subjectName}</TableCell> 
-             <TableCell align="center"></TableCell>   
+             <TableCell align="center">{item.Course_year}</TableCell>     
+             <TableCell align="center">{item.Course_name}</TableCell>     
+             <TableCell align="center">{item.Teacher_id}</TableCell>     
+             <TableCell align="center">{item.edges?.DegreeID?.Degree_name}</TableCell>     
+             <TableCell align="center">{item.edges?.DepartmentID?.DEPARTMENT}</TableCell>     
+             <TableCell align="center">{item.edges?.SubjectID?.Subject_name}</TableCell> 
+             <TableCell align="center"></TableCell> 
             </TableRow>
           ))}
         </TableBody>

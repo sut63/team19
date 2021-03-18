@@ -31,8 +31,15 @@ func (cu *CourseUpdate) Where(ps ...predicate.Course) *CourseUpdate {
 }
 
 // SetCourseYear sets the Course_year field.
-func (cu *CourseUpdate) SetCourseYear(s string) *CourseUpdate {
-	cu.mutation.SetCourseYear(s)
+func (cu *CourseUpdate) SetCourseYear(i int) *CourseUpdate {
+	cu.mutation.ResetCourseYear()
+	cu.mutation.SetCourseYear(i)
+	return cu
+}
+
+// AddCourseYear adds i to Course_year.
+func (cu *CourseUpdate) AddCourseYear(i int) *CourseUpdate {
+	cu.mutation.AddCourseYear(i)
 	return cu
 }
 
@@ -215,7 +222,14 @@ func (cu *CourseUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if value, ok := cu.mutation.CourseYear(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: course.FieldCourseYear,
+		})
+	}
+	if value, ok := cu.mutation.AddedCourseYear(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
 			Value:  value,
 			Column: course.FieldCourseYear,
 		})
@@ -358,8 +372,15 @@ type CourseUpdateOne struct {
 }
 
 // SetCourseYear sets the Course_year field.
-func (cuo *CourseUpdateOne) SetCourseYear(s string) *CourseUpdateOne {
-	cuo.mutation.SetCourseYear(s)
+func (cuo *CourseUpdateOne) SetCourseYear(i int) *CourseUpdateOne {
+	cuo.mutation.ResetCourseYear()
+	cuo.mutation.SetCourseYear(i)
+	return cuo
+}
+
+// AddCourseYear adds i to Course_year.
+func (cuo *CourseUpdateOne) AddCourseYear(i int) *CourseUpdateOne {
+	cuo.mutation.AddCourseYear(i)
 	return cuo
 }
 
@@ -540,7 +561,14 @@ func (cuo *CourseUpdateOne) sqlSave(ctx context.Context) (c *Course, err error) 
 	_spec.Node.ID.Value = id
 	if value, ok := cuo.mutation.CourseYear(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: course.FieldCourseYear,
+		})
+	}
+	if value, ok := cuo.mutation.AddedCourseYear(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
 			Value:  value,
 			Column: course.FieldCourseYear,
 		})
