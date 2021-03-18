@@ -28,28 +28,22 @@ import {
 export interface EntSubjectsOffered {
     /**
      * AMOUNT holds the value of the "AMOUNT" field.
-     * @type {string}
-     * @memberof EntSubjectsOffered
-     */
-    aMOUNT?: string;
-    /**
-     * Remain holds the value of the "Remain" field.
-     * @type {string}
-     * @memberof EntSubjectsOffered
-     */
-    remain?: string;
-    /**
-     * STATUS holds the value of the "STATUS" field.
-     * @type {string}
-     * @memberof EntSubjectsOffered
-     */
-    sTATUS?: string;
-    /**
-     * 
      * @type {number}
      * @memberof EntSubjectsOffered
      */
-    degreeId?: number;
+    aMOUNT?: number;
+    /**
+     * Remain holds the value of the "Remain" field.
+     * @type {number}
+     * @memberof EntSubjectsOffered
+     */
+    remain?: number;
+    /**
+     * STATUS holds the value of the "STATUS" field.
+     * @type {boolean}
+     * @memberof EntSubjectsOffered
+     */
+    sTATUS?: boolean;
     /**
      * 
      * @type {EntSubjectsOfferedEdges}
@@ -62,12 +56,6 @@ export interface EntSubjectsOffered {
      * @memberof EntSubjectsOffered
      */
     id?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof EntSubjectsOffered
-     */
-    subjectId?: number;
 }
 
 export function EntSubjectsOfferedFromJSON(json: any): EntSubjectsOffered {
@@ -83,10 +71,8 @@ export function EntSubjectsOfferedFromJSONTyped(json: any, ignoreDiscriminator: 
         'aMOUNT': !exists(json, 'AMOUNT') ? undefined : json['AMOUNT'],
         'remain': !exists(json, 'Remain') ? undefined : json['Remain'],
         'sTATUS': !exists(json, 'STATUS') ? undefined : json['STATUS'],
-        'degreeId': !exists(json, 'degree_id') ? undefined : json['degree_id'],
         'edges': !exists(json, 'edges') ? undefined : EntSubjectsOfferedEdgesFromJSON(json['edges']),
         'id': !exists(json, 'id') ? undefined : json['id'],
-        'subjectId': !exists(json, 'subject_id') ? undefined : json['subject_id'],
     };
 }
 
@@ -102,10 +88,8 @@ export function EntSubjectsOfferedToJSON(value?: EntSubjectsOffered | null): any
         'AMOUNT': value.aMOUNT,
         'Remain': value.remain,
         'STATUS': value.sTATUS,
-        'degree_id': value.degreeId,
         'edges': EntSubjectsOfferedEdgesToJSON(value.edges),
         'id': value.id,
-        'subject_id': value.subjectId,
     };
 }
 

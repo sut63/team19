@@ -2943,15 +2943,15 @@ var doc = `{
             "properties": {
                 "AMOUNT": {
                     "description": "AMOUNT holds the value of the \"AMOUNT\" field.",
-                    "type": "string"
+                    "type": "integer"
                 },
                 "Remain": {
                     "description": "Remain holds the value of the \"Remain\" field.",
-                    "type": "string"
+                    "type": "integer"
                 },
                 "STATUS": {
                     "description": "STATUS holds the value of the \"STATUS\" field.",
-                    "type": "string"
+                    "type": "boolean"
                 },
                 "degree_id": {
                     "type": "integer"

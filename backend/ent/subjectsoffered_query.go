@@ -363,7 +363,7 @@ func (soq *SubjectsOfferedQuery) WithTerm(opts ...func(*TermQuery)) *SubjectsOff
 // Example:
 //
 //	var v []struct {
-//		AMOUNT string `json:"AMOUNT,omitempty"`
+//		AMOUNT int `json:"AMOUNT,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
@@ -389,7 +389,7 @@ func (soq *SubjectsOfferedQuery) GroupBy(field string, fields ...string) *Subjec
 // Example:
 //
 //	var v []struct {
-//		AMOUNT string `json:"AMOUNT,omitempty"`
+//		AMOUNT int `json:"AMOUNT,omitempty"`
 //	}
 //
 //	client.SubjectsOffered.Query().

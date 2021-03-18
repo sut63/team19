@@ -231,9 +231,9 @@ var (
 	// SubjectsOfferedsColumns holds the columns for the "subjects_offereds" table.
 	SubjectsOfferedsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "amount", Type: field.TypeString},
-		{Name: "status", Type: field.TypeString},
-		{Name: "remain", Type: field.TypeString},
+		{Name: "amount", Type: field.TypeInt},
+		{Name: "status", Type: field.TypeBool},
+		{Name: "remain", Type: field.TypeInt},
 		{Name: "Degree_id", Type: field.TypeInt, Nullable: true},
 		{Name: "Subject_id", Type: field.TypeInt, Nullable: true},
 		{Name: "term_id", Type: field.TypeInt, Nullable: true},

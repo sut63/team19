@@ -32,20 +32,42 @@ func (sou *SubjectsOfferedUpdate) Where(ps ...predicate.SubjectsOffered) *Subjec
 }
 
 // SetAMOUNT sets the AMOUNT field.
-func (sou *SubjectsOfferedUpdate) SetAMOUNT(s string) *SubjectsOfferedUpdate {
-	sou.mutation.SetAMOUNT(s)
+func (sou *SubjectsOfferedUpdate) SetAMOUNT(i int) *SubjectsOfferedUpdate {
+	sou.mutation.ResetAMOUNT()
+	sou.mutation.SetAMOUNT(i)
+	return sou
+}
+
+// AddAMOUNT adds i to AMOUNT.
+func (sou *SubjectsOfferedUpdate) AddAMOUNT(i int) *SubjectsOfferedUpdate {
+	sou.mutation.AddAMOUNT(i)
 	return sou
 }
 
 // SetSTATUS sets the STATUS field.
-func (sou *SubjectsOfferedUpdate) SetSTATUS(s string) *SubjectsOfferedUpdate {
-	sou.mutation.SetSTATUS(s)
+func (sou *SubjectsOfferedUpdate) SetSTATUS(b bool) *SubjectsOfferedUpdate {
+	sou.mutation.SetSTATUS(b)
+	return sou
+}
+
+// SetNillableSTATUS sets the STATUS field if the given value is not nil.
+func (sou *SubjectsOfferedUpdate) SetNillableSTATUS(b *bool) *SubjectsOfferedUpdate {
+	if b != nil {
+		sou.SetSTATUS(*b)
+	}
 	return sou
 }
 
 // SetRemain sets the Remain field.
-func (sou *SubjectsOfferedUpdate) SetRemain(s string) *SubjectsOfferedUpdate {
-	sou.mutation.SetRemain(s)
+func (sou *SubjectsOfferedUpdate) SetRemain(i int) *SubjectsOfferedUpdate {
+	sou.mutation.ResetRemain()
+	sou.mutation.SetRemain(i)
+	return sou
+}
+
+// AddRemain adds i to Remain.
+func (sou *SubjectsOfferedUpdate) AddRemain(i int) *SubjectsOfferedUpdate {
+	sou.mutation.AddRemain(i)
 	return sou
 }
 
@@ -161,11 +183,6 @@ func (sou *SubjectsOfferedUpdate) Save(ctx context.Context) (int, error) {
 			return 0, &ValidationError{Name: "AMOUNT", err: fmt.Errorf("ent: validator failed for field \"AMOUNT\": %w", err)}
 		}
 	}
-	if v, ok := sou.mutation.STATUS(); ok {
-		if err := subjectsoffered.STATUSValidator(v); err != nil {
-			return 0, &ValidationError{Name: "STATUS", err: fmt.Errorf("ent: validator failed for field \"STATUS\": %w", err)}
-		}
-	}
 	if v, ok := sou.mutation.Remain(); ok {
 		if err := subjectsoffered.RemainValidator(v); err != nil {
 			return 0, &ValidationError{Name: "Remain", err: fmt.Errorf("ent: validator failed for field \"Remain\": %w", err)}
@@ -241,21 +258,35 @@ func (sou *SubjectsOfferedUpdate) sqlSave(ctx context.Context) (n int, err error
 	}
 	if value, ok := sou.mutation.AMOUNT(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: subjectsoffered.FieldAMOUNT,
+		})
+	}
+	if value, ok := sou.mutation.AddedAMOUNT(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
 			Value:  value,
 			Column: subjectsoffered.FieldAMOUNT,
 		})
 	}
 	if value, ok := sou.mutation.STATUS(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeBool,
 			Value:  value,
 			Column: subjectsoffered.FieldSTATUS,
 		})
 	}
 	if value, ok := sou.mutation.Remain(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: subjectsoffered.FieldRemain,
+		})
+	}
+	if value, ok := sou.mutation.AddedRemain(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
 			Value:  value,
 			Column: subjectsoffered.FieldRemain,
 		})
@@ -419,20 +450,42 @@ type SubjectsOfferedUpdateOne struct {
 }
 
 // SetAMOUNT sets the AMOUNT field.
-func (souo *SubjectsOfferedUpdateOne) SetAMOUNT(s string) *SubjectsOfferedUpdateOne {
-	souo.mutation.SetAMOUNT(s)
+func (souo *SubjectsOfferedUpdateOne) SetAMOUNT(i int) *SubjectsOfferedUpdateOne {
+	souo.mutation.ResetAMOUNT()
+	souo.mutation.SetAMOUNT(i)
+	return souo
+}
+
+// AddAMOUNT adds i to AMOUNT.
+func (souo *SubjectsOfferedUpdateOne) AddAMOUNT(i int) *SubjectsOfferedUpdateOne {
+	souo.mutation.AddAMOUNT(i)
 	return souo
 }
 
 // SetSTATUS sets the STATUS field.
-func (souo *SubjectsOfferedUpdateOne) SetSTATUS(s string) *SubjectsOfferedUpdateOne {
-	souo.mutation.SetSTATUS(s)
+func (souo *SubjectsOfferedUpdateOne) SetSTATUS(b bool) *SubjectsOfferedUpdateOne {
+	souo.mutation.SetSTATUS(b)
+	return souo
+}
+
+// SetNillableSTATUS sets the STATUS field if the given value is not nil.
+func (souo *SubjectsOfferedUpdateOne) SetNillableSTATUS(b *bool) *SubjectsOfferedUpdateOne {
+	if b != nil {
+		souo.SetSTATUS(*b)
+	}
 	return souo
 }
 
 // SetRemain sets the Remain field.
-func (souo *SubjectsOfferedUpdateOne) SetRemain(s string) *SubjectsOfferedUpdateOne {
-	souo.mutation.SetRemain(s)
+func (souo *SubjectsOfferedUpdateOne) SetRemain(i int) *SubjectsOfferedUpdateOne {
+	souo.mutation.ResetRemain()
+	souo.mutation.SetRemain(i)
+	return souo
+}
+
+// AddRemain adds i to Remain.
+func (souo *SubjectsOfferedUpdateOne) AddRemain(i int) *SubjectsOfferedUpdateOne {
+	souo.mutation.AddRemain(i)
 	return souo
 }
 
@@ -548,11 +601,6 @@ func (souo *SubjectsOfferedUpdateOne) Save(ctx context.Context) (*SubjectsOffere
 			return nil, &ValidationError{Name: "AMOUNT", err: fmt.Errorf("ent: validator failed for field \"AMOUNT\": %w", err)}
 		}
 	}
-	if v, ok := souo.mutation.STATUS(); ok {
-		if err := subjectsoffered.STATUSValidator(v); err != nil {
-			return nil, &ValidationError{Name: "STATUS", err: fmt.Errorf("ent: validator failed for field \"STATUS\": %w", err)}
-		}
-	}
 	if v, ok := souo.mutation.Remain(); ok {
 		if err := subjectsoffered.RemainValidator(v); err != nil {
 			return nil, &ValidationError{Name: "Remain", err: fmt.Errorf("ent: validator failed for field \"Remain\": %w", err)}
@@ -626,21 +674,35 @@ func (souo *SubjectsOfferedUpdateOne) sqlSave(ctx context.Context) (so *Subjects
 	_spec.Node.ID.Value = id
 	if value, ok := souo.mutation.AMOUNT(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: subjectsoffered.FieldAMOUNT,
+		})
+	}
+	if value, ok := souo.mutation.AddedAMOUNT(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
 			Value:  value,
 			Column: subjectsoffered.FieldAMOUNT,
 		})
 	}
 	if value, ok := souo.mutation.STATUS(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeBool,
 			Value:  value,
 			Column: subjectsoffered.FieldSTATUS,
 		})
 	}
 	if value, ok := souo.mutation.Remain(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: subjectsoffered.FieldRemain,
+		})
+	}
+	if value, ok := souo.mutation.AddedRemain(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
 			Value:  value,
 			Column: subjectsoffered.FieldRemain,
 		})

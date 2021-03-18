@@ -5011,9 +5011,11 @@ type SubjectsOfferedMutation struct {
 	op              Op
 	typ             string
 	id              *int
-	_AMOUNT         *string
-	_STATUS         *string
-	_Remain         *string
+	_AMOUNT         *int
+	add_AMOUNT      *int
+	_STATUS         *bool
+	_Remain         *int
+	add_Remain      *int
 	clearedFields   map[string]struct{}
 	_Subject        *int
 	cleared_Subject bool
@@ -5107,12 +5109,13 @@ func (m *SubjectsOfferedMutation) ID() (id int, exists bool) {
 }
 
 // SetAMOUNT sets the AMOUNT field.
-func (m *SubjectsOfferedMutation) SetAMOUNT(s string) {
-	m._AMOUNT = &s
+func (m *SubjectsOfferedMutation) SetAMOUNT(i int) {
+	m._AMOUNT = &i
+	m.add_AMOUNT = nil
 }
 
 // AMOUNT returns the AMOUNT value in the mutation.
-func (m *SubjectsOfferedMutation) AMOUNT() (r string, exists bool) {
+func (m *SubjectsOfferedMutation) AMOUNT() (r int, exists bool) {
 	v := m._AMOUNT
 	if v == nil {
 		return
@@ -5124,7 +5127,7 @@ func (m *SubjectsOfferedMutation) AMOUNT() (r string, exists bool) {
 // If the SubjectsOffered object wasn't provided to the builder, the object is fetched
 // from the database.
 // An error is returned if the mutation operation is not UpdateOne, or database query fails.
-func (m *SubjectsOfferedMutation) OldAMOUNT(ctx context.Context) (v string, err error) {
+func (m *SubjectsOfferedMutation) OldAMOUNT(ctx context.Context) (v int, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldAMOUNT is allowed only on UpdateOne operations")
 	}
@@ -5138,18 +5141,37 @@ func (m *SubjectsOfferedMutation) OldAMOUNT(ctx context.Context) (v string, err 
 	return oldValue.AMOUNT, nil
 }
 
+// AddAMOUNT adds i to AMOUNT.
+func (m *SubjectsOfferedMutation) AddAMOUNT(i int) {
+	if m.add_AMOUNT != nil {
+		*m.add_AMOUNT += i
+	} else {
+		m.add_AMOUNT = &i
+	}
+}
+
+// AddedAMOUNT returns the value that was added to the AMOUNT field in this mutation.
+func (m *SubjectsOfferedMutation) AddedAMOUNT() (r int, exists bool) {
+	v := m.add_AMOUNT
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
 // ResetAMOUNT reset all changes of the "AMOUNT" field.
 func (m *SubjectsOfferedMutation) ResetAMOUNT() {
 	m._AMOUNT = nil
+	m.add_AMOUNT = nil
 }
 
 // SetSTATUS sets the STATUS field.
-func (m *SubjectsOfferedMutation) SetSTATUS(s string) {
-	m._STATUS = &s
+func (m *SubjectsOfferedMutation) SetSTATUS(b bool) {
+	m._STATUS = &b
 }
 
 // STATUS returns the STATUS value in the mutation.
-func (m *SubjectsOfferedMutation) STATUS() (r string, exists bool) {
+func (m *SubjectsOfferedMutation) STATUS() (r bool, exists bool) {
 	v := m._STATUS
 	if v == nil {
 		return
@@ -5161,7 +5183,7 @@ func (m *SubjectsOfferedMutation) STATUS() (r string, exists bool) {
 // If the SubjectsOffered object wasn't provided to the builder, the object is fetched
 // from the database.
 // An error is returned if the mutation operation is not UpdateOne, or database query fails.
-func (m *SubjectsOfferedMutation) OldSTATUS(ctx context.Context) (v string, err error) {
+func (m *SubjectsOfferedMutation) OldSTATUS(ctx context.Context) (v bool, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldSTATUS is allowed only on UpdateOne operations")
 	}
@@ -5181,12 +5203,13 @@ func (m *SubjectsOfferedMutation) ResetSTATUS() {
 }
 
 // SetRemain sets the Remain field.
-func (m *SubjectsOfferedMutation) SetRemain(s string) {
-	m._Remain = &s
+func (m *SubjectsOfferedMutation) SetRemain(i int) {
+	m._Remain = &i
+	m.add_Remain = nil
 }
 
 // Remain returns the Remain value in the mutation.
-func (m *SubjectsOfferedMutation) Remain() (r string, exists bool) {
+func (m *SubjectsOfferedMutation) Remain() (r int, exists bool) {
 	v := m._Remain
 	if v == nil {
 		return
@@ -5198,7 +5221,7 @@ func (m *SubjectsOfferedMutation) Remain() (r string, exists bool) {
 // If the SubjectsOffered object wasn't provided to the builder, the object is fetched
 // from the database.
 // An error is returned if the mutation operation is not UpdateOne, or database query fails.
-func (m *SubjectsOfferedMutation) OldRemain(ctx context.Context) (v string, err error) {
+func (m *SubjectsOfferedMutation) OldRemain(ctx context.Context) (v int, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldRemain is allowed only on UpdateOne operations")
 	}
@@ -5212,9 +5235,28 @@ func (m *SubjectsOfferedMutation) OldRemain(ctx context.Context) (v string, err 
 	return oldValue.Remain, nil
 }
 
+// AddRemain adds i to Remain.
+func (m *SubjectsOfferedMutation) AddRemain(i int) {
+	if m.add_Remain != nil {
+		*m.add_Remain += i
+	} else {
+		m.add_Remain = &i
+	}
+}
+
+// AddedRemain returns the value that was added to the Remain field in this mutation.
+func (m *SubjectsOfferedMutation) AddedRemain() (r int, exists bool) {
+	v := m.add_Remain
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
 // ResetRemain reset all changes of the "Remain" field.
 func (m *SubjectsOfferedMutation) ResetRemain() {
 	m._Remain = nil
+	m.add_Remain = nil
 }
 
 // SetSubjectID sets the Subject edge to Subject by id.
@@ -5436,21 +5478,21 @@ func (m *SubjectsOfferedMutation) OldField(ctx context.Context, name string) (en
 func (m *SubjectsOfferedMutation) SetField(name string, value ent.Value) error {
 	switch name {
 	case subjectsoffered.FieldAMOUNT:
-		v, ok := value.(string)
+		v, ok := value.(int)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetAMOUNT(v)
 		return nil
 	case subjectsoffered.FieldSTATUS:
-		v, ok := value.(string)
+		v, ok := value.(bool)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetSTATUS(v)
 		return nil
 	case subjectsoffered.FieldRemain:
-		v, ok := value.(string)
+		v, ok := value.(int)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -5463,13 +5505,26 @@ func (m *SubjectsOfferedMutation) SetField(name string, value ent.Value) error {
 // AddedFields returns all numeric fields that were incremented
 // or decremented during this mutation.
 func (m *SubjectsOfferedMutation) AddedFields() []string {
-	return nil
+	var fields []string
+	if m.add_AMOUNT != nil {
+		fields = append(fields, subjectsoffered.FieldAMOUNT)
+	}
+	if m.add_Remain != nil {
+		fields = append(fields, subjectsoffered.FieldRemain)
+	}
+	return fields
 }
 
 // AddedField returns the numeric value that was in/decremented
 // from a field with the given name. The second value indicates
 // that this field was not set, or was not define in the schema.
 func (m *SubjectsOfferedMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case subjectsoffered.FieldAMOUNT:
+		return m.AddedAMOUNT()
+	case subjectsoffered.FieldRemain:
+		return m.AddedRemain()
+	}
 	return nil, false
 }
 
@@ -5478,6 +5533,20 @@ func (m *SubjectsOfferedMutation) AddedField(name string) (ent.Value, bool) {
 // type mismatch the field type.
 func (m *SubjectsOfferedMutation) AddField(name string, value ent.Value) error {
 	switch name {
+	case subjectsoffered.FieldAMOUNT:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddAMOUNT(v)
+		return nil
+	case subjectsoffered.FieldRemain:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddRemain(v)
+		return nil
 	}
 	return fmt.Errorf("unknown SubjectsOffered numeric field %s", name)
 }

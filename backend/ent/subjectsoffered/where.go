@@ -92,42 +92,42 @@ func IDLTE(id int) predicate.SubjectsOffered {
 }
 
 // AMOUNT applies equality check predicate on the "AMOUNT" field. It's identical to AMOUNTEQ.
-func AMOUNT(v string) predicate.SubjectsOffered {
+func AMOUNT(v int) predicate.SubjectsOffered {
 	return predicate.SubjectsOffered(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldAMOUNT), v))
 	})
 }
 
 // STATUS applies equality check predicate on the "STATUS" field. It's identical to STATUSEQ.
-func STATUS(v string) predicate.SubjectsOffered {
+func STATUS(v bool) predicate.SubjectsOffered {
 	return predicate.SubjectsOffered(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldSTATUS), v))
 	})
 }
 
 // Remain applies equality check predicate on the "Remain" field. It's identical to RemainEQ.
-func Remain(v string) predicate.SubjectsOffered {
+func Remain(v int) predicate.SubjectsOffered {
 	return predicate.SubjectsOffered(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldRemain), v))
 	})
 }
 
 // AMOUNTEQ applies the EQ predicate on the "AMOUNT" field.
-func AMOUNTEQ(v string) predicate.SubjectsOffered {
+func AMOUNTEQ(v int) predicate.SubjectsOffered {
 	return predicate.SubjectsOffered(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldAMOUNT), v))
 	})
 }
 
 // AMOUNTNEQ applies the NEQ predicate on the "AMOUNT" field.
-func AMOUNTNEQ(v string) predicate.SubjectsOffered {
+func AMOUNTNEQ(v int) predicate.SubjectsOffered {
 	return predicate.SubjectsOffered(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldAMOUNT), v))
 	})
 }
 
 // AMOUNTIn applies the In predicate on the "AMOUNT" field.
-func AMOUNTIn(vs ...string) predicate.SubjectsOffered {
+func AMOUNTIn(vs ...int) predicate.SubjectsOffered {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -144,7 +144,7 @@ func AMOUNTIn(vs ...string) predicate.SubjectsOffered {
 }
 
 // AMOUNTNotIn applies the NotIn predicate on the "AMOUNT" field.
-func AMOUNTNotIn(vs ...string) predicate.SubjectsOffered {
+func AMOUNTNotIn(vs ...int) predicate.SubjectsOffered {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -161,195 +161,63 @@ func AMOUNTNotIn(vs ...string) predicate.SubjectsOffered {
 }
 
 // AMOUNTGT applies the GT predicate on the "AMOUNT" field.
-func AMOUNTGT(v string) predicate.SubjectsOffered {
+func AMOUNTGT(v int) predicate.SubjectsOffered {
 	return predicate.SubjectsOffered(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldAMOUNT), v))
 	})
 }
 
 // AMOUNTGTE applies the GTE predicate on the "AMOUNT" field.
-func AMOUNTGTE(v string) predicate.SubjectsOffered {
+func AMOUNTGTE(v int) predicate.SubjectsOffered {
 	return predicate.SubjectsOffered(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldAMOUNT), v))
 	})
 }
 
 // AMOUNTLT applies the LT predicate on the "AMOUNT" field.
-func AMOUNTLT(v string) predicate.SubjectsOffered {
+func AMOUNTLT(v int) predicate.SubjectsOffered {
 	return predicate.SubjectsOffered(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldAMOUNT), v))
 	})
 }
 
 // AMOUNTLTE applies the LTE predicate on the "AMOUNT" field.
-func AMOUNTLTE(v string) predicate.SubjectsOffered {
+func AMOUNTLTE(v int) predicate.SubjectsOffered {
 	return predicate.SubjectsOffered(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldAMOUNT), v))
 	})
 }
 
-// AMOUNTContains applies the Contains predicate on the "AMOUNT" field.
-func AMOUNTContains(v string) predicate.SubjectsOffered {
-	return predicate.SubjectsOffered(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldAMOUNT), v))
-	})
-}
-
-// AMOUNTHasPrefix applies the HasPrefix predicate on the "AMOUNT" field.
-func AMOUNTHasPrefix(v string) predicate.SubjectsOffered {
-	return predicate.SubjectsOffered(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldAMOUNT), v))
-	})
-}
-
-// AMOUNTHasSuffix applies the HasSuffix predicate on the "AMOUNT" field.
-func AMOUNTHasSuffix(v string) predicate.SubjectsOffered {
-	return predicate.SubjectsOffered(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldAMOUNT), v))
-	})
-}
-
-// AMOUNTEqualFold applies the EqualFold predicate on the "AMOUNT" field.
-func AMOUNTEqualFold(v string) predicate.SubjectsOffered {
-	return predicate.SubjectsOffered(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldAMOUNT), v))
-	})
-}
-
-// AMOUNTContainsFold applies the ContainsFold predicate on the "AMOUNT" field.
-func AMOUNTContainsFold(v string) predicate.SubjectsOffered {
-	return predicate.SubjectsOffered(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldAMOUNT), v))
-	})
-}
-
 // STATUSEQ applies the EQ predicate on the "STATUS" field.
-func STATUSEQ(v string) predicate.SubjectsOffered {
+func STATUSEQ(v bool) predicate.SubjectsOffered {
 	return predicate.SubjectsOffered(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldSTATUS), v))
 	})
 }
 
 // STATUSNEQ applies the NEQ predicate on the "STATUS" field.
-func STATUSNEQ(v string) predicate.SubjectsOffered {
+func STATUSNEQ(v bool) predicate.SubjectsOffered {
 	return predicate.SubjectsOffered(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldSTATUS), v))
 	})
 }
 
-// STATUSIn applies the In predicate on the "STATUS" field.
-func STATUSIn(vs ...string) predicate.SubjectsOffered {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SubjectsOffered(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldSTATUS), v...))
-	})
-}
-
-// STATUSNotIn applies the NotIn predicate on the "STATUS" field.
-func STATUSNotIn(vs ...string) predicate.SubjectsOffered {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SubjectsOffered(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldSTATUS), v...))
-	})
-}
-
-// STATUSGT applies the GT predicate on the "STATUS" field.
-func STATUSGT(v string) predicate.SubjectsOffered {
-	return predicate.SubjectsOffered(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldSTATUS), v))
-	})
-}
-
-// STATUSGTE applies the GTE predicate on the "STATUS" field.
-func STATUSGTE(v string) predicate.SubjectsOffered {
-	return predicate.SubjectsOffered(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldSTATUS), v))
-	})
-}
-
-// STATUSLT applies the LT predicate on the "STATUS" field.
-func STATUSLT(v string) predicate.SubjectsOffered {
-	return predicate.SubjectsOffered(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldSTATUS), v))
-	})
-}
-
-// STATUSLTE applies the LTE predicate on the "STATUS" field.
-func STATUSLTE(v string) predicate.SubjectsOffered {
-	return predicate.SubjectsOffered(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldSTATUS), v))
-	})
-}
-
-// STATUSContains applies the Contains predicate on the "STATUS" field.
-func STATUSContains(v string) predicate.SubjectsOffered {
-	return predicate.SubjectsOffered(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldSTATUS), v))
-	})
-}
-
-// STATUSHasPrefix applies the HasPrefix predicate on the "STATUS" field.
-func STATUSHasPrefix(v string) predicate.SubjectsOffered {
-	return predicate.SubjectsOffered(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldSTATUS), v))
-	})
-}
-
-// STATUSHasSuffix applies the HasSuffix predicate on the "STATUS" field.
-func STATUSHasSuffix(v string) predicate.SubjectsOffered {
-	return predicate.SubjectsOffered(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldSTATUS), v))
-	})
-}
-
-// STATUSEqualFold applies the EqualFold predicate on the "STATUS" field.
-func STATUSEqualFold(v string) predicate.SubjectsOffered {
-	return predicate.SubjectsOffered(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldSTATUS), v))
-	})
-}
-
-// STATUSContainsFold applies the ContainsFold predicate on the "STATUS" field.
-func STATUSContainsFold(v string) predicate.SubjectsOffered {
-	return predicate.SubjectsOffered(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldSTATUS), v))
-	})
-}
-
 // RemainEQ applies the EQ predicate on the "Remain" field.
-func RemainEQ(v string) predicate.SubjectsOffered {
+func RemainEQ(v int) predicate.SubjectsOffered {
 	return predicate.SubjectsOffered(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldRemain), v))
 	})
 }
 
 // RemainNEQ applies the NEQ predicate on the "Remain" field.
-func RemainNEQ(v string) predicate.SubjectsOffered {
+func RemainNEQ(v int) predicate.SubjectsOffered {
 	return predicate.SubjectsOffered(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldRemain), v))
 	})
 }
 
 // RemainIn applies the In predicate on the "Remain" field.
-func RemainIn(vs ...string) predicate.SubjectsOffered {
+func RemainIn(vs ...int) predicate.SubjectsOffered {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -366,7 +234,7 @@ func RemainIn(vs ...string) predicate.SubjectsOffered {
 }
 
 // RemainNotIn applies the NotIn predicate on the "Remain" field.
-func RemainNotIn(vs ...string) predicate.SubjectsOffered {
+func RemainNotIn(vs ...int) predicate.SubjectsOffered {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -383,65 +251,30 @@ func RemainNotIn(vs ...string) predicate.SubjectsOffered {
 }
 
 // RemainGT applies the GT predicate on the "Remain" field.
-func RemainGT(v string) predicate.SubjectsOffered {
+func RemainGT(v int) predicate.SubjectsOffered {
 	return predicate.SubjectsOffered(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldRemain), v))
 	})
 }
 
 // RemainGTE applies the GTE predicate on the "Remain" field.
-func RemainGTE(v string) predicate.SubjectsOffered {
+func RemainGTE(v int) predicate.SubjectsOffered {
 	return predicate.SubjectsOffered(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldRemain), v))
 	})
 }
 
 // RemainLT applies the LT predicate on the "Remain" field.
-func RemainLT(v string) predicate.SubjectsOffered {
+func RemainLT(v int) predicate.SubjectsOffered {
 	return predicate.SubjectsOffered(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldRemain), v))
 	})
 }
 
 // RemainLTE applies the LTE predicate on the "Remain" field.
-func RemainLTE(v string) predicate.SubjectsOffered {
+func RemainLTE(v int) predicate.SubjectsOffered {
 	return predicate.SubjectsOffered(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldRemain), v))
-	})
-}
-
-// RemainContains applies the Contains predicate on the "Remain" field.
-func RemainContains(v string) predicate.SubjectsOffered {
-	return predicate.SubjectsOffered(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldRemain), v))
-	})
-}
-
-// RemainHasPrefix applies the HasPrefix predicate on the "Remain" field.
-func RemainHasPrefix(v string) predicate.SubjectsOffered {
-	return predicate.SubjectsOffered(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldRemain), v))
-	})
-}
-
-// RemainHasSuffix applies the HasSuffix predicate on the "Remain" field.
-func RemainHasSuffix(v string) predicate.SubjectsOffered {
-	return predicate.SubjectsOffered(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldRemain), v))
-	})
-}
-
-// RemainEqualFold applies the EqualFold predicate on the "Remain" field.
-func RemainEqualFold(v string) predicate.SubjectsOffered {
-	return predicate.SubjectsOffered(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldRemain), v))
-	})
-}
-
-// RemainContainsFold applies the ContainsFold predicate on the "Remain" field.
-func RemainContainsFold(v string) predicate.SubjectsOffered {
-	return predicate.SubjectsOffered(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldRemain), v))
 	})
 }
 

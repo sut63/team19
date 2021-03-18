@@ -24,20 +24,28 @@ type SubjectsOfferedCreate struct {
 }
 
 // SetAMOUNT sets the AMOUNT field.
-func (soc *SubjectsOfferedCreate) SetAMOUNT(s string) *SubjectsOfferedCreate {
-	soc.mutation.SetAMOUNT(s)
+func (soc *SubjectsOfferedCreate) SetAMOUNT(i int) *SubjectsOfferedCreate {
+	soc.mutation.SetAMOUNT(i)
 	return soc
 }
 
 // SetSTATUS sets the STATUS field.
-func (soc *SubjectsOfferedCreate) SetSTATUS(s string) *SubjectsOfferedCreate {
-	soc.mutation.SetSTATUS(s)
+func (soc *SubjectsOfferedCreate) SetSTATUS(b bool) *SubjectsOfferedCreate {
+	soc.mutation.SetSTATUS(b)
+	return soc
+}
+
+// SetNillableSTATUS sets the STATUS field if the given value is not nil.
+func (soc *SubjectsOfferedCreate) SetNillableSTATUS(b *bool) *SubjectsOfferedCreate {
+	if b != nil {
+		soc.SetSTATUS(*b)
+	}
 	return soc
 }
 
 // SetRemain sets the Remain field.
-func (soc *SubjectsOfferedCreate) SetRemain(s string) *SubjectsOfferedCreate {
-	soc.mutation.SetRemain(s)
+func (soc *SubjectsOfferedCreate) SetRemain(i int) *SubjectsOfferedCreate {
+	soc.mutation.SetRemain(i)
 	return soc
 }
 
@@ -133,12 +141,8 @@ func (soc *SubjectsOfferedCreate) Save(ctx context.Context) (*SubjectsOffered, e
 		}
 	}
 	if _, ok := soc.mutation.STATUS(); !ok {
-		return nil, &ValidationError{Name: "STATUS", err: errors.New("ent: missing required field \"STATUS\"")}
-	}
-	if v, ok := soc.mutation.STATUS(); ok {
-		if err := subjectsoffered.STATUSValidator(v); err != nil {
-			return nil, &ValidationError{Name: "STATUS", err: fmt.Errorf("ent: validator failed for field \"STATUS\": %w", err)}
-		}
+		v := subjectsoffered.DefaultSTATUS
+		soc.mutation.SetSTATUS(v)
 	}
 	if _, ok := soc.mutation.Remain(); !ok {
 		return nil, &ValidationError{Name: "Remain", err: errors.New("ent: missing required field \"Remain\"")}
@@ -210,7 +214,7 @@ func (soc *SubjectsOfferedCreate) createSpec() (*SubjectsOffered, *sqlgraph.Crea
 	)
 	if value, ok := soc.mutation.AMOUNT(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeInt,
 			Value:  value,
 			Column: subjectsoffered.FieldAMOUNT,
 		})
@@ -218,7 +222,7 @@ func (soc *SubjectsOfferedCreate) createSpec() (*SubjectsOffered, *sqlgraph.Crea
 	}
 	if value, ok := soc.mutation.STATUS(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeBool,
 			Value:  value,
 			Column: subjectsoffered.FieldSTATUS,
 		})
@@ -226,7 +230,7 @@ func (soc *SubjectsOfferedCreate) createSpec() (*SubjectsOffered, *sqlgraph.Crea
 	}
 	if value, ok := soc.mutation.Remain(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeInt,
 			Value:  value,
 			Column: subjectsoffered.FieldRemain,
 		})
