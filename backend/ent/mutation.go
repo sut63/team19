@@ -1161,7 +1161,8 @@ type CourseMutation struct {
 	op                    Op
 	typ                   string
 	id                    *int
-	_Course_year          *string
+	_Course_year          *int
+	add_Course_year       *int
 	_Course_name          *string
 	_Teacher_id           *string
 	clearedFields         map[string]struct{}
@@ -1255,12 +1256,13 @@ func (m *CourseMutation) ID() (id int, exists bool) {
 }
 
 // SetCourseYear sets the Course_year field.
-func (m *CourseMutation) SetCourseYear(s string) {
-	m._Course_year = &s
+func (m *CourseMutation) SetCourseYear(i int) {
+	m._Course_year = &i
+	m.add_Course_year = nil
 }
 
 // CourseYear returns the Course_year value in the mutation.
-func (m *CourseMutation) CourseYear() (r string, exists bool) {
+func (m *CourseMutation) CourseYear() (r int, exists bool) {
 	v := m._Course_year
 	if v == nil {
 		return
@@ -1272,7 +1274,7 @@ func (m *CourseMutation) CourseYear() (r string, exists bool) {
 // If the Course object wasn't provided to the builder, the object is fetched
 // from the database.
 // An error is returned if the mutation operation is not UpdateOne, or database query fails.
-func (m *CourseMutation) OldCourseYear(ctx context.Context) (v string, err error) {
+func (m *CourseMutation) OldCourseYear(ctx context.Context) (v int, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldCourseYear is allowed only on UpdateOne operations")
 	}
@@ -1286,9 +1288,28 @@ func (m *CourseMutation) OldCourseYear(ctx context.Context) (v string, err error
 	return oldValue.CourseYear, nil
 }
 
+// AddCourseYear adds i to Course_year.
+func (m *CourseMutation) AddCourseYear(i int) {
+	if m.add_Course_year != nil {
+		*m.add_Course_year += i
+	} else {
+		m.add_Course_year = &i
+	}
+}
+
+// AddedCourseYear returns the value that was added to the Course_year field in this mutation.
+func (m *CourseMutation) AddedCourseYear() (r int, exists bool) {
+	v := m.add_Course_year
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
 // ResetCourseYear reset all changes of the "Course_year" field.
 func (m *CourseMutation) ResetCourseYear() {
 	m._Course_year = nil
+	m.add_Course_year = nil
 }
 
 // SetCourseName sets the Course_name field.
@@ -1545,7 +1566,7 @@ func (m *CourseMutation) OldField(ctx context.Context, name string) (ent.Value, 
 func (m *CourseMutation) SetField(name string, value ent.Value) error {
 	switch name {
 	case course.FieldCourseYear:
-		v, ok := value.(string)
+		v, ok := value.(int)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -1572,13 +1593,21 @@ func (m *CourseMutation) SetField(name string, value ent.Value) error {
 // AddedFields returns all numeric fields that were incremented
 // or decremented during this mutation.
 func (m *CourseMutation) AddedFields() []string {
-	return nil
+	var fields []string
+	if m.add_Course_year != nil {
+		fields = append(fields, course.FieldCourseYear)
+	}
+	return fields
 }
 
 // AddedField returns the numeric value that was in/decremented
 // from a field with the given name. The second value indicates
 // that this field was not set, or was not define in the schema.
 func (m *CourseMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case course.FieldCourseYear:
+		return m.AddedCourseYear()
+	}
 	return nil, false
 }
 
@@ -1587,6 +1616,13 @@ func (m *CourseMutation) AddedField(name string) (ent.Value, bool) {
 // type mismatch the field type.
 func (m *CourseMutation) AddField(name string, value ent.Value) error {
 	switch name {
+	case course.FieldCourseYear:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddCourseYear(v)
+		return nil
 	}
 	return fmt.Errorf("unknown Course numeric field %s", name)
 }

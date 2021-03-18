@@ -23,8 +23,8 @@ type CourseCreate struct {
 }
 
 // SetCourseYear sets the Course_year field.
-func (cc *CourseCreate) SetCourseYear(s string) *CourseCreate {
-	cc.mutation.SetCourseYear(s)
+func (cc *CourseCreate) SetCourseYear(i int) *CourseCreate {
+	cc.mutation.SetCourseYear(i)
 	return cc
 }
 
@@ -190,7 +190,7 @@ func (cc *CourseCreate) createSpec() (*Course, *sqlgraph.CreateSpec) {
 	)
 	if value, ok := cc.mutation.CourseYear(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeInt,
 			Value:  value,
 			Column: course.FieldCourseYear,
 		})

@@ -25,7 +25,7 @@ type Course struct {
 	SubjectID    int
 	DegreeID     int
 	CourseName   string
-	CourseYear   string
+	CourseYear   int
 	TeacherID    string
 }
 
@@ -123,28 +123,29 @@ func (ctl *CourseController) CreateCourse(c *gin.Context) {
 // @Failure 500 {object} gin.H
 // @Router /courses/{id} [get]
 func (ctl *CourseController) GetCourse(c *gin.Context) {
-	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
-	if err != nil {
-		c.JSON(400, gin.H{
-			"error": err.Error(),
-		})
-		return
-	}
+	name := c.Query("coursename")
+
 	cou, err := ctl.client.Course.
 		Query().
 		WithDepartmentID().
 		WithSubjectID().
 		WithDegreeID().
-		Where(course.IDEQ(int(id))).
+		Where(course.CourseNameContains(name)).
 		All(context.Background())
+		
+
 	if err != nil {
 		c.JSON(404, gin.H{
-			"error": err.Error(),
+			"status": false,
+			"error":  "Name not found",
 		})
 		return
 	}
 
-	c.JSON(200, cou)
+	c.JSON(200, gin.H{
+		"status": true,
+		"data":   cou,
+	})
 }
 
 // ListCourse handles request to get a list of course entities
@@ -285,9 +286,10 @@ func NewCourseController(router gin.IRouter, client *ent.Client) *CourseControll
 
 func (ctl *CourseController) register() {
 	courses := ctl.router.Group("/courses")
+	searchcourses := ctl.router.Group("/searchcourses")
 
 	courses.GET("", ctl.ListCourse)
-
+	searchcourses.GET("", ctl.GetCourse)
 	// CRUD
 	courses.POST("", ctl.CreateCourse)
 	courses.GET(":id", ctl.GetCourse)

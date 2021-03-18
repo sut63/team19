@@ -92,7 +92,7 @@ func IDLTE(id int) predicate.Course {
 }
 
 // CourseYear applies equality check predicate on the "Course_year" field. It's identical to CourseYearEQ.
-func CourseYear(v string) predicate.Course {
+func CourseYear(v int) predicate.Course {
 	return predicate.Course(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldCourseYear), v))
 	})
@@ -113,21 +113,21 @@ func TeacherID(v string) predicate.Course {
 }
 
 // CourseYearEQ applies the EQ predicate on the "Course_year" field.
-func CourseYearEQ(v string) predicate.Course {
+func CourseYearEQ(v int) predicate.Course {
 	return predicate.Course(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldCourseYear), v))
 	})
 }
 
 // CourseYearNEQ applies the NEQ predicate on the "Course_year" field.
-func CourseYearNEQ(v string) predicate.Course {
+func CourseYearNEQ(v int) predicate.Course {
 	return predicate.Course(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldCourseYear), v))
 	})
 }
 
 // CourseYearIn applies the In predicate on the "Course_year" field.
-func CourseYearIn(vs ...string) predicate.Course {
+func CourseYearIn(vs ...int) predicate.Course {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -144,7 +144,7 @@ func CourseYearIn(vs ...string) predicate.Course {
 }
 
 // CourseYearNotIn applies the NotIn predicate on the "Course_year" field.
-func CourseYearNotIn(vs ...string) predicate.Course {
+func CourseYearNotIn(vs ...int) predicate.Course {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -161,65 +161,30 @@ func CourseYearNotIn(vs ...string) predicate.Course {
 }
 
 // CourseYearGT applies the GT predicate on the "Course_year" field.
-func CourseYearGT(v string) predicate.Course {
+func CourseYearGT(v int) predicate.Course {
 	return predicate.Course(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldCourseYear), v))
 	})
 }
 
 // CourseYearGTE applies the GTE predicate on the "Course_year" field.
-func CourseYearGTE(v string) predicate.Course {
+func CourseYearGTE(v int) predicate.Course {
 	return predicate.Course(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldCourseYear), v))
 	})
 }
 
 // CourseYearLT applies the LT predicate on the "Course_year" field.
-func CourseYearLT(v string) predicate.Course {
+func CourseYearLT(v int) predicate.Course {
 	return predicate.Course(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldCourseYear), v))
 	})
 }
 
 // CourseYearLTE applies the LTE predicate on the "Course_year" field.
-func CourseYearLTE(v string) predicate.Course {
+func CourseYearLTE(v int) predicate.Course {
 	return predicate.Course(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldCourseYear), v))
-	})
-}
-
-// CourseYearContains applies the Contains predicate on the "Course_year" field.
-func CourseYearContains(v string) predicate.Course {
-	return predicate.Course(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldCourseYear), v))
-	})
-}
-
-// CourseYearHasPrefix applies the HasPrefix predicate on the "Course_year" field.
-func CourseYearHasPrefix(v string) predicate.Course {
-	return predicate.Course(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldCourseYear), v))
-	})
-}
-
-// CourseYearHasSuffix applies the HasSuffix predicate on the "Course_year" field.
-func CourseYearHasSuffix(v string) predicate.Course {
-	return predicate.Course(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldCourseYear), v))
-	})
-}
-
-// CourseYearEqualFold applies the EqualFold predicate on the "Course_year" field.
-func CourseYearEqualFold(v string) predicate.Course {
-	return predicate.Course(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldCourseYear), v))
-	})
-}
-
-// CourseYearContainsFold applies the ContainsFold predicate on the "Course_year" field.
-func CourseYearContainsFold(v string) predicate.Course {
-	return predicate.Course(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldCourseYear), v))
 	})
 }
 

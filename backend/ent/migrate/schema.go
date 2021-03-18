@@ -47,7 +47,7 @@ var (
 	// CoursesColumns holds the columns for the "courses" table.
 	CoursesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "course_year", Type: field.TypeString},
+		{Name: "course_year", Type: field.TypeInt},
 		{Name: "course_name", Type: field.TypeString},
 		{Name: "teacher_id", Type: field.TypeString},
 		{Name: "Degree_id", Type: field.TypeInt, Nullable: true},

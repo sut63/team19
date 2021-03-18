@@ -195,7 +195,7 @@ interface currency{
 	  SubjectID :         number;
 	  DegreeID  :         number;
     CourseName :        string;
-    CourseYear :        string;
+    CourseYear :        number;
     TeacherID :        string;
 	
 }
@@ -211,6 +211,10 @@ const api = new DefaultApi();
  const [departments, setDepartments ] = React.useState<EntDepartment[]>([]);
  const [subjects, setSubjects ] = React.useState<EntSubject[]>([]);
  const [degrees, setDegrees ] = React.useState<EntDegree[]>([]);
+ 
+
+
+
  const Toast = Swal.mixin({  //ตั้งค่าการแจ้งเตือน
   toast: true,
   position: 'center',
@@ -223,11 +227,18 @@ const api = new DefaultApi();
   },
 });
 
-const handleChange = ( event: React.ChangeEvent<{ name?: string; value: unknown }>,) =>{
+const handleChange = ( event: React.ChangeEvent<{ name?: string; value: any }>,) =>{
     const name = event.target.name as keyof typeof Course;
     const { value } = event.target;
     setCurrency({ ...currency, [name] : value });
     console.log(currency);
+};
+
+const handleChangeInt = (event: React.ChangeEvent<{ name?: string; value: any }>) => {
+  const name = event.target.name as keyof typeof Course;
+  const { value } = event.target;
+  setCurrency({ ...currency, [name]: Number(value)});
+  console.log(currency);
 };
 
 
@@ -253,13 +264,18 @@ const handleChange = ( event: React.ChangeEvent<{ name?: string; value: unknown 
   });
 }
 
+
+
+
+ 
+
 const checkCaseSaveError = (field: string) => {
   switch(field){
     case 'Teacher_id':
       alertMessage("error","รหัสอาจารย์ขึ้นต้นด้วย T ตามด้วยตัวเลข 7 หลัก");
       return;
     case 'Course_name':
-       alertMessage("error","ชื่อหลักสูตรต้องเป็น a-z หรือ A-Z หรือ 0-9");
+       alertMessage("error","ชื่อหลักสูตรต้องเป็นตัวอักษร A-Z หรือ a-z หรือ 0-9");
        return; 
     case 'Course_year':
          alertMessage("error","ปีของหลักสูตรต้องเป็นตัวเลข จำนวนเต็มบวก");
@@ -417,9 +433,10 @@ const checkCaseSaveError = (field: string) => {
       <div>
       <FormControl className={classes.text8} >  <text >ชื่อหลักสูตร</text> </FormControl>
        <FormControl className={classes.textfill1} >
-           <TextField id="Course_name"  variant="outlined" 
+           <TextField id="Course_name"  variant="outlined"        
            name="CourseName"
-           defaultValue="พิมพ์ชื่อหลักสูตร"
+           type="string"
+           defaultValue="พิมพ์ชื่อหลักสูตรด้วยอักษร A-Z หรือ a-z ต่อด้วยปี พศ. "
            value = {currency.CourseName}
            onChange={handleChange}
            />
@@ -431,7 +448,8 @@ const checkCaseSaveError = (field: string) => {
        <FormControl className={classes.textfill2} >
            <TextField id="Teacher_id"  variant="outlined" 
            name="TeacherID"
-           defaultValue="พิมพ์รหัสอาจารย์"
+           type="string"
+           defaultValue="พิมพ์รหัสอาจารย์ขึ้นต้นด้วย T ตามด้วยตัวเลข 7 หลัก"
            value = {currency.TeacherID}
            onChange={handleChange}
            />
@@ -443,9 +461,10 @@ const checkCaseSaveError = (field: string) => {
        <FormControl className={classes.textfill3} >
            <TextField id="Course_year"  variant="outlined" 
            name="CourseYear"
-           defaultValue="พิมพ์ปีของหลักสูตร"
+           type="number"
+           defaultValue="พิมพ์ปีของหลักสูตร เป็นเลขจำนวนเต็มบวก"
            value = {currency.CourseYear}
-           onChange={handleChange}
+           onChange={handleChangeInt}
            />
       </FormControl>
       </div>
