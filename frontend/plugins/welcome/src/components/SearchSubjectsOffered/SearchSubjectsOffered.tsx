@@ -45,8 +45,8 @@ const SearchSubjectsOffered: FC<{}> = () => {
   const classes = useStyles();
   const api = new DefaultApi();
   const [searchstext, setSearchstext] = React.useState(String)
-  const [subjectsoffered, setSubjectsOffered] = useState<EntSubjectsOffered[]>([]);
-  const [subjectsofferedsearch, setSubjectsOfferedsearch] = useState<EntSubjectsOffered[]>([]);
+  const [subjectsoffered, setSubjectsOffered] = React.useState<EntSubjectsOffered[]>([]);
+  const [subjectsofferedsearch, setSubjectsOfferedsearch] = React.useState<EntSubjectsOffered[]>([]);
   
 
   useEffect(() => {
@@ -70,7 +70,7 @@ const SearchSubjectsOffered: FC<{}> = () => {
       toast.addEventListener('mouseleave', Swal.resumeTimer);
       },
     });
-  var alerts : number;
+  //var alerts : number;
 
    const handleChange = (event: React.ChangeEvent<{ value: unknown }>,) =>{
     setSearchstext(event.target.value as string);
@@ -78,34 +78,46 @@ const SearchSubjectsOffered: FC<{}> = () => {
   }
 
   function search(){
-    subjectsoffered.map((item: any) => {  
-      if (item.edges?.subject?.subjectName == searchstext ) {
-    const getSubjectsOfferedsearch = async () => {
-      const res = await api.getSubjectsOffered({id: item.id})
-      setSubjectsOfferedsearch(res);
-      alerts = res.length
-      if (alerts > 0) {
-        Toast.fire({
-          icon: 'success',
-          title: 'Search Success',
-        })
-      } else {
-        Toast.fire({
-          icon: 'error',
-          title: 'Search Error',
-        })
-      }
-     };
-     getSubjectsOfferedsearch();
-    }
-    else {
+    if (searchstext != "") {
+      const apiUrl = `http://localhost:8080/api/v1/searchSubjectsOffereds?name=${searchstext}`;
+      const requestOptions = {
+        method: 'GET',
+      };
+      console.log(searchstext);
+      fetch(apiUrl, requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data.data);
+        //setSubjectsOfferedsearch(data.data);
+        data.data.map((item : any ) => {        
+        if (data.data != "" && item.edges?.Subject?.Subject_name == searchstext) {
+          Toast.fire({
+            icon: 'success',
+            title: 'Search Success',
+          })
+          setSubjectsOfferedsearch(data.data);
+        }else if(data.data != "" && item.edges?.Subject?.Subjec_name != searchstext){
+          Toast.fire({
+            icon: 'error',
+            title: 'Search Error',
+          })
+          setSubjectsOfferedsearch([]);
+        }})
+        if (data.data == ""){
+          setSubjectsOfferedsearch([]);
+          Toast.fire({
+            icon: 'error',
+            title: 'Search Error',
+          })
+        }
+      });
+    }else {
       setSubjectsOfferedsearch([]);
       Toast.fire({
         icon: 'error',
         title: 'Search Error',
       })
-    }
-  });
+    } 
   }
   return (
     <Page theme={pageTheme.home}>
@@ -155,23 +167,21 @@ const SearchSubjectsOffered: FC<{}> = () => {
             <TableCell align="center">Year</TableCell>
             <TableCell align="center">Term</TableCell>
             <TableCell align="center">Amount</TableCell>
-            <TableCell align="center">Status</TableCell>
             <TableCell align="center">Remain</TableCell>
+            
           </TableRow>
         </TableHead>
         <TableBody>
-          {subjectsofferedsearch === undefined
-            ? null
-            : subjectsofferedsearch.map((item) => (
+          { subjectsofferedsearch.map((item : any ) => (
             <TableRow key={item.id}>
               <TableCell align="center">{item.id}</TableCell>
-              <TableCell align="center">{item.edges?.subject?.subjectName}</TableCell>
-              <TableCell align="center">{item.edges?.degree?.degreeName}</TableCell>
-              <TableCell align="center">{item.edges?.year?.yEAR}</TableCell>
-              <TableCell align="center">{item.edges?.term?.tERM}</TableCell>
-              <TableCell align="center">{item.aMOUNT}</TableCell>
-              <TableCell align="center">{item.sTATUS}</TableCell>
-              <TableCell align="center">{item.remain}</TableCell>
+              <TableCell align="center">{item.edges?.Subject?.Subject_name}</TableCell>
+              <TableCell align="center">{item.edges?.Degree?.Degree_name}</TableCell>
+              <TableCell align="center">{item.edges?.Year?.YEAR}</TableCell>
+              <TableCell align="center">{item.edges?.Term?.TERM}</TableCell>
+              <TableCell align="center">{item.AMOUNT}</TableCell>
+              <TableCell align="center">{item.Remain}</TableCell>
+              
             </TableRow>
           ))}
         </TableBody>

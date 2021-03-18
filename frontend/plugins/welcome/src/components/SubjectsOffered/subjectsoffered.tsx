@@ -16,6 +16,11 @@ import {
   MenuItem,
   TextField,
   Button,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+  FormLabel,
+  FormHelperText,
 } from '@material-ui/core';
 import { makeStyles, } from '@material-ui/core/styles';
 import { DefaultApi } from '../../api/apis';
@@ -57,21 +62,27 @@ interface  EntSubjectsOffered  {
   Year  :    number;
   Degree  :    number;
   Term :       number;
-  AMOUNT :      string;
-  Remain :      string;
-  STATUS :      string;
+  AMOUNT :      number;
+  Remain :     number;
+  STATUS :      boolean;
 }
 
 const EntSubjectsOffered: FC<{}> = () => {
   const classes = useStyles();
   const http = new DefaultApi();
-
   const [subjectsoffered, setSubjectsOffered] = React.useState<Partial<EntSubjectsOffered>>({});
-
   const [subject, setSubject] = React.useState<EntSubject[]>([]);
   const [degree, setDegree] = React.useState<EntDegree[]>([]);
   const [year, setYear] = React.useState<EntYear[]>([]);
   const [term, setTerm] = React.useState<EntTerm[]>([]);
+  const [amountError, setAmountError] = React.useState('');
+  const [statusError, setStatusError] = React.useState('');
+  const [remainError, setRemainError] = React.useState('');
+  const [state, setState] = React.useState({
+    Open: false,
+  });
+  const { Open } = state;
+  const error = [Open].filter((v) => v).length !== 1;
     // alert setting
     const Toast = Swal.mixin({
       toast: true,
@@ -120,6 +131,26 @@ const EntSubjectsOffered: FC<{}> = () => {
     setSubjectsOffered({ ...subjectsoffered, [name]: value });
     console.log(subjectsoffered);
   };
+  
+  const handleChangeInt = (event: React.ChangeEvent<{ name?: string; value: any }>) => {
+    const name = event.target.name as keyof typeof EntSubjectsOffered;
+    const { value } = event.target;
+    const validateValue = value.toString()
+    checkPattern(name, validateValue)
+    setSubjectsOffered({ ...subjectsoffered, [name]: Number(value)});
+    console.log(subjectsoffered);
+  };
+
+  const handleChangeBool = (event: React.ChangeEvent<{ id?: string; value: any; name: string; checked?: boolean; }>) => {
+    const id = event.target.id as keyof typeof EntSubjectsOffered;
+    const { value } = event.target;
+    const validateValue = value.toString()
+    checkPattern(id, validateValue)
+    setState({ ...state, [event.target.name]: event.target.checked });
+    setSubjectsOffered({ ...subjectsoffered, [id]: event.target.checked});
+    console.log(subjectsoffered);
+  };
+
 
   const alertMessage = (icon: any, title: any) => {
     Toast.fire({
@@ -127,7 +158,37 @@ const EntSubjectsOffered: FC<{}> = () => {
       title: title,
     });
   }
+  
+  // ฟังก์ชั่นสำหรับ validate Remain
+  const validateRemain = (rm: number) => {
+    return rm >= 0 ;
+  }
 
+  // ฟังก์ชั่นสำหรับ validate Status
+  const validateStatus = (val: boolean) => {
+    return val == true;}
+
+  // ฟังก์ชั่นสำหรับ validate Amount
+  const validateAmount = (amt: number) => {
+    return amt >= 1;
+  }
+
+  const checkPattern = (name: string, value: any) => {
+    switch(name){
+      case 'AMOUNT':
+        validateAmount(value) ? setAmountError('') : setAmountError("รูปแบบจำนวนที่รับไม่ถูกต้อง ต้องเป็นจำนวนเต็มบวก");
+        return;
+      case 'STATUS':
+        validateStatus(value) ? setStatusError('') : setStatusError("รูปแบบสถานะไม่ถูกต้อง สถานะคือ Open");
+        return;
+      case 'Remain':
+        validateRemain(value) ? setRemainError('') : setRemainError("รูปแบบคงเหลือไม่ถูกต้อง ต้องเป็นจำนวนเต็มบวก");
+        return;  
+      default:
+        return;
+    }
+  }
+   
   const checkCaseSaveError = (field: string) => {
     switch(field){
       case 'AMOUNT':
@@ -144,7 +205,6 @@ const EntSubjectsOffered: FC<{}> = () => {
          return;
     }
   }
- 
 
   // function save data
   function save() {
@@ -156,7 +216,7 @@ const EntSubjectsOffered: FC<{}> = () => {
     };
 
     console.log(subjectsoffered); // log ดูข้อมูล สามารถ Inspect ดูข้อมูลได้ F12 เลือก Tab Console
-
+    if (subjectsoffered.STATUS === true){
     fetch(apiUrl, requestOptions)
       .then(response => response.json())
       .then(data => {
@@ -170,7 +230,12 @@ const EntSubjectsOffered: FC<{}> = () => {
           checkCaseSaveError(data.error.Name)
         }
       });
-  }
+    } else {
+      Toast.fire({
+        icon: 'error',
+        title: 'รูปแบบสถานะไม่ถูกต้อง สถานะคือ Open',
+      });
+  }}
  return (
    <Page theme={pageTheme.home}>
      <Header
@@ -288,8 +353,17 @@ const EntSubjectsOffered: FC<{}> = () => {
             </Grid>
             <Grid item xs={9}>
       <form className={classes.root} noValidate autoComplete="off" >
-        <TextField label="กรอกจำนวนที่รับ"name ="AMOUNT" type="string" 
-        value={subjectsoffered.AMOUNT } onChange={handleChange} className={classes.textField}
+        <TextField 
+        error = {amountError ? true : false}
+        label="กรอกจำนวนที่รับ"
+        name="AMOUNT" 
+        type="number" 
+        InputProps={{ inputProps: { min: 0 } }}
+        helperText= {amountError}
+        value={subjectsoffered.AMOUNT || ''}
+        variant="outlined"
+        onChange={handleChangeInt} 
+        className={classes.textField}
                   />
       </form>
       </Grid>
@@ -298,8 +372,17 @@ const EntSubjectsOffered: FC<{}> = () => {
             </Grid>
             <Grid item xs={9}>
       <form className={classes.root} noValidate autoComplete="off" >
-        <TextField label="กรอกคงเหลือ"name ="Remain" type="string" 
-        value={subjectsoffered.Remain } onChange={handleChange} className={classes.textField}
+        <TextField 
+        error = {remainError ? true : false}
+        label="กรอกคงเหลือ"
+        name="Remain" 
+        type="number" 
+        InputProps={{ inputProps: { min: 0 } }}
+        helperText= {remainError}
+        value={subjectsoffered.Remain || ''}
+        variant="outlined"
+        onChange={handleChangeInt} 
+        className={classes.textField}
                   />
       </form>
       </Grid>
@@ -307,10 +390,20 @@ const EntSubjectsOffered: FC<{}> = () => {
               <div className={classes.paper}>สถานะ</div>
             </Grid>
             <Grid item xs={9}>
-            <form className={classes.root} noValidate autoComplete="off">
-      <TextField  label="สถานะ" name ="STATUS" type="string" 
-      value={subjectsoffered.STATUS } onChange={handleChange} className={classes.textField}/>
-    </form>      
+            <FormControl required error={error} component="fieldset" className={classes.formControl}>
+        <FormGroup>
+          <FormControlLabel
+            control={<Checkbox 
+              id="STATUS"
+              checked={Open} 
+              value={subjectsoffered.STATUS ||''}
+              onChange={handleChangeBool} 
+              name="Open" />}
+            label="Open"
+          />
+        </FormGroup>
+        <FormHelperText> {statusError}</FormHelperText>
+      </FormControl>
       </Grid>
           <Grid item xs={3}></Grid>
           <Grid item xs={9}>

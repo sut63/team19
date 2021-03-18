@@ -22,9 +22,9 @@ type SubjectsOfferedController struct {
 
 // SubjectsOffered defines the struct for the SubjectsOffered
 type SubjectsOffered struct {
-	AMOUNT  string
-	STATUS  string
-	Remain  string
+	AMOUNT  int
+	STATUS bool
+	Remain  int
 	Subject int
 	Degree  int
 	Year    int
@@ -133,30 +133,28 @@ func (ctl *SubjectsOfferedController) CreateSubjectsOffered(c *gin.Context) {
 // @Failure 500 {object} gin.H
 // @Router /SubjectsOffereds/{id} [get]
 func (ctl *SubjectsOfferedController) GetSubjectsOffered(c *gin.Context) {
-	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
-	if err != nil {
-		c.JSON(400, gin.H{
-			"error": err.Error(),
-		})
-		return
-	}
+	name := c.Query("name")
 
 	so, err := ctl.client.SubjectsOffered.
 		Query().
+		Where(subjectsoffered.HasSubjectWith(subject.SubjectNameContains(name))).
 		WithSubject().
 		WithYear().
 		WithDegree().
 		WithTerm().
-		Where(subjectsoffered.IDEQ(int(id))).
 		All(context.Background())
-	if err != nil {
-		c.JSON(404, gin.H{
-			"error": err.Error(),
+		if err != nil {
+			c.JSON(404, gin.H{
+				"status": false,
+				"error":  "SubjectsOffered not found",
+			})
+			return
+		}
+	
+		c.JSON(200, gin.H{
+			"status": true,
+			"data":   so,
 		})
-		return
-	}
-
-	c.JSON(200, so)
 }
 
 // ListSubjectsOffered handles request to get a list of SubjectsOffered entities
@@ -294,8 +292,10 @@ func NewSubjectsOfferedController(router gin.IRouter, client *ent.Client) *Subje
 // InitSubjectsOfferedController registers routes to the main engine
 func (ctl *SubjectsOfferedController) register() {
 	SubjectsOffereds := ctl.router.Group("/SubjectsOffereds")
+	searchSubjectsOffereds := ctl.router.Group("/searchSubjectsOffereds")
 
 	SubjectsOffereds.GET("", ctl.ListSubjectsOffered)
+	searchSubjectsOffereds.GET("", ctl.GetSubjectsOffered)
 
 	// CRUD
 	SubjectsOffereds.POST("", ctl.CreateSubjectsOffered)

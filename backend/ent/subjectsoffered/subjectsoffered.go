@@ -73,9 +73,9 @@ var ForeignKeys = []string{
 
 var (
 	// AMOUNTValidator is a validator for the "AMOUNT" field. It is called by the builders before save.
-	AMOUNTValidator func(string) error
-	// STATUSValidator is a validator for the "STATUS" field. It is called by the builders before save.
-	STATUSValidator func(string) error
+	AMOUNTValidator func(int) error
+	// DefaultSTATUS holds the default value on creation for the STATUS field.
+	DefaultSTATUS bool
 	// RemainValidator is a validator for the "Remain" field. It is called by the builders before save.
-	RemainValidator func(string) error
+	RemainValidator func(int) error
 )

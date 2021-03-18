@@ -20,11 +20,11 @@ type SubjectsOffered struct {
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
 	// AMOUNT holds the value of the "AMOUNT" field.
-	AMOUNT string `json:"AMOUNT,omitempty"`
+	AMOUNT int `json:"AMOUNT,omitempty"`
 	// STATUS holds the value of the "STATUS" field.
-	STATUS string `json:"STATUS,omitempty"`
+	STATUS bool `json:"STATUS,omitempty"`
 	// Remain holds the value of the "Remain" field.
-	Remain string `json:"Remain,omitempty"`
+	Remain int `json:"Remain,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the SubjectsOfferedQuery when eager-loading is set.
 	Edges      SubjectsOfferedEdges `json:"edges"`
@@ -108,10 +108,10 @@ func (e SubjectsOfferedEdges) TermOrErr() (*Term, error) {
 // scanValues returns the types for scanning values from sql.Rows.
 func (*SubjectsOffered) scanValues() []interface{} {
 	return []interface{}{
-		&sql.NullInt64{},  // id
-		&sql.NullString{}, // AMOUNT
-		&sql.NullString{}, // STATUS
-		&sql.NullString{}, // Remain
+		&sql.NullInt64{}, // id
+		&sql.NullInt64{}, // AMOUNT
+		&sql.NullBool{},  // STATUS
+		&sql.NullInt64{}, // Remain
 	}
 }
 
@@ -137,20 +137,20 @@ func (so *SubjectsOffered) assignValues(values ...interface{}) error {
 	}
 	so.ID = int(value.Int64)
 	values = values[1:]
-	if value, ok := values[0].(*sql.NullString); !ok {
+	if value, ok := values[0].(*sql.NullInt64); !ok {
 		return fmt.Errorf("unexpected type %T for field AMOUNT", values[0])
 	} else if value.Valid {
-		so.AMOUNT = value.String
+		so.AMOUNT = int(value.Int64)
 	}
-	if value, ok := values[1].(*sql.NullString); !ok {
+	if value, ok := values[1].(*sql.NullBool); !ok {
 		return fmt.Errorf("unexpected type %T for field STATUS", values[1])
 	} else if value.Valid {
-		so.STATUS = value.String
+		so.STATUS = value.Bool
 	}
-	if value, ok := values[2].(*sql.NullString); !ok {
+	if value, ok := values[2].(*sql.NullInt64); !ok {
 		return fmt.Errorf("unexpected type %T for field Remain", values[2])
 	} else if value.Valid {
-		so.Remain = value.String
+		so.Remain = int(value.Int64)
 	}
 	values = values[3:]
 	if len(values) == len(subjectsoffered.ForeignKeys) {
@@ -226,11 +226,11 @@ func (so *SubjectsOffered) String() string {
 	builder.WriteString("SubjectsOffered(")
 	builder.WriteString(fmt.Sprintf("id=%v", so.ID))
 	builder.WriteString(", AMOUNT=")
-	builder.WriteString(so.AMOUNT)
+	builder.WriteString(fmt.Sprintf("%v", so.AMOUNT))
 	builder.WriteString(", STATUS=")
-	builder.WriteString(so.STATUS)
+	builder.WriteString(fmt.Sprintf("%v", so.STATUS))
 	builder.WriteString(", Remain=")
-	builder.WriteString(so.Remain)
+	builder.WriteString(fmt.Sprintf("%v", so.Remain))
 	builder.WriteByte(')')
 	return builder.String()
 }

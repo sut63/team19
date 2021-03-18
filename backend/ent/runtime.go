@@ -122,13 +122,13 @@ func init() {
 	// subjectsofferedDescAMOUNT is the schema descriptor for AMOUNT field.
 	subjectsofferedDescAMOUNT := subjectsofferedFields[0].Descriptor()
 	// subjectsoffered.AMOUNTValidator is a validator for the "AMOUNT" field. It is called by the builders before save.
-	subjectsoffered.AMOUNTValidator = subjectsofferedDescAMOUNT.Validators[0].(func(string) error)
+	subjectsoffered.AMOUNTValidator = subjectsofferedDescAMOUNT.Validators[0].(func(int) error)
 	// subjectsofferedDescSTATUS is the schema descriptor for STATUS field.
 	subjectsofferedDescSTATUS := subjectsofferedFields[1].Descriptor()
-	// subjectsoffered.STATUSValidator is a validator for the "STATUS" field. It is called by the builders before save.
-	subjectsoffered.STATUSValidator = subjectsofferedDescSTATUS.Validators[0].(func(string) error)
+	// subjectsoffered.DefaultSTATUS holds the default value on creation for the STATUS field.
+	subjectsoffered.DefaultSTATUS = subjectsofferedDescSTATUS.Default.(bool)
 	// subjectsofferedDescRemain is the schema descriptor for Remain field.
 	subjectsofferedDescRemain := subjectsofferedFields[2].Descriptor()
 	// subjectsoffered.RemainValidator is a validator for the "Remain" field. It is called by the builders before save.
-	subjectsoffered.RemainValidator = subjectsofferedDescRemain.Validators[0].(func(string) error)
+	subjectsoffered.RemainValidator = subjectsofferedDescRemain.Validators[0].(func(int) error)
 }
